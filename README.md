@@ -1,1 +1,1 @@
-# projet-i3-sneaker
+# Projet I3 : Sneaker
