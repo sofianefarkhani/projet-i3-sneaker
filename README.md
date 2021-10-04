@@ -1,1 +1,3 @@
-# Projet I3 : Sneaker
+# Projet I3 : SNEAKERS
+## Installation
+## Usage
