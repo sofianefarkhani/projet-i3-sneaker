@@ -25,7 +25,7 @@ class Color:
         '''
         
         if ((name is None) and (rgb is None)):
-            raise ValueError('Cannot create an error without either a name or an rgb code.')
+            raise ValueError('Cannot create a color without either a name or an rgb code.')
         
         elif (rgb is not None and len(rgb) != 3):
             raise ValueError('Please give me an rgb List of length 3, and not '+str(len(rgb))+", like you just did.")
