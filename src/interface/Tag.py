@@ -29,8 +29,24 @@ class Tag:
         if secondaryColor is not None: self.secondaryColor = secondaryColor
     
     
+    
+    
+    
+    ####### GETTERS, SETTERS
+    
     def isComplete(self):
         return hasattr(self, 'databaseID', 'type', 'mainColor')
     
     def hasSecondaryColor(self):
         return hasattr(self, 'secondaryColor')
+    
+    def setType(self, type:Type):
+        self.type = Type
+    
+    def setMainColor(self, color:Color):
+        self.mainColor = color
+    
+    def setSecondaryColor(self, color:Color):
+        self.secondaryColor = color
+        
+    
