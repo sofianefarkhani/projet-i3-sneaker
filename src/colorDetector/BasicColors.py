@@ -1,6 +1,7 @@
 from enum import Enum
 
 class ColorEnum(Enum):
+    '''Each ColorEnum is represented by the name of the color in uppercase, and has for value the rgb representation of the color.'''
     RED   = [255, 0, 0]
     GREEN = [0, 255, 0]
     BLUE  = [0, 0, 255]
