@@ -1,7 +1,9 @@
-from colorDetector.Color import Color
-from Type import Type
+from Data.Color import Color
+#from Type import Type
+import json
+from Data.Type import Type
 
-class Tag:
+class Tag():
     '''
      A tag represents the data concerning one shoe.
      
@@ -30,8 +32,6 @@ class Tag:
     
     
     
-    
-    
     ####### GETTERS, SETTERS
     
     def isComplete(self):
@@ -41,7 +41,7 @@ class Tag:
         return hasattr(self, 'secondaryColor')
     
     def setType(self, type:Type):
-        self.type = Type
+        self.type = type
     
     def setMainColor(self, color:Color):
         self.mainColor = color
@@ -49,4 +49,6 @@ class Tag:
     def setSecondaryColor(self, color:Color):
         self.secondaryColor = color
         
+    
+    
     

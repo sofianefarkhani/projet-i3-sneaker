@@ -1,8 +1,9 @@
 
-from colorDetector.BasicColors import ColorEnum
+from Data.BasicColors import ColorEnum
+import json
 
 
-class Color:
+class Color():
     '''A color stores attributes of RGB format, and if given, the name of the color.
     
     An instance of color should have the following variables:
@@ -85,6 +86,3 @@ class Color:
         print("\n\nHere are the end results: this you asked for the color:")
         print (c.name)
         print (c.rgb)
-    
-    
-    
