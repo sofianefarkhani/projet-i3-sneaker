@@ -86,3 +86,6 @@ class Color():
         print("\n\nHere are the end results: this you asked for the color:")
         print (c.name)
         print (c.rgb)
+        
+    def toString(self):
+        return self.__dict__

@@ -15,7 +15,7 @@ class Writer(json.JSONEncoder):
     #     raise ValueError("Writer take only Tags object, your object is not Tags")
     #     return json.JSONEncoder.json_convert(self, obj)
         
-    def outputTagAsJson(tag:Tag):
+    def outputTagAsJson(tag:Tag, outputFilePath:str='../out/data.json'):
         '''Writes the given tag under the Json format in the output file: ../out/data.json .
         
         The json string of the given tag is appended to the file in a new line.
@@ -26,5 +26,5 @@ class Writer(json.JSONEncoder):
         
         Esteban'''
         data = jsonpickle.encode(tag)
-        file_object = open('../out/data.json', 'a')
+        file_object = open(outputFilePath, 'a')
         file_object.write("\n"+data)

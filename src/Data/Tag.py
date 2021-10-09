@@ -49,6 +49,7 @@ class Tag():
     def setSecondaryColor(self, color:Color):
         self.secondaryColor = color
         
-    
+    def toString(self):
+        return self.__dict__
     
     

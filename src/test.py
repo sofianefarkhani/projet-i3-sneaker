@@ -7,6 +7,7 @@ import json
 from json import JSONEncoder
 import jsonpickle
 from interface.Writer import Writer
+from interface.JsonReader import JsonReader 
 
 #### Testing the creation of colors
 #Color.testColorCreation()
@@ -15,12 +16,12 @@ from interface.Writer import Writer
 
 
 ##### AND HERE WE MAKE JSON 
-c = Color(rgb = [13, 0, 255])
-c2 = Color(rgb = [0, 2, 0])
-t = Tag(0)
-t.setType(Type.HIGH)
-t.setMainColor(c)
-t.setSecondaryColor(c2)
+# c = Color(rgb = [13, 0, 255])
+# c2 = Color(rgb = [0, 2, 0])
+# t = Tag(0)
+# t.setType(Type.HIGH)
+# t.setMainColor(c)
+#t.setSecondaryColor(c2)
 
 # data = jsonpickle.encode(t)
 # print(data)
@@ -36,4 +37,9 @@ t.setSecondaryColor(c2)
 # file_object = open('../out/data.json', 'a')
 # file_object.write("\n"+data)
 
-Writer.outputTagAsJson(t)
+#Writer.outputTagAsJson(t)
+
+
+
+##### READING THE OUTPUT FILE
+JsonReader.readOutputFile(verbalOutput=True)
