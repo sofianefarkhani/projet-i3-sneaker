@@ -8,7 +8,7 @@ class JsonReader:
         '''Reads the json data in the output file.
         
         To change the file read, you can input the desired file path.
-        Returns the list of tags stored in the outpu file.'''
+        Returns the list of tags stored in the output file.'''
         
         file_object = open(inputFilePath, 'r')
         lines = file_object.readlines()
