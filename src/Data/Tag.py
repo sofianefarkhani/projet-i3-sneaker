@@ -34,8 +34,8 @@ class Tag():
     
     ####### GETTERS, SETTERS
     
-    def isComplete(self):
-        return hasattr(self, 'databaseID', 'type', 'mainColor')
+    def isComplete(self) :
+        return (hasattr(self, 'databaseID') and hasattr(self, 'type') and hasattr(self, 'mainColor'))
     
     def hasSecondaryColor(self):
         return hasattr(self, 'secondaryColor')
