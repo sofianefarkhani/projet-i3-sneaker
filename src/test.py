@@ -42,4 +42,13 @@ from interface.JsonReader import JsonReader
 
 
 ##### READING THE OUTPUT FILE
-JsonReader.readOutputFile(verbalOutput=True)
+#JsonReader.readOutputFile(verbalOutput=True)
+
+
+
+
+
+
+
+
+

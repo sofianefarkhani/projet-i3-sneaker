@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 import cv2
 class Loader :
+    '''The loader loads images and keeps them ready to use for any class that would request them.'''
+    
     def __init__(self, readMode):
         if readMode == 'l':
             self.__img = cv2.imread('img/test/sneaker1.jpeg')
