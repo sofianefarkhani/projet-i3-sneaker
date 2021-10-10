@@ -93,7 +93,9 @@ class Loader :
     def getFirstImg():
         '''Returns the first available image in the list of loaded images.'''
         if len(Loader.__images)>0: return Loader.__images.pop(0)
-    
+        elif(Loader.endOfServiceOnNextNoImage):
+            Loader.endService()
+        else: return None
     
     
     # def showImage(self):

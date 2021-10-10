@@ -8,6 +8,7 @@ from interface.Writer import Writer
 from colorDetector.ColorDetector import ColorDetector
 from sneakerExtractor.ShoeExtractor import ShoeExtractor
 from typeDetector.TypeDetector import TypeDetector
+from preprocess.ImagePreprocessor import ImagePreprocessor
 
 from Data.Tag import Tag
 from Data.Color import Color
@@ -38,12 +39,15 @@ class BlackBox:
         images = Loader.getImages(True);
         for img in images:
             
-            if img is None: continue
+            if img is None and not Loader.endOfService: 
+                continue
+            elif Loader.endOfService:
+                return
             
-            shoeImg = ShoeExtractor.extractShoeFromImage(img)
+            shoeImg = ShoeExtractor.extractShoeFromImage(ImagePreprocessor.preprocessForShoeExtraction(img))
             
-            (mainColor, secondaryColor) = ColorDetector.detectColorsOf(shoeImg)
-            typeOfShoe = TypeDetector.detectTypeOfShoe(shoeImg)
+            (mainColor, secondaryColor) = ColorDetector.detectColorsOf(ImagePreprocessor.preprocessForColorsIdentification(shoeImg))
+            typeOfShoe = TypeDetector.detectTypeOfShoe(ImagePreprocessor.preprocessForTypeIdentification(shoeImg))
             
             tag = Tag(0) # yeah temporary id for now we don't care too much about that
             
