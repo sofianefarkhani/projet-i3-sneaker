@@ -8,6 +8,8 @@ from json import JSONEncoder
 import jsonpickle
 from interface.Writer import Writer
 from interface.JsonReader import JsonReader 
+from interface.Loader import Loader
+import cv2
 
 #### Testing the creation of colors
 #Color.testColorCreation()
@@ -18,10 +20,10 @@ from interface.JsonReader import JsonReader
 ##### AND HERE WE MAKE JSON 
 # c = Color(rgb = [13, 0, 255])
 # c2 = Color(rgb = [0, 2, 0])
-# t = Tag(0)
-# t.setType(Type.HIGH)
-# t.setMainColor(c)
-#t.setSecondaryColor(c2)
+# tag = Tag(0)
+# tag.setType(Type.HIGH)
+# tag.setMainColor(c)
+# tag.setSecondaryColor(c2)
 
 # data = jsonpickle.encode(t)
 # print(data)
@@ -37,7 +39,7 @@ from interface.JsonReader import JsonReader
 # file_object = open('../out/data.json', 'a')
 # file_object.write("\n"+data)
 
-#Writer.outputTagAsJson(t)
+# Writer.outputTagAsJson(tag)
 
 
 
@@ -49,6 +51,15 @@ from interface.JsonReader import JsonReader
 
 
 
+##### Test loading of images
+## images are loaded as we need them. 
 
-
+def showImage(img):
+    cv2.imshow("img", img)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+    
+images = Loader.getImages(talking=True);
+for img in images:
+    showImage(img)
 
