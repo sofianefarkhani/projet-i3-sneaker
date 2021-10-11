@@ -1,4 +1,5 @@
 
+from typing import List
 from Data.BasicColors import ColorEnum
 import json
 
@@ -14,7 +15,7 @@ class Color():
     
     
     
-    def __init__(self, name:str=None, rgb:list[int]=None):
+    def __init__(self, name:str=None, rgb:List[int]=None):
         '''Creates a color.
         
             -If only given the color's name, will create the RGB code from the corresponding color in BasicColors(Enum).
