@@ -86,9 +86,15 @@ class Loader :
         Loader.endServiceWhenNoMoreImages()
         
             
-            
-            
-            
+    def getImgAtIndex(index:int=0):
+        '''A method is to get a specific image.''' 
+        if index < 0:
+            print ('Unable to have an index <0')
+            return
+        if index > len(Loader.__images):
+            print ('Index too big')
+            return
+        return Loader.__images[index]
     
     def getFirstImg():
         '''Returns the first available image in the list of loaded images.'''
