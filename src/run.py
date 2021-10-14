@@ -8,9 +8,6 @@ from multiprocessing import Process
 from Task import Task
 import time
 
-# bb1 = BlackBox(testMode = True)
-# bb2 = BlackBox(testMode = True)
-# bb1.startComputation()
 
 if __name__ == '__main__':
     # Establish communication queues
