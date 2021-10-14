@@ -8,16 +8,13 @@ from enum import Enum
 from interface.Writer import Writer
 from Data.Color import Color
 
-def ColorExist(ColorName:str):
-    for C in ColorEnum:
-        if C.name == ColorName:
-            return True
-    return False
-
-
 continued = True
-while(continued):
 
+
+    
+
+
+while(continued):
     print("\nAdd some datas - Press 1") 
     print("Modify some datas - Press 2")
     print("Get some informations about an image - Press 3")
@@ -62,7 +59,7 @@ while(continued):
                 if choiceColorPrincipal == "NONE" : 
                     colorsFirst = None
                     boucleColorPrincipal = False
-                elif not ColorExist(choiceColorPrincipal):
+                elif not ColorEnum.colorExist(choiceColorPrincipal):
                     print("Your color isn't in our database")
                     print("If you change to change the color - Press 1")
                     print("If you want to add the color - Press 2")
@@ -105,7 +102,7 @@ while(continued):
                 if choiceColorsecond == "NONE" : 
                     colorsSecond = None
                     boucleColorSecondaire = False
-                elif not ColorExist(choiceColorsecond):
+                elif not ColorEnum.colorExist(choiceColorsecond):
                     print("Your color isn't in our database")
                     print("If you change to change the color - Press 1")
                     print("If you want to add the color - Press 2")
@@ -192,4 +189,7 @@ while(continued):
         continued = False
     else:
         print("Your choice doesn't exist... Choose something else...\n")
+    
+    
+    
     

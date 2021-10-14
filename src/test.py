@@ -71,13 +71,19 @@ def showImage(img):
 ##### Test image loading for menu
 # print (str(MenuImageLoader.loadImages()))
 
-# static loading
-"""
-print ('static loading')
-for img in MenuImageLoader.loadImages(debugMode=True):
-    showImage(img.img)
-"""
+# print ('static loading')
+# for img in MenuImageLoader.loadImages(debugMode=True):
+#     showImage(img.img)
 
-print ('dynamic loading')
-for img in MenuImageLoader.loadImagesButDynamically(debugMode=True):
-    showImage(img.img)
+
+# print ('dynamic loading')
+# for img in MenuImageLoader.loadImagesButDynamically(debugMode=True):
+#     showImage(img.img)
+
+
+
+
+from menu2 import Menu
+menu = Menu()
+
+menu.executeInstructions()
