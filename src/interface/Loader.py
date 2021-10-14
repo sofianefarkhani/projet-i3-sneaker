@@ -3,6 +3,7 @@
 from typing import Generator
 import cv2
 from threading import Lock
+from interface.ConfigLoader import ConfigLoader
 
 
 class Loader :
@@ -24,7 +25,7 @@ class Loader :
     
     idOfNextImageToLoad = 1
     
-    imgBatchSize = 2
+    imgBatchSize = ConfigLoader.getVariable('loader', 'batchSize')
     """The number of images to load at once."""
     reloadNumber = 1
     """When we reach this number of loaded images or less, we try to load more."""

@@ -1,0 +1,9 @@
+
+
+
+
+
+
+loader:
+    batchSize: 4      # how many images should the loader load at once in the system
+
