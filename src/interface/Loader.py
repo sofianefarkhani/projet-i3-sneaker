@@ -42,7 +42,7 @@ class Loader :
         
         #while the application still runs, be ready to give images. (to one thread at a time though.)
         while not Loader.endOfService:
-            with Loader.critical_function_lock:                                     #this part here should only be accessible to one thread at a time
+            with Loader.critical_function_lock:          #this part here should only be accessible to one thread at a time
                 if not Loader.endOfServiceOnNextNoImage and len(Loader.__images)<Loader.reloadNumber: #if we have not loaded all existing images and there are not many loaded images left
                     Loader.loadImages()
                 
