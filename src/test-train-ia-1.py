@@ -1,6 +1,3 @@
-# A file to test anything you need in the moment.
-
-
 import numpy
 from tensorflow.keras import layers
 from Data.Color import Color
@@ -21,7 +18,6 @@ from tensorflow.keras.layers import MaxPool2D
 from tensorflow.keras.layers import Flatten
 from tensorflow.keras.layers import Dropout
 
-from tensorflow.keras.datasets import cifar10
 
 IMG_SIZE = 100  # Todo: set and load this in config and not here
 
@@ -80,17 +76,17 @@ input_shape = (IMG_SIZE, IMG_SIZE, 1)
 model = Sequential()
 model.add(Conv2D(32, (5,5), activation='relu', kernel_initializer='he_uniform', input_shape=input_shape))
 model.add(MaxPool2D((5, 5)))
-model.add(Conv2D(64, (5,5), activation='relu'))
-model.add(MaxPool2D((5, 5)))
+# model.add(Conv2D(64, (5,5), activation='relu'))
+# model.add(MaxPool2D((5, 5)))
 
-model.add(Conv2D(32, (5,5), activation='relu'))
-model.add(MaxPool2D((5, 5)))
-model.add(Conv2D(64, (5,5), activation='relu'))
-model.add(MaxPool2D((5, 5)))
-model.add(Conv2D(32, (5,5), activation='relu'))
-model.add(MaxPool2D((5, 5)))
-model.add(Conv2D(64, (5,5), activation='relu'))
-model.add(MaxPool2D((5, 5)))
+# model.add(Conv2D(32, (5,5), activation='relu'))
+# model.add(MaxPool2D((5, 5)))
+# model.add(Conv2D(64, (5,5), activation='relu'))
+# model.add(MaxPool2D((5, 5)))
+# model.add(Conv2D(32, (5,5), activation='relu'))
+# model.add(MaxPool2D((5, 5)))
+# model.add(Conv2D(64, (5,5), activation='relu'))
+# model.add(MaxPool2D((5, 5)))
 
 
 model.add(Flatten())
@@ -99,7 +95,7 @@ model.add(Dropout(0.8))
 model.add(Dense(2, activation='softmax'))
 
 # define loss and optimizer
-model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 # fit the model
 model.fit(x_train, y_train, epochs=10, batch_size=128, verbose=0)
 
