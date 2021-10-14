@@ -1,7 +1,7 @@
 
 
 import cv2
-from TaskType import TaskType
+from Data.TaskType import TaskType
 
 from interface.Loader import Loader
 from interface.Writer import Writer
@@ -15,7 +15,6 @@ from Data.Tag import Tag
 from Data.Color import Color
 from Data.Type import Type
 import multiprocessing
-from TaskType import TaskType
 
 class BlackBox(multiprocessing.Process):
     '''The BlackBox coordinates all the image dealings and the extraction of the values.
