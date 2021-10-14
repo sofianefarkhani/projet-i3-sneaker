@@ -5,6 +5,14 @@ from Data.Tag import Tag
 from menuPkg.MenuImageLoader import MenuImageLoader
 from Data.BasicColors import ColorEnum
 from enum import Enum
+from interface.Writer import Writer
+from Data.Color import Color
+
+def ColorExist(ColorName:str):
+    for C in ColorEnum:
+        if C.name == ColorName:
+            return True
+    return False
 
 
 continued = True
@@ -50,11 +58,11 @@ while(continued):
                 print("You didn't enter any color...")
                 continue
             else:
-                choiceColorPrincipal.upper
+                choiceColorPrincipal = choiceColorPrincipal.upper()
                 if choiceColorPrincipal == "NONE" : 
                     colorsFirst = None
                     boucleColorPrincipal = False
-                elif choiceColorPrincipal not in ColorEnum:
+                elif not ColorExist(choiceColorPrincipal):
                     print("Your color isn't in our database")
                     print("If you change to change the color - Press 1")
                     print("If you want to add the color - Press 2")
@@ -78,6 +86,10 @@ while(continued):
                     else:
                         print("This choice doesn't exist...")
                         continue
+                else:
+                    print("Your color is already in our database")
+                    colorsFirst = Color(str(choiceColorPrincipal))
+                    boucleColorPrincipal = False
 
         #Récup la couleur secondaire
         boucleColorSecondaire = True
@@ -89,11 +101,11 @@ while(continued):
                 print("You didn't enter any color...")
                 continue
             else:
-                choiceColorsecond.upper
+                choiceColorsecond = choiceColorsecond.upper()
                 if choiceColorsecond == "NONE" : 
                     colorsSecond = None
                     boucleColorSecondaire = False
-                elif choiceColorsecond not in ColorEnum:
+                elif not ColorExist(choiceColorsecond):
                     print("Your color isn't in our database")
                     print("If you change to change the color - Press 1")
                     print("If you want to add the color - Press 2")
@@ -117,6 +129,13 @@ while(continued):
                     else:
                         print("This choice doesn't exist...")
                         continue
+                else:
+                    print("Your color is already in our database")
+                    colorsSecond = Color(str(choiceColorsecond))
+                    boucleColorSecondaire = False
+        
+        newTag = Tag(indexLastLine+1, choiceType, colorsFirst, colorsSecond)
+        Writer.outputTagAsJson(newTag, "../out/testData.json")
 
     elif(choice == 2):
         print("You chose option 2")
