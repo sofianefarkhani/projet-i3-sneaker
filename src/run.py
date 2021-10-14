@@ -7,7 +7,15 @@ import multiprocessing
 from multiprocessing import Process
 from Task import Task
 import time
+from interface.ConfigLoader import ConfigLoader
 
+
+def calcNbProcessus():
+    request = ConfigLoader.getVariable('runConfig', 'nbProcess')
+    if request == 'default':
+        return multiprocessing.cpu_count() -1
+    else:
+        return request
 
 if __name__ == '__main__':
     # Establish communication queues
@@ -15,7 +23,7 @@ if __name__ == '__main__':
     results = multiprocessing.Queue()
     
     # Start consumers
-    num_processes = multiprocessing.cpu_count() -1
+    num_processes = calcNbProcessus()
     print ('Creating %d consumers' % num_processes)
     consumers = [ BlackBox(tasks, testMode = True) for i in range(num_processes) ]
     for bb in consumers:

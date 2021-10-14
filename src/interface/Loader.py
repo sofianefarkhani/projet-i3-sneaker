@@ -26,9 +26,9 @@ class Loader :
     idOfNextImageToLoad = 1
     
     imgBatchSize = ConfigLoader.getVariable('loader', 'batchSize')
-    """The number of images to load at once."""
-    reloadNumber = 1
-    """When we reach this number of loaded images or less, we try to load more."""
+    reloadNumber = ConfigLoader.getVariable('loader', 'reloadNumber')
+    
+    localImgSrc = ConfigLoader.getVariable('loader', 'localImgSrc')
     
     critical_function_lock = Lock()
     '''A thread.Lock to stop multiple threads from accessing the same part of the code at once.'''
@@ -74,12 +74,12 @@ class Loader :
         
         imgSuffix = '.png'
         if number<=0: return;
-        while (image := cv2.imread('../img/test/'+str(Loader.idOfNextImageToLoad)+imgSuffix)) is not None:
+        while (image := cv2.imread(Loader.localImgSrc+str(Loader.idOfNextImageToLoad)+imgSuffix)) is not None:
             Loader.__images.append(image)
             number -= 1
             Loader.idOfNextImageToLoad += 1
             
-            if Loader.talking : print('    - Loaded '+ '../img/test/'+str(Loader.idOfNextImageToLoad)+imgSuffix)
+            if Loader.talking : print('    - Loaded '+ Loader.localImgSrc+str(Loader.idOfNextImageToLoad)+imgSuffix)
             
             if number==0: return
             

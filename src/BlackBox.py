@@ -16,6 +16,9 @@ from Data.Color import Color
 from Data.Type import Type
 import multiprocessing
 from TaskType import TaskType
+from interface.ConfigLoader import ConfigLoader
+
+
 
 class BlackBox(multiprocessing.Process):
     '''The BlackBox coordinates all the image dealings and the extraction of the values.
@@ -83,7 +86,7 @@ class BlackBox(multiprocessing.Process):
         
         if self.testMode:
             print('New data written in the test output file.')
-            Writer.outputTagAsJson(tag, '../out/testData.json')
+            Writer.outputTagAsJson(tag, ConfigLoader.getVariable('output', 'testData'))
         else:
             Writer.outputTagAsJson(tag)
         
