@@ -3,3 +3,5 @@ tensorflow
 keras
 jsonpickle
 sciPy
+jsonpickle
+PyYAML

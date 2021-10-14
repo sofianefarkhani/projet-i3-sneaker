@@ -3,7 +3,7 @@
 import json
 from Data.Tag import Tag
 import jsonpickle
-
+from interface.ConfigLoader import ConfigLoader
 class Writer(json.JSONEncoder):
     '''The Writer writes JSON. 
     
@@ -15,7 +15,7 @@ class Writer(json.JSONEncoder):
     #     raise ValueError("Writer take only Tags object, your object is not Tags")
     #     return json.JSONEncoder.json_convert(self, obj)
         
-    def outputTagAsJson(tag:Tag, outputFilePath:str='../out/data.json'):
+    def outputTagAsJson(tag:Tag, outputFilePath:str=ConfigLoader.getVariable('output', 'data')):
         '''Writes the given tag under the Json format in the output file: ../out/data.json .
         
         Checks if the tag is complete first. 
