@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
+from typing import Generator
 import cv2
 from threading import Lock
 
@@ -46,15 +47,15 @@ class Loader :
                 if not Loader.endOfServiceOnNextNoImage and len(Loader.__images)<Loader.reloadNumber: #if we have not loaded all existing images and there are not many loaded images left
                     Loader.loadImages()
                 
-                try:
+                if len(Loader.__images)!=0:
                     if talking : print('There are '+str(len(Loader.__images))+' loaded images in store: i\'ll give you one')
                     yield Loader.getFirstImg();
-                except: 
+                else:
                     print("No more images in store for now, returning None instead")
                     if Loader.endOfServiceOnNextNoImage:
                         Loader.endService()
                     yield None
-            
+        
             
     
     
