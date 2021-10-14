@@ -72,9 +72,11 @@ def showImage(img):
 # print (str(MenuImageLoader.loadImages()))
 
 # static loading
+"""
 print ('static loading')
 for img in MenuImageLoader.loadImages(debugMode=True):
     showImage(img.img)
+"""
 
 print ('dynamic loading')
 for img in MenuImageLoader.loadImagesButDynamically(debugMode=True):

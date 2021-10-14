@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import jsonpickle
 from Data.Tag import Tag
+from menuPkg.MenuImageLoader import MenuImageLoader
 
 
 continued = True
@@ -17,7 +18,7 @@ while(continued):
     """
 
     print("Option 2 - Taper 2") #Modifier les data d'une image
-    print("Avoir les informations d'une image - Taper 3") #Montrer des informations des images -> lis le json, cherche les data de cette image
+    print("Avoir les informations d'une image - Taper 3")
     print("Quitter le menu - Taper 4")
 
     choice = int(input("Que voulez-vous faire ? \n"))
@@ -67,22 +68,14 @@ while(continued):
                 print("Ce choix n'existe pas\n")
         
         if(hasId):
-            file_object = open("../out/testData.json", 'r')
-            lines = file_object.readlines()
-            tagList = []
-            for line in lines:
-                print(line)
-                object = jsonpickle.decode(line)
-                if object.databaseID == idImage:
-                    print("Test valide")
-                else:
-                    print("L'id que vous avez donné n'existe pas...")
-            
+            theTag = MenuImageLoader.loadImageById(idImage)
+            print(theTag.toString())
+            continue    
         elif(hasName):
             print("on a le nom\n")
             continue
         else:
-            print("Vous n'avez aucun informations pour avoir accès aux données...\n")
+            print("Vous n'avez aucunes informations pour avoir accès aux données...\n")
             continue
 
     elif(choice == 4):

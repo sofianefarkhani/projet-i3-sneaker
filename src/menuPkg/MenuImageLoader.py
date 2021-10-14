@@ -4,6 +4,7 @@ from os import listdir
 from os.path import isfile, join
 from Data.Image import Image
 import cv2
+from interface.JsonReader import JsonReader
 
 class MenuImageLoader:
     '''A class that loads a table of images for the menu. Simple enough.'''
@@ -53,4 +54,15 @@ class MenuImageLoader:
                 print(image.toString(1))
             yield image
     
-    
+    def loadImageById(idImage:int):
+        tagList = JsonReader.readOutputFile("../out/testData.json")
+        for tag in tagList:
+            if(tag.databaseID == idImage):
+                image = Image(cv2.imread(join("../img/train/trainingTestImages/" + str(idImage) +".png")), ("../img/train/trainingTestImages/" + str(idImage) +".png"), idImage, str(idImage))
+                cv2.imshow("Image",image.img)
+                cv2.waitKey(0)
+                cv2.destroyAllWindows()
+                return image
+            else:
+                print("Your id isn't in the database")
+                break
