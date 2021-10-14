@@ -12,7 +12,7 @@ from interface.Loader import Loader
 import cv2
 
 from Data.Image import Image
-from menu.MenuImageLoader import MenuImageLoader
+from menuPkg.MenuImageLoader import MenuImageLoader
 
 #### Testing the creation of colors
 #Color.testColorCreation()
