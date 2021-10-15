@@ -13,9 +13,7 @@ c1:
         p: you chose 2
     a: _ASK_
 
-    c3:
-        disp: choix 3
-        p: you chose 3
+    
     c4:
         disp: choix 4
         p: you chose 4
@@ -27,7 +25,9 @@ c:
     disp: Choix 2 (c)
 
 c3:
-     disp: Choix 3 (c3)
+    disp: print vars
+    p: here are the menu vars
+    a: showVars
 
 
 a: _ASK_

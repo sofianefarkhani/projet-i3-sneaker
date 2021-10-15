@@ -11,6 +11,17 @@ from interface.Writer import Writer
 from Data.Color import Color
 import yaml
 
+
+class KontrollerClass:
+    def __init__(self, module, className):
+        self.module = module
+        self.className = className
+        
+    def getKontroller(self):
+        mod = __import__(self.module, fromlist=[self.className])
+        return getattr(mod, self.className)
+
+
 class MenuContext:
     def __init__(self, path, setOfInstructions):
         self.path = path
@@ -34,9 +45,14 @@ class AnswerType:
 class Menu:
     ##### Constructor
     
-    def __init__(self, file='menuPkg/mainMenuChoices.yaml', controllerPath='menuPkg/MenuController.py'):
+    def __init__(self, controllerKlass, file='menuPkg/mainMenuChoices.yaml'):
         self.file = file
-        self.controller = controllerPath
+        self.kontroller = controllerKlass.getKontroller()
+        self.vars = {
+            'controllerModule' : controllerKlass.module,
+            'controllerClassName' : controllerKlass.className
+        }
+        
         with open(self.file) as f:
             allInstructions = yaml.load(f, Loader=yaml.FullLoader)
             self.executeInstructions(MenuContext([], allInstructions)) # launches the menu at its root
@@ -125,9 +141,15 @@ class Menu:
                     choices = []
                     canExit = True
                     
-                if context.instructions[i] == "_LOOP_":
+                elif context.instructions[i] == "_LOOP_":
                     if not context.closeMenu: # if we have not asked to exit the menu yet, we loop it
                         self.executeInstructions(context)
+                
+                else: # we want to launch a method from the controller 
+                    methodName = context.instructions[i]
+                    method = getattr(self.kontroller, methodName)
+                    method(self.vars)
+                        
                         
             elif i=='set' and context.instructions[i] =="_NOEXIT_":
                 canExit=False
