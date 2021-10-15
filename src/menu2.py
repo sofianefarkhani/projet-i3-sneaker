@@ -12,14 +12,6 @@ from Data.Color import Color
 import yaml
 
 
-class KontrollerClass:
-    def __init__(self, module, className):
-        self.module = module
-        self.className = className
-        
-    def getKontroller(self):
-        mod = __import__(self.module, fromlist=[self.className])
-        return getattr(mod, self.className)
 
 
 class MenuContext:
@@ -45,12 +37,10 @@ class AnswerType:
 class Menu:
     ##### Constructor
     
-    def __init__(self, controllerKlass, file='menuPkg/mainMenuChoices.yaml'):
+    def __init__(self, file='menuPkg/mainMenuChoices.yaml'):
         self.file = file
-        self.kontroller = controllerKlass.getKontroller()
         self.vars = {
-            'controllerModule' : controllerKlass.module,
-            'controllerClassName' : controllerKlass.className
+            'yamlFile' : self.file
         }
         
         with open(self.file) as f:
@@ -116,6 +106,12 @@ class Menu:
                         
             if i == 'disp': continue # we don't care about disp, it is not an instruction to execute
             
+            elif i == 'controllerModule':
+                self.vars['controllerModule'] = context.instructions[i]
+                
+            elif i == 'controllerClass':
+                self.vars['controllerClass'] = context.instructions[i]
+            
             elif i[0] == 'p': # this is asking for a prompt
                 self.consolePrint (str(context.instructions[i]), context.path)
 
@@ -146,8 +142,10 @@ class Menu:
                         self.executeInstructions(context)
                 
                 else: # we want to launch a method from the controller 
+                    mod = __import__(self.vars['controllerModule'], fromlist=[self.vars['controllerClass']])
+                    klass = getattr(mod, self.vars['controllerClass'])
                     methodName = context.instructions[i]
-                    method = getattr(self.kontroller, methodName)
+                    method = getattr(klass, methodName)
                     method(self.vars)
                         
                         

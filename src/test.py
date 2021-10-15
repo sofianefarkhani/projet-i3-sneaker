@@ -84,10 +84,8 @@ def showImage(img):
 
 
 from menu2 import Menu
-from menu2 import KontrollerClass
 
-k = KontrollerClass('menuPkg.MenuController', 'MenuController')
-menu = Menu(k, 'menuPkg/testMenu.yaml')
+menu = Menu('menuPkg/testMenu.yaml')
 
 
 # from menuPkg.MenuController import MenuController
@@ -99,8 +97,8 @@ menu = Menu(k, 'menuPkg/testMenu.yaml')
 #         mod = getattr(mod, comp)
 #     return mod
 
-mod = __import__('menuPkg.MenuController', fromlist=['MenuController'])
-klass = getattr(mod, 'MenuController')
+# mod = __import__('menuPkg.MenuController', fromlist=['MenuController'])
+# klass = getattr(mod, 'MenuController')
 
-method = getattr(klass, "doSmtg")
-result = method("heyo")
+# method = getattr(klass, "doSmtg")
+# result = method("heyo")
