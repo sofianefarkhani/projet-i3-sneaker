@@ -83,7 +83,7 @@ def showImage(img):
 
 
 
-from menu2 import Menu
+from menuPkg.Menu import Menu
 
 menu = Menu('menuPkg/testMenu.yaml')
 
