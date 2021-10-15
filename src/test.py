@@ -84,6 +84,4 @@ def showImage(img):
 
 
 from menu2 import Menu
-menu = Menu()
-
-menu.executeInstructions()
+menu = Menu('menuPkg/testMenu.yaml')

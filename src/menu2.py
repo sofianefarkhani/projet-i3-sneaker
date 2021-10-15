@@ -11,131 +11,47 @@ from interface.Writer import Writer
 from Data.Color import Color
 import yaml
 
+class MenuContext:
+    def __init__(self, path, setOfInstructions):
+        self.path = path
+        self.instructions = setOfInstructions
+        self.closeMenu = False
 
-class Menu: 
-    
+class Choice:
+    def __init__(self, choiceName, choiceIndex, linkedInstructions):
+        self.choiceName = choiceName
+        self.index = choiceIndex
+        self.linkedInstructions = linkedInstructions
+        
+    def toString(self):
+        return str(self.index)+': '+str(self.linkedInstructions['disp'])
+
+class AnswerType:
+    EXIT_REQUEST = 0
+    CHOOSE = 1
+    KEEP_GOING = 2
+
+class Menu:
     ##### Constructor
     
     def __init__(self, file='menuPkg/mainMenuChoices.yaml', controllerPath='menuPkg/MenuController.py'):
         self.file = file
-        self.closeMenu = False
-        self.choices = []
         self.controller = controllerPath
-    
-    
-    
-    ###### PATH UTILITIES
-    
-    def goBack(self, position):
-        self.closeMenu = True
-        if (position == []):
-            self.closeMenu = True
-        else:
-            position = position[:len(position)-1] # remove the last index
-        self.load(position)
-        
-        
-    def goInChoice(self, choiceName, position, instructions):
-        if (choiceName) in instructions:
-            position.append(choiceName)
-            self.load(position)
-            self.executeInstructions(position)
-        else:
-            self.consolePrint('There is no such choice: '+choiceName)
-        
-            
-    
-    def load(self, position):
-        
-        
-        '''Load the instructions in: position'''
         with open(self.file) as f:
-            config = yaml.load(f, Loader=yaml.FullLoader)
-            
-            for instruct in position:
-                config = config[instruct]
-            return config
-
+            allInstructions = yaml.load(f, Loader=yaml.FullLoader)
+            self.executeInstructions(MenuContext([], allInstructions)) # launches the menu at its root
     
-    #### Running the menu
-    def executeInstructions(self, position=[]):
-        if position is None: position = self.position
-        
-        setOfInstructions = self.load(position)
-        
-        indexOfFirstChoice=1
-        choices = []
-        canExit = True
-        
-        for i in setOfInstructions:
-            
-            if self.closeMenu:
-                self.closeMenu = False
-                break
-                        
-            if i == 'disp': continue
-            
-            elif i[0] == 'p': # this is asking for a prompt
-                self.consolePrint (str(setOfInstructions[i]), position)
-
-            elif i[0] == 'c': # this is a new choice
-                if choices==[]: indexOfFirstChoice = int(i[1:])
-                choices.append(setOfInstructions[i])
-
-            elif i[0] == 'a': # this is an action
-                # First, check if it is a default action
-                if setOfInstructions[i] == "_ASK_":
-                    self.ask(choices, indexOfFirstChoice, position, setOfInstructions, canExit)
-                    choices = []
-                    position = position[:len(position)-1]
-                    
-                if setOfInstructions[i] == "_LOOP_":
-                    print ('LOOOOOOP')
-                    if not self.closeMenu:
-                        self.load(position)
-                        self.executeInstructions(position)
-                    else:
-                        self.closeMenu=False
-            elif i=='set' and setOfInstructions[i]=="_NOEXIT_":
-                canExit=False
-                
-                
-   
-   
-   
-   
-   
-   
-   
-    # User interaction
     
-    def ask(self, choices, id1, position, instructions, canExit=True):
-        if choices==[]:
-            self.consolePrint('The menu asks me to ask you between no choice, on path: '+str(position), position)
-            self.goInChoice('c1', position, instructions)
-            return 
-        
-        m = "" 
-        i = 0
+    def choiceExists(choices, answer):
         for choice in choices:
-            m += "\n"+str(i+id1) + ": "+str(choice['disp'])
-            i+=1
-        exitId = i+id1
-        if canExit: m+="\n"+str(exitId) + ": Exit"
-        
-        self.consolePrint(m, position)
-        answer = input(self.indent(position)+'Your choice >> ')
-        
-        if int(answer)==exitId and canExit: # he asked to go back
-            self.goBack(position)
-        elif ('c'+answer) in instructions: # if the choice 'c'+answer exists, then execute this part.
-            self.goInChoice('c'+answer, position, instructions)
-        else: # ask again, since he has not understood
-            self.consolePrint('This choice: "'+answer+'" does not exist', position)
-            self.ask(choices, id1, position, instructions, canExit)
-        
-        
-        
+            if answer == str(choice.index):
+                return choice
+        return None
+    
+    def nameOfChoice(choices, answer):
+        for choice in choices:
+            if choice.index == answer: return choice.name
+            
     
     def consolePrint(self, message:str, position):
         indent = self.indent(position)
@@ -146,4 +62,91 @@ class Menu:
         for i in range(len(position)):
             m+='|    '
         return m
+    
+    
+    # User interaction
+    def ask(self, choices, context, canExit=True):
+        # if choices is [], there is still the possibility to ask for the guy to exit
+        while len(choices)!=0 or canExit:
+            m = "" 
+            for choice in choices:
+                m += "\n"+choice.toString()
+            
+            exitIndex = len(choices)+1
+            if canExit: m+="\n"+str(exitIndex) + ": Exit"
+            
+            self.consolePrint(m, context.path)
+            answer = input(self.indent(context.path)+'Your choice >> ')
+            
+            if canExit and int(answer)==exitIndex: # he asked to go back
+                    return (AnswerType.EXIT_REQUEST, None)
+            
+            elif choice := Menu.choiceExists(choices, answer): # if the choice 'c'+answer exists, then execute this part.
+                return (AnswerType.CHOOSE, choice.choiceName)
+            else: # ask again, since he has not understood
+                self.consolePrint('This choice: "'+answer+'" does not exist', context.path)
+                self.consolePrint('Please try giving your choice again:', context.path)
+        
+        
+    
+    #### Running the menu
+    def executeInstructions(self, context:MenuContext):
+        choices = []
+        canExit = True
+        
+        for i in context.instructions:
+            
+            if context.closeMenu: break
+                        
+            if i == 'disp': continue # we don't care about disp, it is not an instruction to execute
+            
+            elif i[0] == 'p': # this is asking for a prompt
+                self.consolePrint (str(context.instructions[i]), context.path)
+
+            elif i[0] == 'c': # this is a new choice
+                choices.append(Choice(i, len(choices)+1, context.instructions[i]))
+
+            elif i[0] == 'a': # this is an action
+                # First, check if it is a default action
+                if context.instructions[i] == "_ASK_":
+                    (answerType, answerData) = self.ask(choices, context, canExit)
+                    
+                    if answerType == AnswerType.EXIT_REQUEST:
+                        break
+                    elif answerType == AnswerType.CHOOSE:
+                        newPath = context.path.copy()
+                        newPath.append(answerData)
+                        newContext = MenuContext(newPath, context.instructions[answerData])
+                        self.executeInstructions(newContext)
+                    
+                    elif answerType != AnswerType.KEEP_GOING: 
+                        print('this line should never appear. Ask esteban for help after he stops crying.')
+                    
+                    choices = []
+                    canExit = True
+                    
+                if context.instructions[i] == "_LOOP_":
+                    if not context.closeMenu: # if we have not asked to exit the menu yet, we loop it
+                        self.executeInstructions(context)
+                        
+            elif i=='set' and context.instructions[i] =="_NOEXIT_":
+                canExit=False
+
+        if len(context.path)==0:
+            print ('Exiting the menu app.')
+                
+                
+   
+   
+   
+   
+   
+   
+   
+    
+        
+    
+    
+    
+
     

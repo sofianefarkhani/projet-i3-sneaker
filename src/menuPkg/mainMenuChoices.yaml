@@ -16,6 +16,8 @@
 # If a set of instructions does not end with a loop, user will be sent back to the set of instructions he came from.
 #
 
+# maybe i'll add a _LOOP_PARENT_ action
+
 
 # p for prompt
 p1: 'Welcome to the menu for image labelling! Please choose one of the following :'
