@@ -37,16 +37,18 @@ class AnswerType:
 class Menu:
     ##### Constructor
     
+    lastReturnedVars = None;
+    
     def __init__(self, file='menuPkg/mainMenuChoices.yaml'):
         self.file = file
         self.vars = {
             'yamlFile' : self.file
         }
-        
         with open(self.file) as f:
             allInstructions = yaml.load(f, Loader=yaml.FullLoader)
             self.executeInstructions(MenuContext([], allInstructions)) # launches the menu at its root
-    
+            print ('Exiting the menu app, its vars can be found in Menu.lastReturnedVars')
+            Menu.lastReturnedVars = self.vars.copy()
     
     def choiceExists(choices, answer):
         for choice in choices:
@@ -61,7 +63,7 @@ class Menu:
     
     def consolePrint(self, message:str, position):
         indent = self.indent(position)
-        print (indent+message.replace('\n', indent))
+        print (indent+str(message).replace('\n', indent))
            
     def indent(self, position):
         m = "\n"
@@ -141,6 +143,9 @@ class Menu:
                     if not context.closeMenu: # if we have not asked to exit the menu yet, we loop it
                         self.executeInstructions(context)
                 
+                elif context.instructions[i] == "_VARS_":
+                    self.consolePrint(self.vars, context.path)
+                
                 else: # we want to launch a method from the controller 
                     mod = __import__(self.vars['controllerModule'], fromlist=[self.vars['controllerClass']])
                     klass = getattr(mod, self.vars['controllerClass'])
@@ -151,9 +156,7 @@ class Menu:
                         
             elif i=='set' and context.instructions[i] =="_NOEXIT_":
                 canExit=False
-
-        if len(context.path)==0:
-            print ('Exiting the menu app.')
+            
                 
                 
    

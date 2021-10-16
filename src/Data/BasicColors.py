@@ -19,5 +19,11 @@ class ColorEnum(Enum):
             if C.name == ColorName.upper():
                 return True
         return False
+    
+    def getColor(name:str):
+        for C in ColorEnum:
+            if C.name == name.upper():
+                return C
+        return None
 
 

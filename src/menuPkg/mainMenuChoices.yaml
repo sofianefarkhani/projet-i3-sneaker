@@ -29,31 +29,35 @@ p1: 'Welcome to the menu for image labelling! Please choose one of the following
 c1: 
     disp: Add some data
 
-    #a for action
-    a: resetCurrentData
-
     #First prompt to ask for the type of shoe
     p1: What type is this shoe? 
+
+    a0: upIndex # keeps track of the last added index in the db 
+    #a: _VARS_
+
     c1: 
         disp: LOW type
-        a: setLowType
+        a: setLowType #a for action
     c2:
         disp: HIGH type
         a: setHighType
-    c3: 
-        disp: i don't know
     
     set: _NOEXIT_
     a1: _ASK_ #a reserved action name: displays the three choices above and lets you choose one.
 
+   
     #second prompt to ask for the main color
     p2: What is the principal color in your shoe ?
+    p22: If you don't want to write it, write none
     a2: chooseMainShoeColor
 
     p3: What is the secondary color in your shoes ?
+    p33: "If you don't want to write it, write none"
     a3: chooseSecondaryShoeColor
     
-    
+    #a6: _VARS_
+    a7: registerTag
+    p: Your new tag has been successfully registered!
 
 c2:
     disp: Modify some data
@@ -69,4 +73,6 @@ c3:
 
 a: _ASK_
 a1: _LOOP_
+
+p: 'Goodbye!'
 
