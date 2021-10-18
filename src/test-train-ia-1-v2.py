@@ -4,8 +4,6 @@ from keras.layers import MaxPooling2D
 from keras.layers import Flatten, Activation, Dropout
 from keras.layers import Dense
 from keras import callbacks
-import os.path
-import jsonpickle
 import pandas
 import json
 
@@ -48,13 +46,19 @@ test_datagen = ImageDataGenerator(
     rescale=1. / 255)
 
 with open('../img/datasetLabelType.json') as json_file:
-    dataframeTraining = json.load(json_file)
+    dataset = json.load(json_file)
 
-dataframeTraining = pandas.DataFrame(data=dataframeTraining)
+ratio = 0.8
+# need randomize the dataset order before separate it in two part
+dataFrameTraining = {'id': dataset['id'][:int(len(dataset['id'])*ratio)], 'label':dataset['label'][:int(len(dataset['label'])*ratio)]}
+dataFrameTest = {'id': dataset['id'][int(len(dataset['id'])*ratio):], 'label':dataset['label'][int(len(dataset['label'])*ratio):]}
+
+dataFrameTraining = pandas.DataFrame(data=dataFrameTraining)
+dataFrameTest = pandas.DataFrame(data=dataFrameTest)
 
 
 trainingSet = train_datagen.flow_from_dataframe(
-    dataframe=dataframeTraining,
+    dataframe=dataFrameTraining,
     directory="../img/test/",
     x_col="id",
     y_col="label",
@@ -65,7 +69,7 @@ trainingSet = train_datagen.flow_from_dataframe(
 
 
 testSet = test_datagen.flow_from_dataframe(
-    dataframe=dataframeTraining,
+    dataframe=dataFrameTest,
     directory="../img/test/",
     x_col="id",
     y_col="label",
@@ -76,7 +80,7 @@ testSet = test_datagen.flow_from_dataframe(
 
 
 model.fit(trainingSet, validation_data=testSet, epochs=5,
-          validation_steps=1000, steps_per_epoch=100)  # set steps_per_epoch = 3000 with real data
+          validation_steps=100, steps_per_epoch=100)  # set steps_per_epoch=3000 and validation_steps=1000 with real data
 
 # """
 # Tensorboard log
