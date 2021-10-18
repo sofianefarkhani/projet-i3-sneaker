@@ -10,6 +10,7 @@ from interface.Writer import Writer
 from interface.JsonReader import JsonReader 
 from interface.Loader import Loader
 import cv2
+from preprocess.BackgroundSuppression import BackgroundSuppression
 
 #### Testing the creation of colors
 #Color.testColorCreation()
@@ -61,5 +62,6 @@ def showImage(img):
     
 images = Loader.getImages(talking=True);
 for img in images:
-    showImage(img)
-
+    imagesNoBg = BackgroundSuppression.replaceBackground(img)
+    for imgPreproc in imagesNoBg:
+        showImage(imgPreproc)
