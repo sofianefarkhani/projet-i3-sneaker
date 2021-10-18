@@ -7,6 +7,7 @@ from keras import callbacks
 import os.path
 import jsonpickle
 import pandas
+import json
 
 from keras.preprocessing.image import ImageDataGenerator
 
@@ -46,10 +47,11 @@ train_datagen = ImageDataGenerator(
 test_datagen = ImageDataGenerator(
     rescale=1. / 255)
 
-# need 
-dataframeTraining = {'id': ["1.png", "2.png", "3.png", "4.png", "5.png", "6.png", "7.png", "8.png", "9.png"],
-             'label': ["LOW", "HIGH", "LOW", "HIGH", "LOW", "HIGH", "LOW", "HIGH", "LOW"]}
+with open('../img/datasetLabelType.json') as json_file:
+    dataframeTraining = json.load(json_file)
+
 dataframeTraining = pandas.DataFrame(data=dataframeTraining)
+
 
 trainingSet = train_datagen.flow_from_dataframe(
     dataframe=dataframeTraining,
@@ -62,29 +64,34 @@ trainingSet = train_datagen.flow_from_dataframe(
     class_mode='binary')
 
 
-
-testSet = test_datagen.flow_from_directory(
-    '../img/test',
+testSet = test_datagen.flow_from_dataframe(
+    dataframe=dataframeTraining,
+    directory="../img/test/",
+    x_col="id",
+    y_col="label",
     target_size=(64, 64),
     batch_size=32,
     color_mode="grayscale",
     class_mode='binary')
 
-"""
-Tensorboard log
-"""
 
-log_dir = 'tf_log'
-tb_cb = callbacks.TensorBoard(log_dir=log_dir, histogram_freq=0)
-cbks = [tb_cb]
+model.fit(trainingSet, validation_data=testSet, epochs=5,
+          validation_steps=1000, steps_per_epoch=100)  # set steps_per_epoch = 3000 with real data
 
-# If the CNN weight model already exists make predictions
-if os.path.isfile("weights.h5") & os.path.isfile("model.h5"):
-    print("CNN Weight and models already exists, make the predictions")
-# Else Load the data and store the CNN weight model
-else:
-    model.fit(trainingSet, validation_data=testSet, epochs=5,
-              callbacks=cbks, validation_steps=1000, steps_per_epoch=3000)
+# """
+# Tensorboard log
+# """
+# log_dir = 'tf_log'
+# tb_cb = callbacks.TensorBoard(log_dir=log_dir, histogram_freq=0)
+# cbks = [tb_cb]
 
-    model.save("model.h5")
-    model.save_weights('weights.h5', overwrite=True)
+# # If the CNN weight model already exists make predictions
+# if os.path.isfile("weights.h5") & os.path.isfile("model.h5"):
+#     print("CNN Weight and models already exists, make the predictions")
+# # Else Load the data and store the CNN weight model
+# else:
+#     model.fit(trainingSet, validation_data=testSet, epochs=5,
+#               callbacks=cbks, validation_steps=1000, steps_per_epoch=3)
+
+#     model.save("model.h5")
+#     model.save_weights('weights.h5', overwrite=True)
