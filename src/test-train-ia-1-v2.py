@@ -5,6 +5,8 @@ from keras.layers import Flatten, Activation, Dropout
 from keras.layers import Dense
 from keras import callbacks
 import os.path
+import jsonpickle
+import pandas
 
 from keras.preprocessing.image import ImageDataGenerator
 
@@ -39,18 +41,29 @@ train_datagen = ImageDataGenerator(
     shear_range=0.2,
     zoom_range=0.2,
     horizontal_flip=True
-    )
+)
 
 test_datagen = ImageDataGenerator(
     rescale=1. / 255)
 
-training_set = train_datagen.flow_from_directory(
-    '../img/test',
+# need 
+dataframeTraining = {'id': ["1.png", "2.png", "3.png", "4.png", "5.png", "6.png", "7.png", "8.png", "9.png"],
+             'label': ["LOW", "HIGH", "LOW", "HIGH", "LOW", "HIGH", "LOW", "HIGH", "LOW"]}
+dataframeTraining = pandas.DataFrame(data=dataframeTraining)
+
+trainingSet = train_datagen.flow_from_dataframe(
+    dataframe=dataframeTraining,
+    directory="../img/test/",
+    x_col="id",
+    y_col="label",
     target_size=(64, 64),
     batch_size=32,
     color_mode="grayscale",
     class_mode='binary')
-test_set = test_datagen.flow_from_directory(
+
+
+
+testSet = test_datagen.flow_from_directory(
     '../img/test',
     target_size=(64, 64),
     batch_size=32,
@@ -65,18 +78,13 @@ log_dir = 'tf_log'
 tb_cb = callbacks.TensorBoard(log_dir=log_dir, histogram_freq=0)
 cbks = [tb_cb]
 
-# Part 3 - If the CNN weight model already exists make predictions
+# If the CNN weight model already exists make predictions
 if os.path.isfile("weights.h5") & os.path.isfile("model.h5"):
     print("CNN Weight and models already exists, make the predictions")
-# Part 3 - Else Load the data and store the CNN weight model
+# Else Load the data and store the CNN weight model
 else:
-    # model.fit_generator(training_set,
-    #                     steps_per_epoch=3000,
-    #                     epochs=5,
-    #                     validation_data=test_set,
-    #                     callbacks=cbks,
-    #                     validation_steps=1000)
-    model.fit(training_set, validation_data=test_set, epochs=5, callbacks=cbks, validation_steps=1000, steps_per_epoch=3000)
+    model.fit(trainingSet, validation_data=testSet, epochs=5,
+              callbacks=cbks, validation_steps=1000, steps_per_epoch=3000)
 
     model.save("model.h5")
     model.save_weights('weights.h5', overwrite=True)

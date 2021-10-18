@@ -5,3 +5,4 @@ jsonpickle
 sciPy
 jsonpickle
 PyYAML
+pandas
