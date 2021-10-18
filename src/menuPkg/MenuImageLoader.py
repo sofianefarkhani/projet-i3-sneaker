@@ -54,6 +54,7 @@ class MenuImageLoader:
                 print(image.toString(1))
             yield image
     
+    #enlever la fonction quand l'ancien menu sera supprimé
     def loadImageById(idImage:int):
         tagList = JsonReader.readOutputFile("../out/testData.json")
         for tag in tagList:

@@ -5,7 +5,7 @@ class Type(Enum):
     HIGH = 1
     
     
-    def getType(name):
+    def getType(name:str):
         for t in Type:
             if t.name == name.upper():
                 return t

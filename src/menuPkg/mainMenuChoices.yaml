@@ -61,14 +61,24 @@ c1:
 
 c2:
     disp: Modify some data
-    p: You chose option 2
-
-
+    p1: Do you have the ID of the image? 
+    c1: 
+        disp: Enter the ID
+        a: enterIdOfImageModify
+    c2: 
+        disp: You don't have the ID
+    a: _ASK_
     
 c3:
     disp: Get some informations about an image
-    p1: Do you have the ID of the image? Enter a number, or 'no'
-    a: enterIdOfImage
+
+    p1: Do you have the ID of the image? 
+    c1: 
+        disp: Enter the ID
+        a: enterIdOfImage
+    c2: 
+        disp: You don't have the ID
+    a: _ASK_
     
 
 a: _ASK_
