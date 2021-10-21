@@ -56,10 +56,7 @@ class Loader :
                     if Loader.endOfServiceOnNextNoImage:
                         Loader.endService()
                     yield None
-        
-            
-    
-    
+     
     def loadImages(number:int=None):
         '''A method that is here to load some test images.
         
@@ -87,6 +84,7 @@ class Loader :
         if Loader.talking : print('No more images in database to load')
         Loader.endServiceWhenNoMoreImages()
     
+     
     def getFirstImg():
         '''Returns the first available image in the list of loaded images.'''
         if len(Loader.__images)>0: return Loader.__images.pop(0)
@@ -94,12 +92,6 @@ class Loader :
             Loader.endService()
         else: return None
     
-    
-    # def showImage(self):
-    #     cv2.imshow("Img",self.__img)
-    #     cv2.waitKey(0)
-    #     cv2.destroyAllWindows()
-
     def endService():
         '''Terminates the Loader.getImages() method for all threads using it.'''
         Loader.endOfService = True

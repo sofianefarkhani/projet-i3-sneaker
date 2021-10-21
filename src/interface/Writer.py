@@ -26,7 +26,9 @@ class Writer(json.JSONEncoder):
         With love, 
         
         Esteban'''
-        if not tag.isComplete(): return
+        if not tag.isComplete(): 
+            print('THIS TAG IS INCOMPLETE AND WILL NOT BE REGISTERED')
+            return
         data = jsonpickle.encode(tag)
         file_object = open(outputFilePath, 'a')
         file_object.write("\n"+data)

@@ -1,0 +1,120 @@
+Author of this framework of horrors: Esteban Aragon.
+    If you wanna complain to him about how he should've never bothered, think first about his feelings. 
+
+
+Hey a bit of documentation on this menu framework.
+
+
+
+1) CREATE A MENU:
+
+    Creating a menu and launching it is done through only one line of code:
+
+    from menuPkg.Menu import Menu
+    menu = Menu('PATH_OF_YAML_FILE.yaml')
+
+    A menu has a set of global variables: self.vars, which is a dictionnary. More on that in section 3)3).
+    On closing the menu completely, this set is stored as a class variable: Menu.lastReturnedVars
+
+
+2) YAML FILE:
+
+    The yaml file of the menu contains its instructions.
+    They will be read in order, from top to bottom, one indentation level at a time. 
+
+    For exemple, in the following menu:
+
+    |   c1:
+    |       disp: Choix 1
+    |       c11:
+    |           disp: choix 11
+    |       a11: _ASK_
+    |   c2:
+    |       disp: choix 2
+    |       c22:
+    |           disp: choix 22
+    |       a22: _ASK_
+    |   a1: _ASK_
+
+    the instructions executed will be: 
+    1) c1
+    2) c2
+    3) a1
+    And now if the user chooses c1, the menu will execute:
+    1) disp
+    2) c11
+    3) a11
+
+
+    This way, it is easy to see which choices bring you where.
+
+
+
+3) INSTRUCTIONS
+
+    To make a menu run, multiple instructions are possible.
+    Some use keywords, some use the first letter of the instruction to be detected.
+
+
+    1) KEYWORDS
+
+        The instructions that use keywords are:
+        
+            - controllerModule  : it gives the menu the path to its controller's module.
+            - controllerClass   : it gives the menu the name of its controller class.
+            - set               : it gives certain attributes to the currently running menu page.
+                    -> set: _NOEXIT_     removes the option to exit the choices on the next time we ask for user input.
+            - disp              : gives the choice it is placed into its name. 
+    
+
+    2) NO KEYWORDS
+
+        The instructions that don't use keywords are: 
+
+            - p : prints something in for the user to see.
+            - c : registers a choice for the next time we require some user input.
+            - a : executes an action. More on that in the section "3)3) Actions".
+
+            Those instructions can have any name that isn't a keyword and starts by the letter.
+            For exemple, 'c', 'c1', 'cALPHA', and 'c1554' are all possible ways to register a choice.
+    
+
+    3) ACTIONS
+
+        To execute an action, as we have seen previously, we use the 'a' instruction.
+
+
+        1) DEFAULT ACTIONS
+            In order to make easier the use of the menu, some of these are implemented by default.
+            These default actions are: 
+
+                a: _ASK_
+                    Presents the user with the choices declared right before this line.
+                    If there was a 'set: _NOEXIT_' before, there will not be an option to exit this page.
+
+                a: _LOOP_
+                    The current menu page will loop until the user asks to exit.  
+                    When we exit, we go back in the indentation of the menus.
+
+                a: _VARS_
+                    Prints the menu global variables.
+                    These variables include: 
+                        the path to the yaml file (yamlFile), 
+                        the module of the controller,  
+                        the class name of the controller. 
+
+
+        2) CUSTOM ACTIONS
+
+            When we wanna do something a bit more complicated, we will need a custom action.
+
+            To create one, we first need to register a controller, using the 'controllerModule' and 'controllerClass' instructions
+                (see section '3)1) Keywords')
+
+            This controller class will contain ONLY STATIC METHODS. 
+            Each method in the controller class will take EXACTLY ONE PARAMETER: vars, the global variables of the menu.
+
+            You can then do what you want with the variables stored in there. You can also modify them, and they will change in the rest of the menu.
+
+
+And that's all :D

@@ -11,3 +11,19 @@ class ColorEnum(Enum):
     AQUA  = [0, 255, 255]
     FUSCHIA = [255, 0, 255]
     YELLOW = [255, 255, 0]
+    
+    
+    
+    def colorExist(ColorName:str):
+        for C in ColorEnum:
+            if C.name == ColorName.upper():
+                return True
+        return False
+    
+    def getColor(name:str):
+        for C in ColorEnum:
+            if C.name == name.upper():
+                return C
+        return None
+
+
