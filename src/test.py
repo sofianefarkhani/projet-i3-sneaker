@@ -55,12 +55,12 @@ from menuPkg.Menu import Menu
 
 ##### Test loading of images
 ## images are loaded as we need them. 
-"""
+
 def showImage(img):
     cv2.imshow("img", img)
     cv2.waitKey(0)
-    cv2.destroyAllWindows()
-"""    
+    cv2.destroyAllWindows()  
+
 # images = Loader.getImages(talking=True);
 #for img in images:
 #     showImage(img)
@@ -72,10 +72,10 @@ def showImage(img):
 # ConfigLoader.getVariable('mysql', 'other', 'tbeau')
 
 #BackgroundSuppression.testMaskColor()
-images = Loader.getImages(talking=True);
-for img in images:
-    imagesNoBg = BackgroundSuppression.replaceBackground(img)
-    for imgPreproc in imagesNoBg:
-        showImage(imgPreproc)
+#images = Loader.getImages(talking=True);
+#for img in images:
+#    imagesNoBg = BackgroundSuppression.replaceBackground(img)
+#    for imgPreproc in imagesNoBg:
+#        showImage(imgPreproc)
 
 menu = Menu()
