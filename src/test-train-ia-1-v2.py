@@ -4,29 +4,24 @@ from keras.layers import MaxPooling2D
 from keras.layers import Flatten, Activation, Dropout
 from keras.layers import Dense
 from keras import callbacks
-import pandas
-import json
-
-from keras.preprocessing.image import ImageDataGenerator
-
-from interface.JsonReader import JsonReader
+from getDatasetTrainingIA import getDataseTrainingIA
 
 model = Sequential()
 
-# Step 1 - Convolution
+# Convolution
 model.add(Conv2D(32, (3, 3), input_shape=(64, 64, 1)))
 model.add(Activation("relu"))
-# Step 2 - Pooling
+# Pooling
 model.add(MaxPooling2D(pool_size=(2, 2)))
 # Adding a second convolutional layer
 model.add(Conv2D(32, (3, 3)))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Activation("relu"))
 model.add(MaxPooling2D(pool_size=(2, 2)))
-# Step 3 - Flattening
+# Flattening
 model.add(Flatten())
 
-# Step 4 - Full connection
+# Full connection
 model.add(Dense(units=128, activation='relu'))
 model.add(Dense(units=1, activation='softmax'))
 model.add(Activation("relu"))
@@ -36,59 +31,7 @@ model.compile(optimizer='adam', loss='binary_crossentropy',
               metrics=['accuracy'])
 model.summary()
 
-# Part 2 - Fitting the CNN to the images
-train_datagen = ImageDataGenerator(
-    rescale=1. / 255,
-    shear_range=0.2,
-    zoom_range=0.2,
-    horizontal_flip=True
-)
-
-test_datagen = ImageDataGenerator(
-    rescale=1. / 255)
-
-# with open('../img/datasetLabelType.json') as json_file:
-#     dataset = json.load(json_file)
-
-(imagesNames, imagesLabels) = JsonReader.getDataForIATypeTraining(typeAsString=True)
-dataset = {
-    'id' : imagesNames,
-    'label': imagesLabels
-} 
-print(dataset['id'])
-input('press enter to see labels >>')
-print(dataset['label'])
-
-
-ratio = 0.8
-# need randomize the dataset order before separate it in two part
-dataFrameTraining = {'id': dataset['id'][:int(len(dataset['id'])*ratio)], 'label':dataset['label'][:int(len(dataset['label'])*ratio)]}
-dataFrameTest = {'id': dataset['id'][int(len(dataset['id'])*ratio):], 'label':dataset['label'][int(len(dataset['label'])*ratio):]}
-
-dataFrameTraining = pandas.DataFrame(data=dataFrameTraining)
-dataFrameTest = pandas.DataFrame(data=dataFrameTest)
-
-
-trainingSet = train_datagen.flow_from_dataframe(
-    dataframe=dataFrameTraining,
-    directory="../img/test/",
-    x_col="id",
-    y_col="label",
-    target_size=(64, 64),
-    batch_size=32,
-    color_mode="grayscale",
-    class_mode='binary')
-
-
-testSet = test_datagen.flow_from_dataframe(
-    dataframe=dataFrameTest,
-    directory="../img/test/",
-    x_col="id",
-    y_col="label",
-    target_size=(64, 64),
-    batch_size=32,
-    color_mode="grayscale",
-    class_mode='binary')
+(trainingSet, testSet) = getDataseTrainingIA(target_size=(64, 64), ratio=0.8)
 
 
 model.fit(trainingSet, validation_data=testSet, epochs=5,
