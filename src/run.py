@@ -15,7 +15,8 @@ if __name__ == '__main__':
     results = multiprocessing.Queue()
     
     # Start consumers
-    num_processes = multiprocessing.cpu_count() -1
+    # num_processes = multiprocessing.cpu_count() -1
+    num_processes = 1
     print ('Creating %d consumers' % num_processes)
     consumers = [ BlackBox(tasks, testMode = True) for i in range(num_processes) ]
     for bb in consumers:

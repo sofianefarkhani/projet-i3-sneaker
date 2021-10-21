@@ -10,6 +10,7 @@ from interface.Writer import Writer
 from interface.JsonReader import JsonReader 
 from interface.Loader import Loader
 import cv2
+from colorDetector.ColorDetector import ColorDetector
 
 #### Testing the creation of colors
 #Color.testColorCreation()
@@ -54,12 +55,15 @@ import cv2
 ##### Test loading of images
 ## images are loaded as we need them. 
 
-def showImage(img):
-    cv2.imshow("img", img)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+# def showImage(img):
+#     cv2.imshow("img", img)
+#     cv2.waitKey(0)
+#     cv2.destroyAllWindows()
     
-images = Loader.getImages(talking=True);
-for img in images:
-    showImage(img)
+# images = Loader.getImages(talking=True);
+# for img in images:
+#     showImage(img)
 
+image = cv2.imread('../img/test/1.png')
+
+ColorDetector.detectColorsOf(image)
