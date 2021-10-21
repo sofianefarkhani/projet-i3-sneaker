@@ -86,11 +86,6 @@ class Loader :
         # if we reach this point, there are no more images to load in the database.
         if Loader.talking : print('No more images in database to load')
         Loader.endServiceWhenNoMoreImages()
-        
-            
-            
-            
-            
     
     def getFirstImg():
         '''Returns the first available image in the list of loaded images.'''
