@@ -18,6 +18,13 @@ from tensorflow.keras.layers import MaxPool2D
 from tensorflow.keras.layers import Flatten
 from tensorflow.keras.layers import Dropout
 
+# 
+# 
+# OLD FILE ONLY TO KEEP SOME INFO TO TEST WITH IA
+# 
+# 
+# 
+
 
 IMG_SIZE = 100  # Todo: set and load this in config and not here
 
