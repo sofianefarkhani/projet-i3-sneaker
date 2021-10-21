@@ -9,6 +9,8 @@ import json
 
 from keras.preprocessing.image import ImageDataGenerator
 
+from interface.JsonReader import JsonReader
+"""
 model = Sequential()
 
 # Step 1 - Convolution
@@ -44,10 +46,20 @@ train_datagen = ImageDataGenerator(
 
 test_datagen = ImageDataGenerator(
     rescale=1. / 255)
+""" 
+# with open('../img/datasetLabelType.json') as json_file:
+#     dataset = json.load(json_file)
 
-with open('../img/datasetLabelType.json') as json_file:
-    dataset = json.load(json_file)
+(imagesNames, imagesLabels) = JsonReader.getDataForIATypeTraining(typeAsString=True)
+dataset = {
+    'id' : imagesNames,
+    'label': imagesLabels
+} 
+print(dataset['id'])
+input('press enter to see labels >>')
+print(dataset['label'])
 
+"""
 ratio = 0.8
 # need randomize the dataset order before separate it in two part
 dataFrameTraining = {'id': dataset['id'][:int(len(dataset['id'])*ratio)], 'label':dataset['label'][:int(len(dataset['label'])*ratio)]}
