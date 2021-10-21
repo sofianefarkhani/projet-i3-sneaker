@@ -3,6 +3,8 @@
 
 import cv2
 import numpy as np
+from interface.ConfigLoader import ConfigLoader
+import ast
 
 class BackgroundSuppression:
 
@@ -11,9 +13,9 @@ class BackgroundSuppression:
     __CANNY_THRESH_2 = 20
     __MASK_DILATE_ITER = 10
     __MASK_ERODE_ITER = 10
-    __MASK_COLOR = [(0.0,0.0,1.0),(1.0,0.0,0.0), (0.0,1.0,0.0)]
 
     def replaceBackground(image):
+        __MASK_COLOR = ConfigLoader.getVariable('background')
         imagesNoBg = []
         if image is not None:
             gray = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
@@ -46,8 +48,8 @@ class BackgroundSuppression:
             mask_stack  = mask_stack.astype('float32') / 255.0          # Use float matrices, 
             image         = image.astype('float32') / 255.0                 #  for easy blending
 
-            for i in range(3):
-                masked = (mask_stack * image) + ((1-mask_stack) * BackgroundSuppression.__MASK_COLOR[i])
+            for key in __MASK_COLOR:
+                masked = (mask_stack * image) + ((1-mask_stack) * ast.literal_eval(__MASK_COLOR[key]))
                 imagesNoBg.append((masked * 255).astype('uint8'))
          # Blend
         return imagesNoBg

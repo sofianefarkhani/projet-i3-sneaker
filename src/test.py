@@ -68,15 +68,14 @@ def showImage(img):
 
 
 #### TEST CONFIG CLASS
-"""
-from interface.ConfigLoader import ConfigLoader
-ConfigLoader.getVariable('mysql', 'other', 'tbeau')
+#from interface.ConfigLoader import ConfigLoader
+# ConfigLoader.getVariable('mysql', 'other', 'tbeau')
 
+#BackgroundSuppression.testMaskColor()
 images = Loader.getImages(talking=True);
 for img in images:
     imagesNoBg = BackgroundSuppression.replaceBackground(img)
     for imgPreproc in imagesNoBg:
         showImage(imgPreproc)
-"""
 
 menu = Menu()
