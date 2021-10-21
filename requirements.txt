@@ -6,3 +6,4 @@ sciPy
 jsonpickle
 PyYAML
 pandas
+matplotlib

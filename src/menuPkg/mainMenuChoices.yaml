@@ -1,24 +1,4 @@
 
-
-#
-# this file represents the menu questions and the choices that follow. 
-#   'p': print a message, 
-#   'c': add a possible choice
-#   'disp': declare the name of the choice, 
-#   'a': declare an action to do
-#
-# There are some default actions:
-#   'a: _ASK_' : This presents the user with the choices declared right before this line.
-#   'a: _LOOP_': This loops the present set of instructions
-#
-# And a reserved marker: 
-#   'set: _NOEXIT_': on the next 'a: _ASK_', no exit option will be displayed.
-# If a set of instructions does not end with a loop, user will be sent back to the set of instructions he came from.
-#
-
-# maybe i'll add a _LOOP_PARENT_ action
-
-
 controllerModule: menuPkg.MenuController
 controllerClass: MenuController
 
@@ -27,7 +7,7 @@ p1: 'Welcome to the menu for image labelling! Please choose one of the following
 
 # c for choice
 c1: 
-    disp: Add some data
+    disp: Add some data (Full tag with colors and shoe type)
 
     #First prompt to ask for the type of shoe
     p1: What type is this shoe? 
@@ -58,6 +38,35 @@ c1:
     #a6: _VARS_
     a7: registerTag
     p: Your new tag has been successfully registered!
+
+c4:
+    disp: 'Add data on images: presence of shoe, shoe type'
+
+    p: Please look at the image and close it afterwards
+    a: displayImage
+
+    p1: Was there a shoe? 
+    c1: 
+        disp: Yep
+        a: setShoePresenceTrue
+        p1: What was its type then ? 
+        c1: 
+            disp: LOW
+            a1: setShoeTypeLow
+        c2: 
+            disp: HIGH
+            a1: setShoeTypeHigh
+        set: _NOEXIT_
+        a2: _ASK_
+    c2: 
+        disp: No...
+        a: setShoePresenceFalse
+    
+    a1: _ASK_
+    p22: registering your input...
+    a2: registerTrainData
+    p2: data registered!
+    a3: _LOOP_
 
 c2:
     disp: Modify some data

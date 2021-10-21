@@ -59,10 +59,10 @@ from menuPkg.Menu import Menu
 ##### Test loading of images
 ## images are loaded as we need them. 
 
-def showImage(img):
-    cv2.imshow("img", img)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()  
+# def showImage(img):
+#     cv2.imshow("img", img)
+#     cv2.waitKey(0)
+#     cv2.destroyAllWindows()  
 
 # images = Loader.getImages(talking=True);
 #for img in images:
@@ -81,4 +81,4 @@ def showImage(img):
 #    for imgPreproc in imagesNoBg:
 #        showImage(imgPreproc)
 
-#menu = Menu()
+menu = Menu()

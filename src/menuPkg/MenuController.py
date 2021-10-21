@@ -1,13 +1,20 @@
 from Data.BasicColors import ColorEnum
 from Data.Color import Color
 from Data.Tag import Tag
+from Data.TrainDataElement import TrainDataElement
 from Data.Type import Type
 from interface.Writer import Writer
 import jsonpickle
 import cv2
 from interface.JsonReader import JsonReader
 from Data.Image import Image
+import os
 from os.path import isfile, join
+from interface.ConfigLoader import ConfigLoader
+from menuPkg.MenuImageLoader import MenuImageLoader
+from PyQt5.QtWidgets import QApplication, QWidget, QLabel
+from PyQt5.QtGui import QIcon, QPixmap
+
 
 class MenuController:
     
@@ -186,3 +193,32 @@ class MenuController:
             file_object.truncate()
             for line in everything:
                 file_object.write(line)
+        
+        
+    #### PART TO CONTROL THE ADDITION OF DATA FOR TRAINING 
+    def displayImage(vars):
+        if 'trainImageList' not in vars:
+            vars['trainImageList']=MenuImageLoader.loadImages()
+        image = vars['trainImageList'].pop()
+        vars['imageName'] = image.name
+        cv2.imshow("Label me", image.img)
+        cv2.waitKey(0)
+        
+
+    def setShoePresenceTrue(vars):
+        vars['shoePresence'] = True           
+                
+    def setShoePresenceFalse(vars):
+        vars['shoePresence'] = False 
+        
+        
+    def setShoeTypeLow(vars):
+        vars['typeT'] = Type.LOW
+    
+    def setShoeTypeHigh(vars):
+        vars['typeT'] = Type.HIGH
+    
+    def registerTrainData(vars):
+        if not ('typeT' in vars): vars['typeT'] = None
+        tde = TrainDataElement(vars['imageName'], vars['shoePresence'], vars['typeT'])
+        Writer.outputTagAsJson(tde, ConfigLoader.getVariable('input', 'shoeTypeTrainData'))
