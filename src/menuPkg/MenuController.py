@@ -138,10 +138,9 @@ class MenuController:
                 cv2.imshow("Image",image.img)
                 cv2.waitKey(0)
                 cv2.destroyAllWindows()
-                return image
-            else:
-                print("Your id isn't in the database")
-                break
+                print(tag.type, " " ,tag.mainColor.toString(), " " ,tag.secondaryColor.toString())
+                return image    
+        print("Your id isn't in the database")
 
     def enterIdOfImageModify(vars) :
         idImageModify = int(input("Enter the ID : "))

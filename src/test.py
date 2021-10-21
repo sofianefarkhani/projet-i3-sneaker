@@ -11,6 +11,7 @@ from interface.JsonReader import JsonReader
 from interface.Loader import Loader
 import cv2
 from preprocess.BackgroundSuppression import BackgroundSuppression
+from menuPkg.Menu import Menu
 
 #### Testing the creation of colors
 #Color.testColorCreation()
@@ -54,12 +55,12 @@ from preprocess.BackgroundSuppression import BackgroundSuppression
 
 ##### Test loading of images
 ## images are loaded as we need them. 
-
+"""
 def showImage(img):
     cv2.imshow("img", img)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
-    
+"""    
 # images = Loader.getImages(talking=True);
 #for img in images:
 #     showImage(img)
@@ -67,6 +68,7 @@ def showImage(img):
 
 
 #### TEST CONFIG CLASS
+"""
 from interface.ConfigLoader import ConfigLoader
 ConfigLoader.getVariable('mysql', 'other', 'tbeau')
 
@@ -75,3 +77,6 @@ for img in images:
     imagesNoBg = BackgroundSuppression.replaceBackground(img)
     for imgPreproc in imagesNoBg:
         showImage(imgPreproc)
+"""
+
+menu = Menu()
