@@ -27,7 +27,9 @@ from menuPkg.Menu import Menu
 # tag.setType(Type.HIGH)
 # tag.setMainColor(c)
 # tag.setSecondaryColor(c2)
-
+#c = Color('black')
+#c2 = Color('mediumblue')
+#print(c2.toString())
 # data = jsonpickle.encode(t)
 # print(data)
 

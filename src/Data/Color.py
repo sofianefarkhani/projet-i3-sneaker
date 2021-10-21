@@ -33,14 +33,7 @@ class Color():
             raise ValueError('Please give me an rgb List of length 3, and not '+str(len(rgb))+", like you just did.")
         
         elif (rgb is None):
-            for color in ColorEnum:
-                if color.name == name:
-                    self.name = name
-                    self.rgb = color.value
-                    return
-                
-            if not hasattr(self, 'name'):
-                raise ValueError('The default color '+name+' does not exist. How very sad.')
+            self.name, self.rgb = ColorEnum.getColorByName(name)
         
         elif (name is None):
             maxDivergence = 1

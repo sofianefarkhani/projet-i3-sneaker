@@ -1,5 +1,6 @@
 from enum import Enum
 import matplotlib.colors as mcolors
+import numpy as np
 
 class ColorEnum(Enum):
     '''Each ColorEnum is represented by the name of the color in uppercase, and has for value the rgb representation of the color.'''
@@ -40,7 +41,14 @@ class ColorEnum(Enum):
             if generalDif<maxDivergence:
                 maxDivergence = generalDif
                 decidedC = color;
-        
         return decidedC
+
+    def getColorByName(name:str):
+        for color in mcolors.CSS4_COLORS:
+            if color.upper() == name.upper():
+                return (name, np.multiply(mcolors.to_rgb(color),255))
+            
+        raise ValueError('The default color '+name+' does not exist. How very sad.')
+
 
 
