@@ -20,6 +20,7 @@ class JsonReader:
         if verbalOutput: print('decoding '+str(len(lines))+" objects:")
         
         for line in lines:
+            if line == "":continue
             object = jsonpickle.decode(line) #OBJECT IS ALREADY A TAG
             if verbalOutput: print('    '+str(object.toString()))
             tagList.append(object)

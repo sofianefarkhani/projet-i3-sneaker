@@ -1,0 +1,37 @@
+
+controllerModule: menuPkg.MenuController
+controllerClass: MenuController
+
+
+
+p: main page
+
+c1:
+    disp: Test Choices
+    c1:
+        disp: choix 1
+        p: you chose 1
+    c2:
+        disp: choix 2
+        p: you chose 2
+    a: _ASK_
+
+    
+    c4:
+        disp: choix 4
+        p: you chose 4
+    set: _NOEXIT_
+    a2: _ASK_
+
+
+c:
+    disp: Choix 2 (c)
+
+c3:
+    disp: print vars
+    p: here are the menu vars
+    a: showVars
+
+
+a: _ASK_
+a2: _LOOP_

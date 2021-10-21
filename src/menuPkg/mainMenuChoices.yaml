@@ -1,0 +1,88 @@
+
+
+#
+# this file represents the menu questions and the choices that follow. 
+#   'p': print a message, 
+#   'c': add a possible choice
+#   'disp': declare the name of the choice, 
+#   'a': declare an action to do
+#
+# There are some default actions:
+#   'a: _ASK_' : This presents the user with the choices declared right before this line.
+#   'a: _LOOP_': This loops the present set of instructions
+#
+# And a reserved marker: 
+#   'set: _NOEXIT_': on the next 'a: _ASK_', no exit option will be displayed.
+# If a set of instructions does not end with a loop, user will be sent back to the set of instructions he came from.
+#
+
+# maybe i'll add a _LOOP_PARENT_ action
+
+
+controllerModule: menuPkg.MenuController
+controllerClass: MenuController
+
+# p for prompt
+p1: 'Welcome to the menu for image labelling! Please choose one of the following :'
+
+# c for choice
+c1: 
+    disp: Add some data
+
+    #First prompt to ask for the type of shoe
+    p1: What type is this shoe? 
+
+    a0: upIndex # keeps track of the last added index in the db 
+    #a: _VARS_
+
+    c1: 
+        disp: LOW type
+        a: setLowType #a for action
+    c2:
+        disp: HIGH type
+        a: setHighType
+    
+    set: _NOEXIT_
+    a1: _ASK_ #a reserved action name: displays the three choices above and lets you choose one.
+
+   
+    #second prompt to ask for the main color
+    p2: What is the principal color in your shoe ?
+    p22: If you don't want to write it, write none
+    a2: chooseMainShoeColor
+
+    p3: What is the secondary color in your shoes ?
+    p33: "If you don't want to write it, write none"
+    a3: chooseSecondaryShoeColor
+    
+    #a6: _VARS_
+    a7: registerTag
+    p: Your new tag has been successfully registered!
+
+c2:
+    disp: Modify some data
+    p1: Do you have the ID of the image? 
+    c1: 
+        disp: Enter the ID
+        a: enterIdOfImageModify
+    c2: 
+        disp: You don't have the ID
+    a: _ASK_
+    
+c3:
+    disp: Get some informations about an image
+
+    p1: Do you have the ID of the image? 
+    c1: 
+        disp: Enter the ID
+        a: enterIdOfImage
+    c2: 
+        disp: You don't have the ID
+    a: _ASK_
+    
+
+a: _ASK_
+a1: _LOOP_
+
+p: 'Goodbye!'
+
