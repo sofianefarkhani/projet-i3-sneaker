@@ -20,8 +20,9 @@ from menuPkg.Menu import Menu
 
 
 ##### AND HERE WE MAKE JSON 
-# c = Color(rgb = [13, 0, 255])
-# c2 = Color(rgb = [0, 2, 0])
+#c = Color(rgb = [13, 0, 255])
+#c = Color(rgb = [0, 2, 0])
+#print(c.toString())
 # tag = Tag(0)
 # tag.setType(Type.HIGH)
 # tag.setMainColor(c)
@@ -78,4 +79,4 @@ def showImage(img):
 #    for imgPreproc in imagesNoBg:
 #        showImage(imgPreproc)
 
-menu = Menu()
+#menu = Menu()

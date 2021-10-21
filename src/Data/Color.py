@@ -44,24 +44,12 @@ class Color():
         
         elif (name is None):
             maxDivergence = 1
-            decidedC = None
-            for color in ColorEnum: #search for the basic color closest to the given rgb code. 
-                rc = color.value[0]
-                gc = color.value[1]
-                bc = color.value[2]
-                
-                difRc = abs(rc-rgb[0])/255.0
-                difGc = abs(gc-rgb[1])/255.0
-                difBc = abs(bc-rgb[2])/255.0
-                generalDif = (difRc+difGc+difBc)/3 #the divergence measured between the two colors, measured in [0,1]
-                if generalDif<maxDivergence:
-                    maxDivergence = generalDif
-                    decidedC = color;
+            decidedC = ColorEnum.getClosestColorByRGB(rgb[0],rgb[1], rgb[2])
             
             if decidedC is None:
                 raise ValueError("Hey you just got an exception you should've never had :D call Esteban")
             else:
-                self.name = decidedC.name
+                self.name = decidedC
                 self.rgb = rgb
         else:
             self.rgb = rgb

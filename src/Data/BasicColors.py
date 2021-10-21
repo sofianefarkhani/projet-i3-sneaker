@@ -1,4 +1,5 @@
 from enum import Enum
+import matplotlib.colors as mcolors
 
 class ColorEnum(Enum):
     '''Each ColorEnum is represented by the name of the color in uppercase, and has for value the rgb representation of the color.'''
@@ -10,8 +11,7 @@ class ColorEnum(Enum):
     GRAY  = [128, 128, 128]
     AQUA  = [0, 255, 255]
     FUSCHIA = [255, 0, 255]
-    YELLOW = [255, 255, 0]
-    
+    YELLOW = [255, 255, 0]    
     
     
     def colorExist(ColorName:str):
@@ -25,5 +25,22 @@ class ColorEnum(Enum):
             if C.name == name.upper():
                 return C
         return None
+
+    def getClosestColorByRGB(r, g, b):
+        maxDivergence = 1
+        for color in mcolors.CSS4_COLORS: #search for the basic color closest to the given rgb code. 
+            rc = mcolors.to_rgb(color)[0]*255.0
+            gc = mcolors.to_rgb(color)[1]*255.0
+            bc = mcolors.to_rgb(color)[2]*255.0
+            
+            difRc = abs(rc-r)/255.0
+            difGc = abs(gc-g)/255.0
+            difBc = abs(bc-b)/255.0
+            generalDif = (difRc+difGc+difBc)/3 #the divergence measured between the two colors, measured in [0,1]
+            if generalDif<maxDivergence:
+                maxDivergence = generalDif
+                decidedC = color;
+        
+        return decidedC
 
 
