@@ -1,9 +1,3 @@
-from keras.models import Sequential
-from keras.layers import Conv2D
-from keras.layers import MaxPooling2D
-from keras.layers import Flatten, Activation, Dropout
-from keras.layers import Dense
-from keras import callbacks
 import pandas
 from keras.preprocessing.image import ImageDataGenerator
 from interface.JsonReader import JsonReader
