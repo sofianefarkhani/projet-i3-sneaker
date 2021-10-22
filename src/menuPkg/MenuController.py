@@ -12,9 +12,7 @@ import os
 from os.path import isfile, join
 from interface.ConfigLoader import ConfigLoader
 from menuPkg.MenuImageLoader import MenuImageLoader
-from PyQt5.QtWidgets import QApplication, QWidget, QLabel
-from PyQt5.QtGui import QIcon, QPixmap
-
+from trainAI.baseTrainAI import trainAIV1
 
 class MenuController:
     
@@ -222,3 +220,8 @@ class MenuController:
         if not ('typeT' in vars): vars['typeT'] = None
         tde = TrainDataElement(vars['imageName'], vars['shoePresence'], vars['typeT'])
         Writer.outputTagAsJson(tde, ConfigLoader.getVariable('input', 'shoeTypeTrainData'))
+        
+        
+        
+    def aiTrain(vars):
+        trainAIV1()

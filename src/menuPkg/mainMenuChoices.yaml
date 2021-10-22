@@ -39,7 +39,7 @@ c1:
     a7: registerTag
     p: Your new tag has been successfully registered!
 
-c4:
+c2:
     disp: 'Add data on images: presence of shoe, shoe type'
 
     p: Please look at the image and close it afterwards
@@ -68,7 +68,7 @@ c4:
     p2: data registered!
     a3: _LOOP_
 
-c2:
+c3:
     disp: Modify some data
     p1: Do you have the ID of the image? 
     c1: 
@@ -78,7 +78,7 @@ c2:
         disp: You don't have the ID
     a: _ASK_
     
-c3:
+c4:
     disp: Get some informations about an image
 
     p1: Do you have the ID of the image? 
@@ -88,7 +88,11 @@ c3:
     c2: 
         disp: You don't have the ID
     a: _ASK_
-    
+
+c5: 
+    disp: Launch type AI training
+    a: aiTrain
+
 
 a: _ASK_
 a1: _LOOP_

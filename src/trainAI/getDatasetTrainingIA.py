@@ -1,7 +1,7 @@
 import pandas
 from keras.preprocessing.image import ImageDataGenerator
 from interface.JsonReader import JsonReader
-
+from interface.ConfigLoader import ConfigLoader
 
 def getDataseTrainingIA(target_size=(64, 64), ratio=0.8):
     # Fitting the CNN to the images
@@ -33,9 +33,12 @@ def getDataseTrainingIA(target_size=(64, 64), ratio=0.8):
     dataFrameTraining = pandas.DataFrame(data=dataFrameTraining)
     dataFrameTest = pandas.DataFrame(data=dataFrameTest)
 
+    import os
+    print("##############################  "+str(os.getcwd())) 
+    
     trainingSet = train_datagen.flow_from_dataframe(
         dataframe=dataFrameTraining,
-        directory="../img/test/",
+        directory=ConfigLoader.getVariable('input', 'trainingImagesFolder'),
         x_col="id",
         y_col="label",
         target_size=target_size,
@@ -45,7 +48,7 @@ def getDataseTrainingIA(target_size=(64, 64), ratio=0.8):
 
     testSet = test_datagen.flow_from_dataframe(
         dataframe=dataFrameTest,
-        directory="../img/test/",
+        directory=ConfigLoader.getVariable('input', 'trainingImagesFolder'),
         x_col="id",
         y_col="label",
         target_size=target_size,

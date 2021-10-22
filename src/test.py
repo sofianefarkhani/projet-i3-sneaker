@@ -82,3 +82,6 @@ from menuPkg.Menu import Menu
 #        showImage(imgPreproc)
 
 menu = Menu()
+
+# from trainAI.baseTrainAI import trainAIV1
+# trainAIV1()
