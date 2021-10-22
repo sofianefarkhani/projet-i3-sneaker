@@ -31,7 +31,7 @@ def trainAIV1():
     model.compile(optimizer='adam', loss='binary_crossentropy',
                 metrics=['accuracy'])
     model.summary()
-
+    
     (trainingSet, testSet) = getDataseTrainingIA(target_size=(64, 64), ratio=0.8)
 
 
