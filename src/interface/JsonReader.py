@@ -47,12 +47,16 @@ class JsonReader:
         types = []
         
         for tde in storedTDE:
+            if not tde.isThereAShoe: continue
             if not typeAsString:
                 types.append(tde.shoeType)
             else: 
                 types.append(tde.shoeType.name)
             imgs.append(tde.imageName)
         
+        print ('######################################################################################')
+        print (types)
+        print ('######################################################################################')
         return (imgs, types)
             
         

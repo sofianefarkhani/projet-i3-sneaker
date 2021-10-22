@@ -33,8 +33,9 @@ def getDataseTrainingIA(target_size=(64, 64), ratio=0.8):
     dataFrameTraining = pandas.DataFrame(data=dataFrameTraining)
     dataFrameTest = pandas.DataFrame(data=dataFrameTest)
 
-    import os
-    print("##############################  "+str(os.getcwd())) 
+    # import os
+    # print("##############################  "+str(os.getcwd())) 
+    
     
     trainingSet = train_datagen.flow_from_dataframe(
         dataframe=dataFrameTraining,
