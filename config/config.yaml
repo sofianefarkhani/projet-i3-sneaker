@@ -9,10 +9,11 @@ runConfig:
                             # -> 'auto'  auto adjusts the number of processes in accordance with the number of tasks
                             # -> any strictly positive number: sets the number of processes to this number.
     
-    talkative: 
+    talkative:              # all these options are for console messages with print()
         processes: False    # to see the messages of the processes starting/ending
         ias:       False    # to see the messages of the processing happening in each Blackbox. 
-        loader:    False
+        loader:    False    # to see the messages of the loader
+        
 output:
     data: ../out/data.json          # the output for image tags
     testData: ../out/testData.json  # the output file where we dump stuff that does not really matter, when we test stuff

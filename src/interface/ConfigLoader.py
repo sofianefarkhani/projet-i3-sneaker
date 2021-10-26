@@ -9,8 +9,6 @@ class ConfigLoader:
         varPathAsString = ""
         for var in varPath: varPathAsString+="/"+var
         
-        print (varPath)
-        
         if varPathAsString in ConfigLoader.lastLoadedVars:
             return ConfigLoader.lastLoadedVars[varPathAsString]
         else: 
