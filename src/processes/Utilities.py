@@ -25,6 +25,8 @@ class Utilities:
         else:
             raise ValueError('Invalid value for a number of processes; you entered: "'+request+'". \nPlease modify this value in config.yaml.') 
 
+    def isNbProcessAuto():
+        return ConfigLoader.getVariable('runConfig', 'nbProcess') == 'auto'
 
     def shouldAutoRegulate():
         return ConfigLoader.getVariable('runConfig', 'nbProcess') == 'auto'

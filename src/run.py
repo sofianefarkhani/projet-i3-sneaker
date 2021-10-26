@@ -17,7 +17,6 @@ if __name__ == '__main__':
     results = multiprocessing.Queue()
     
     # Start consumers
-    
     if procTalkative: print ('Creating %d consumers' % numProcesses)
     consumers = [ BlackBox(tasks, testMode = True) for i in range(numProcesses) ]
     for bb in consumers:
@@ -25,7 +24,7 @@ if __name__ == '__main__':
     
     # Enqueue jobs 
     images = Loader.getImages();
-    for img in images:                              # Main loop
+    for img in images:       # Main loop
         if Loader.endOfService: break
         tasks.put(Task(TaskType.PROCESS, img))
         
