@@ -1,5 +1,5 @@
 
-from Data.TaskType import TaskType
+from processes.TaskType import TaskType
 import time
 
 class Task(object):

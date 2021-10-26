@@ -4,11 +4,18 @@
 
 
 runConfig:
-    nbProcess: default             # 'default' calculates for the number of procs you have.
-
+    nbProcess: default      # -> 'default' calculates for the number of processors you have.
+                            #       - some may be idling from time to time.
+                            # -> 'auto'  auto adjusts the number of processes in accordance with the number of tasks
+                            # -> any strictly positive number: sets the number of processes to this number.
+    
+    talkative: 
+        processes: False    # to see the messages of the processes starting/ending
+        ias:       False    # to see the messages of the processing happening in each Blackbox. 
+        loader:    False
 output:
-    data: ../out/data.json         # the output for image tags
-    testData: ../out/testData.json # the output file where we dump stuff that does not really matter, when we test stuff
+    data: ../out/data.json          # the output for image tags
+    testData: ../out/testData.json  # the output file where we dump stuff that does not really matter, when we test stuff
 
 loader:
     localImgSrc: ../img/test/

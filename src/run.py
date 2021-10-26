@@ -1,48 +1,42 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 from BlackBox import BlackBox
-from Data.TaskType import TaskType
+from processes.TaskType import TaskType
 from interface.Loader import Loader
 import multiprocessing
-from multiprocessing import Process
-from Data.Task import Task
-import time
-from interface.ConfigLoader import ConfigLoader
+from processes.Task import Task
+from processes.Utilities import Utilities
 
-
-def calcNbProcessus():
-    request = ConfigLoader.getVariable('runConfig', 'nbProcess')
-    if request == 'default':
-        return multiprocessing.cpu_count() -1
-    else:
-        return request
 
 if __name__ == '__main__':
+    # Get basic parameters
+    (numProcesses, procTalkative, bbTalkative) = Utilities.getRunningConfig()
+    
     # Establish communication queues
     tasks = multiprocessing.JoinableQueue()
     results = multiprocessing.Queue()
     
     # Start consumers
-    num_processes = calcNbProcessus()
-    print ('Creating %d consumers' % num_processes)
-    consumers = [ BlackBox(tasks, testMode = True) for i in range(num_processes) ]
+    
+    if procTalkative: print ('Creating %d consumers' % numProcesses)
+    consumers = [ BlackBox(tasks, testMode = True) for i in range(numProcesses) ]
     for bb in consumers:
         bb.start()
     
-    # Enqueue jobs
-    images = Loader.getImages(True);
-    for img in images:
-        if Loader.endOfService: 
-            break
+    # Enqueue jobs 
+    images = Loader.getImages();
+    for img in images:                              # Main loop
+        if Loader.endOfService: break
         tasks.put(Task(TaskType.PROCESS, img))
-        #time.sleep(2)
         
-    # job is finished: kill each blackbox
-    for i in range(num_processes):
+    # BRUTALLY MURDER each blackbox when Loader ends its service 
+    for i in range(numProcesses):
         tasks.put(Task(TaskType.END, img))
 
     # Wait for all of the tasks to finish
     tasks.join()
+    
+    if procTalkative: print("t'was fun working with you :D")
     
 
 

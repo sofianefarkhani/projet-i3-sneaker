@@ -14,6 +14,4 @@ class ConfigLoader:
                     configData = configData[varPath[i]]
                 else:
                     return None
-            
-            print("\nWE HAVE:    "+str(configData))
             return configData

@@ -1,10 +1,9 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-from typing import Generator
 import cv2
 from threading import Lock
 from interface.ConfigLoader import ConfigLoader
-
+from processes.Utilities import Utilities
 
 class Loader :
     '''The loader loads images and keeps them ready to use for any class that would request them.
@@ -34,13 +33,9 @@ class Loader :
     '''A thread.Lock to stop multiple threads from accessing the same part of the code at once.'''
     
     
-    talking = False
     
-    
-    def getImages(talking = False):
+    def getImages():
         '''Returns an iterator that lets you get unlimited images.'''
-        
-        Loader.talking = talking
         
         #while the application still runs, be ready to give images. (to one thread at a time though.)
         while not Loader.endOfService:
@@ -49,10 +44,10 @@ class Loader :
                     Loader.loadImages()
                 
                 if len(Loader.__images)!=0:
-                    if talking : print('There are '+str(len(Loader.__images))+' loaded images in store: i\'ll give you one')
+                    if Utilities.loaderShouldTalk() : print('There are '+str(len(Loader.__images))+' loaded images in store: i\'ll give you one')
                     yield Loader.getFirstImg();
                 else:
-                    print("No more images in store for now, returning None instead")
+                    if Utilities.loaderShouldTalk() : print("No more images in store for now, returning None instead")
                     if Loader.endOfServiceOnNextNoImage:
                         Loader.endService()
                     yield None
@@ -67,7 +62,7 @@ class Loader :
         if number is None:
             number = Loader.imgBatchSize
             
-        if Loader.talking : print('Loading '+str(number)+' more images')
+        if Utilities.loaderShouldTalk() : print('Loading '+str(number)+' more images')
         
         imgSuffix = '.png'
         if number<=0: return;
@@ -76,12 +71,12 @@ class Loader :
             number -= 1
             Loader.idOfNextImageToLoad += 1
             
-            if Loader.talking : print('    - Loaded '+ Loader.localImgSrc+str(Loader.idOfNextImageToLoad)+imgSuffix)
+            if Utilities.loaderShouldTalk() : print('    - Loaded '+ Loader.localImgSrc+str(Loader.idOfNextImageToLoad)+imgSuffix)
             
             if number==0: return
             
         # if we reach this point, there are no more images to load in the database.
-        if Loader.talking : print('No more images in database to load')
+        if Utilities.loaderShouldTalk() : print('No more images in database to load')
         Loader.endServiceWhenNoMoreImages()
     
      

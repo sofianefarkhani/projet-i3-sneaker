@@ -1,7 +1,7 @@
 
 
 import cv2
-from TaskType import TaskType
+from processes.TaskType import TaskType
 
 from interface.Loader import Loader
 from interface.Writer import Writer
@@ -12,12 +12,10 @@ from typeDetector.TypeDetector import TypeDetector
 from preprocess.ImagePreprocessor import ImagePreprocessor
 
 from Data.Tag import Tag
-from Data.Color import Color
-from Data.Type import Type
 import multiprocessing
-from TaskType import TaskType
+from processes.TaskType import TaskType
 from interface.ConfigLoader import ConfigLoader
-
+from processes.Utilities import Utilities
 
 
 class BlackBox(multiprocessing.Process):
@@ -30,12 +28,13 @@ class BlackBox(multiprocessing.Process):
     
     def __init__(self, task_queue, testMode:bool=False):
         '''Creates a blackbox and readies it to complete Tasks.'''
-        self.id = BlackBox.nextBBIndexAvailable
-        BlackBox.nextBBIndexAvailable += 1
+        self.id = BlackBox.assignId()
+        
         self.testMode = testMode
         multiprocessing.Process.__init__(self)
         self.task_queue = task_queue
-        
+    
+    
 
     def run(self):
         '''Runs this Blackbox to deal with images in the task queue.
@@ -45,6 +44,9 @@ class BlackBox(multiprocessing.Process):
             -detect their colors (main and secondary)\n
             -detect their type (high or low)\n
             -write the results in the output file.'''
+            
+        (numProcesses, procTalkative, bbTalkative) = Utilities.getRunningConfig()    
+            
         proc_name = self.name
         while True:
             next_task = self.task_queue.get()
@@ -56,7 +58,7 @@ class BlackBox(multiprocessing.Process):
             if next_task.img is None: # this should not happen, but i still left it as a precaution
                 continue
             
-            print ('%s: %s' % (proc_name, next_task))
+            if bbTalkative: print ('%s: %s' % (proc_name, next_task))
             self.compute(next_task.img)
             
             answer = next_task()
@@ -64,7 +66,7 @@ class BlackBox(multiprocessing.Process):
             self.task_queue.task_done()    # helps when we want to join threads at the end of the programm
             #self.result_queue.put(answer)
         self.task_queue.task_done()
-        print ('%s: Exiting' % proc_name)
+        if procTalkative: print ('%s: Exiting' % proc_name)
         return
     
     def compute(self, img):
@@ -85,7 +87,7 @@ class BlackBox(multiprocessing.Process):
         tag.setSecondaryColor(secondaryColor)
         
         if self.testMode:
-            print('New data written in the test output file.')
+            if Utilities.iaShouldTalk(): print('New data written in the test output file.')
             Writer.outputTagAsJson(tag, ConfigLoader.getVariable('output', 'testData'))
         else:
             Writer.outputTagAsJson(tag)
@@ -96,3 +98,7 @@ class BlackBox(multiprocessing.Process):
         cv2.imshow("From blackbox "+str(self.id), img)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
+    
+    def assignId():
+        BlackBox.nextBBIndexAvailable += 1
+        return BlackBox.nextBBIndexAvailable-1
