@@ -1,5 +1,6 @@
 #A file to test anything you need in the moment.
 
+from numpy.lib.type_check import imag
 from Data.Color import Color
 from Data.Tag import Tag
 from Data.Type import Type
@@ -12,6 +13,8 @@ from interface.Loader import Loader
 import cv2
 from preprocess.BackgroundSuppression import BackgroundSuppression
 from menuPkg.Menu import Menu
+
+from colorDetector.ColorDetector import ColorDetector
 
 #### Testing the creation of colors
 #Color.testColorCreation()
@@ -75,10 +78,20 @@ def showImage(img):
 # ConfigLoader.getVariable('mysql', 'other', 'tbeau')
 
 #BackgroundSuppression.testMaskColor()
-#images = Loader.getImages(talking=True);
-#for img in images:
-#    imagesNoBg = BackgroundSuppression.replaceBackground(img)
-#    for imgPreproc in imagesNoBg:
-#        showImage(imgPreproc)
+images = Loader.getImages(talking=True);
+listColorDominants = []
+for img in images:
+    imagesNoBg = BackgroundSuppression.replaceBackground(img)
+    for imgPreproc in imagesNoBg:
+        listColorDominants.append(ColorDetector.detectColorsOf(imgPreproc))
+        #print(ColorDetector.detectColorsOf(imgPreproc))
+        showImage(imgPreproc)
+    print("final dominants list color : ",listColorDominants)
+
+    for colors in range(len(listColorDominants)):
+        for color in range(len(colors)):
+            #print("Voici une couleur : ", color)
+            if(color == )
+
 
 #menu = Menu()
