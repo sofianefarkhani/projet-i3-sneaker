@@ -73,7 +73,7 @@ def trainAIV2():
     model = Sequential()
 
 # first CONV => RELU => CONV => RELU => POOL layer set
-    model.add(Conv2D(128, (9, 9), input_shape=(300, 150, 1), padding="same"))
+    model.add(Conv2D(128, (9, 9), input_shape=(120, 120, 1), padding="same"))
     # model.add(Conv2D(32, (3, 3), padding="same", input_shape=(300, 150, 1)))
     model.add(Activation("relu"))
     model.add(BatchNormalization(axis=1))
@@ -105,7 +105,7 @@ def trainAIV2():
                 metrics=['accuracy'])
     model.summary()
     
-    (trainingSet, testSet) = getDataseTrainingIA(target_size=(300, 150), ratio=0.8)
+    (trainingSet, testSet) = getDataseTrainingIA(target_size=(120, 120), ratio=0.8)
 
 
     model.fit(trainingSet, validation_data=testSet, batch_size=32, epochs=25)  # set steps_per_epoch=3000 and validation_steps=1000 with real data
