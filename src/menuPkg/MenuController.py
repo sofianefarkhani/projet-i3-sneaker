@@ -12,7 +12,7 @@ import os
 from os.path import isfile, join
 from interface.ConfigLoader import ConfigLoader
 from menuPkg.MenuImageLoader import MenuImageLoader
-from trainAI.baseTrainAI import trainAIV1
+from trainAI.baseTrainAI import trainAIV1, trainAIV2
 
 class MenuController:
     

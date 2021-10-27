@@ -2,6 +2,7 @@ import pandas
 from keras.preprocessing.image import ImageDataGenerator
 from interface.JsonReader import JsonReader
 from interface.ConfigLoader import ConfigLoader
+import random
 
 def getDataseTrainingIA(target_size=(64, 64), ratio=0.8):
     # Fitting the CNN to the images
@@ -25,10 +26,7 @@ def getDataseTrainingIA(target_size=(64, 64), ratio=0.8):
     }
 
     # Need randomize the dataset order before separate it in two part
-    dataFrameTraining = {'id': dataset['id'][:int(len(
-        dataset['id'])*ratio)], 'label': dataset['label'][:int(len(dataset['label'])*ratio)]}
-    dataFrameTest = {'id': dataset['id'][int(len(
-        dataset['id'])*ratio):], 'label': dataset['label'][int(len(dataset['label'])*ratio):]}
+    (dataFrameTraining, dataFrameTest) = shuffleDataSet(dataset, ratio)
 
     dataFrameTraining = pandas.DataFrame(data=dataFrameTraining)
     dataFrameTest = pandas.DataFrame(data=dataFrameTest)
@@ -61,3 +59,43 @@ def getDataseTrainingIA(target_size=(64, 64), ratio=0.8):
         class_mode='binary')
 
     return (trainingSet, testSet)
+
+
+def shuffleDataSet(dataset, ratio):
+    lstLabel = []
+    for label in dataset['label']:
+        isNewLabel = True
+        for l in lstLabel:
+            if l == label:
+                isNewLabel = False
+                break
+        if isNewLabel:
+            lstLabel.append(label)
+    
+    idTraining = []
+    labelTraining = []
+    idTest = []
+    labelTest = []
+
+    for label in lstLabel:
+        lstIndex = []
+        for i in range(len(dataset['label'])):
+            if dataset['label'][i] == label:
+                lstIndex.append(i)
+        random.shuffle(lstIndex)
+        for idIndex in lstIndex[:int(len(lstIndex)*ratio)]:
+            idTraining.append(dataset['id'][idIndex])
+            labelTraining.append(label)
+        for idIndex in lstIndex[int(len(lstIndex)*ratio):]:
+            idTest.append(dataset['id'][idIndex])
+            labelTest.append(label)
+
+    dataFrameTraining = {'id': idTraining, 'label': labelTraining}
+    dataFrameTest = {'id': idTest, 'label': labelTest}
+
+    print (dataFrameTraining['id'])
+    print (dataFrameTraining['label'])
+    print (dataFrameTest['id'])
+    print (dataFrameTest['label'])
+
+    return (dataFrameTraining, dataFrameTest)
