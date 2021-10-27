@@ -66,7 +66,7 @@ class BlackBox(multiprocessing.Process):
             self.task_queue.task_done()    # helps when we want to join threads at the end of the programm
             #self.result_queue.put(answer)
         self.task_queue.task_done()
-        if procTalkative: print ('%s: Exiting' % proc_name)
+        if procTalkative: print ('%s: End of service' % proc_name)
         return
     
     def compute(self, img):
@@ -75,10 +75,10 @@ class BlackBox(multiprocessing.Process):
         elif Loader.endOfService:
             return 'exit'
         
-        shoeImg = ShoeExtractor.extractShoeFromImage(ImagePreprocessor.preprocessForShoeExtraction(img))
+        shoeImg = ShoeExtractor.extractShoeFromImage(ImagePreprocessor.preprocessForShoeExtraction(img, self.name), self.name)
         
-        (mainColor, secondaryColor) = ColorDetector.detectColorsOf(ImagePreprocessor.preprocessForColorsIdentification(shoeImg))
-        typeOfShoe = TypeDetector.detectTypeOfShoe(ImagePreprocessor.preprocessForTypeIdentification(shoeImg))
+        (mainColor, secondaryColor) = ColorDetector.detectColorsOf(ImagePreprocessor.preprocessForColorsIdentification(shoeImg, self.name), self.name)
+        typeOfShoe = TypeDetector.detectTypeOfShoe(ImagePreprocessor.preprocessForTypeIdentification(shoeImg, self.name), self.name)
         
         tag = Tag(0) # yeah temporary id for now we don't care too much about that
         
@@ -87,7 +87,7 @@ class BlackBox(multiprocessing.Process):
         tag.setSecondaryColor(secondaryColor)
         
         if self.testMode:
-            if Utilities.iaShouldTalk(): print('New data written in the test output file.')
+            if Utilities.iaShouldTalk(): print('%s: New data written in the test output file.' % (self.name))
             Writer.outputTagAsJson(tag, ConfigLoader.getVariable('output', 'testData'))
         else:
             Writer.outputTagAsJson(tag)
@@ -95,10 +95,15 @@ class BlackBox(multiprocessing.Process):
         self.showImage(img)
     
     def showImage(self, img):
-        cv2.imshow("From blackbox "+str(self.id), img)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
+        '''Shows an image if the config allows it. 
+        
+        Stops this BlackBox from executing anything new while the image is on display.'''
+        if ConfigLoader.getVariable('runConfig', 'gui', 'showImages'):
+            cv2.imshow("From blackbox "+str(self.id), img)
+            cv2.waitKey(0)
+            cv2.destroyAllWindows()
     
     def assignId():
+        '''Assigns an id to this instance of Blackbox.'''
         BlackBox.nextBBIndexAvailable += 1
         return BlackBox.nextBBIndexAvailable-1

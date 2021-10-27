@@ -7,6 +7,6 @@ from processes.Utilities import Utilities
 class TypeDetector:
     
     
-    def detectTypeOfShoe(image):
-        if Utilities.iaShouldTalk(): print("Detecting the type of the shoe")
+    def detectTypeOfShoe(image, procName):
+        if Utilities.iaShouldTalkInDetail(): print("%s: Detecting the type of the shoe"%procName)
         return Type.HIGH

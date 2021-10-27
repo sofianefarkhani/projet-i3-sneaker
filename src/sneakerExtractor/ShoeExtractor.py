@@ -5,6 +5,6 @@ from processes.Utilities import Utilities
 
 class ShoeExtractor:
     
-    def extractShoeFromImage(image):
-        if Utilities.iaShouldTalk(): print("Extracting shoe from the given image")
+    def extractShoeFromImage(image, procName):
+        if Utilities.iaShouldTalkInDetail(): print("%s: Extracting shoe from the given image" % procName)
         return image

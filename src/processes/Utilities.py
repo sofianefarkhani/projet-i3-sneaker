@@ -37,4 +37,5 @@ class Utilities:
     def loaderShouldTalk():
         return ConfigLoader.getVariable('runConfig', 'talkative', 'loader')
     
-    
+    def iaShouldTalkInDetail():
+        return ConfigLoader.getVariable('runConfig', 'talkative', 'ias-detailed')

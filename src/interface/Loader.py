@@ -44,7 +44,7 @@ class Loader :
                     Loader.loadImages()
                 
                 if len(Loader.__images)!=0:
-                    if Utilities.loaderShouldTalk() : print('There are '+str(len(Loader.__images))+' loaded images in store: i\'ll give you one')
+                    if Utilities.loaderShouldTalk() : print('Placing one more image in task queue: still '+str(len(Loader.__images))+' image(s) are ready')
                     yield Loader.getFirstImg();
                 else:
                     if Utilities.loaderShouldTalk() : print("No more images in store for now, returning None instead")
