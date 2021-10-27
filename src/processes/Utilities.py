@@ -39,3 +39,6 @@ class Utilities:
     
     def iaShouldTalkInDetail():
         return ConfigLoader.getVariable('runConfig', 'talkative', 'ias-detailed')
+    
+    def shouldReloadConfig():
+        return ConfigLoader.getVariable('runConfig', 'dynamicConfig')

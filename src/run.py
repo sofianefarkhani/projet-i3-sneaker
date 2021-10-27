@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 from BlackBox import BlackBox
+from interface.ConfigLoader import ConfigLoader
 from processes.TaskType import TaskType
 from interface.Loader import Loader
 import multiprocessing
@@ -27,6 +28,8 @@ if __name__ == '__main__':
     for img in images:       # Main loop
         if Loader.endOfService: break
         tasks.put(Task(TaskType.PROCESS, img))
+        if Utilities.shouldReloadConfig():
+            ConfigLoader.loadVars()
         
     # BRUTALLY MURDER each blackbox when Loader ends its service 
     for i in range(numProcesses):

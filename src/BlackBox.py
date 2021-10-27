@@ -65,6 +65,10 @@ class BlackBox(multiprocessing.Process):
             
             self.task_queue.task_done()    # helps when we want to join threads at the end of the programm
             #self.result_queue.put(answer)
+            
+            if Utilities.shouldReloadConfig():
+                ConfigLoader.loadVars()
+            
         self.task_queue.task_done()
         if procTalkative: print ('%s: End of service' % proc_name)
         return
