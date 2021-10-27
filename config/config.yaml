@@ -4,13 +4,25 @@
 
 
 runConfig:
-    nbProcess: default             # 'default' calculates for the number of procs you have.
+    nbProcess: default             # 'default' means: the number of procs you have minus one.
 
 output:
     data: ../out/data.json         # the output for image tags
     testData: ../out/testData.json # the output file where we dump stuff that does not really matter, when we test stuff
 
+input:
+    # to train our IAs
+    trainingImagesFolder: ../img/train/trainingTestImages   # the home folder for all images to train our ia
+    shoeDetectAndExtractTrainData: ../in/trainData.json     # the data to train the IA that detects the presence of sneakers 
+    shoeTypeTrainData: ../in/trainData.json                 # the data to train the IA that detects the type of sneaker
+    nomore: ../img/nomore.png                               # the displayed image to inform there are no more images when labelling by hand
+
 loader:
-    localImgSrc: ../img/test/
-    batchSize: 4      # how many images should the loader load at once in the system
-    reloadNumber: 1   # When we reach this number of loaded images or less, we try to load more.
+    localImgSrc: ../img/test/   # the local folder where images that should be labelled will go 
+    batchSize: 4                # how many images should the loader load at once in the system
+    reloadNumber: 1             # When we reach this number of loaded images or less, we try to load more.
+
+background: 
+    b: (0.0,1.0,0.0)
+    r: (0.0,0.0,1.0)
+    g: (1.0,0.0,0.0)

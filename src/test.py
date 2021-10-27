@@ -10,6 +10,8 @@ from interface.Writer import Writer
 from interface.JsonReader import JsonReader 
 from interface.Loader import Loader
 import cv2
+from preprocess.BackgroundSuppression import BackgroundSuppression
+from menuPkg.Menu import Menu
 
 #### Testing the creation of colors
 #Color.testColorCreation()
@@ -18,13 +20,16 @@ import cv2
 
 
 ##### AND HERE WE MAKE JSON 
-# c = Color(rgb = [13, 0, 255])
-# c2 = Color(rgb = [0, 2, 0])
+#c = Color(rgb = [13, 0, 255])
+#c = Color(rgb = [0, 2, 0])
+#print(c.toString())
 # tag = Tag(0)
 # tag.setType(Type.HIGH)
 # tag.setMainColor(c)
 # tag.setSecondaryColor(c2)
-
+#c = Color('black')
+#c2 = Color('mediumblue')
+#print(c2.toString())
 # data = jsonpickle.encode(t)
 # print(data)
 
@@ -57,15 +62,26 @@ import cv2
 # def showImage(img):
 #     cv2.imshow("img", img)
 #     cv2.waitKey(0)
-#     cv2.destroyAllWindows()
-    
+#     cv2.destroyAllWindows()  
+
 # images = Loader.getImages(talking=True);
-# for img in images:
+#for img in images:
 #     showImage(img)
 
 
 
 #### TEST CONFIG CLASS
-from interface.ConfigLoader import ConfigLoader
-ConfigLoader.getVariable('mysql', 'other', 'tbeau')
+#from interface.ConfigLoader import ConfigLoader
+# ConfigLoader.getVariable('mysql', 'other', 'tbeau')
 
+#BackgroundSuppression.testMaskColor()
+#images = Loader.getImages(talking=True);
+#for img in images:
+#    imagesNoBg = BackgroundSuppression.replaceBackground(img)
+#    for imgPreproc in imagesNoBg:
+#        showImage(imgPreproc)
+
+menu = Menu()
+
+# from trainAI.baseTrainAI import trainAIV1
+# trainAIV1()

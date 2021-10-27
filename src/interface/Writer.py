@@ -3,6 +3,7 @@
 import json
 from Data.Tag import Tag
 import jsonpickle
+from Data.TrainDataElement import TrainDataElement
 from interface.ConfigLoader import ConfigLoader
 class Writer(json.JSONEncoder):
     '''The Writer writes JSON. 
@@ -26,7 +27,19 @@ class Writer(json.JSONEncoder):
         With love, 
         
         Esteban'''
-        if not tag.isComplete(): return
+        if not tag.isComplete(): 
+            print('THIS TAG IS INCOMPLETE AND WILL NOT BE REGISTERED')
+            return
         data = jsonpickle.encode(tag)
+        file_object = open(outputFilePath, 'a')
+        file_object.write("\n"+data)
+        
+        
+    def outputTagAsJson(tde:TrainDataElement, outputFilePath:str=ConfigLoader.getVariable('input', 'shoeTypeTrainData')):
+        '''Writes the given TrainDataElement under the Json format in the output file.
+        
+        The json string of the given object is appended to the file in a new line.'''
+        
+        data = jsonpickle.encode(tde)
         file_object = open(outputFilePath, 'a')
         file_object.write("\n"+data)

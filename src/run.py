@@ -1,11 +1,11 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 from BlackBox import BlackBox
-from TaskType import TaskType
+from Data.TaskType import TaskType
 from interface.Loader import Loader
 import multiprocessing
 from multiprocessing import Process
-from Task import Task
+from Data.Task import Task
 import time
 from interface.ConfigLoader import ConfigLoader
 
