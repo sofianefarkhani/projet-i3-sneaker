@@ -78,20 +78,8 @@ def showImage(img):
 # ConfigLoader.getVariable('mysql', 'other', 'tbeau')
 
 #BackgroundSuppression.testMaskColor()
-images = Loader.getImages(talking=True);
-listColorDominants = []
-for img in images:
-    imagesNoBg = BackgroundSuppression.replaceBackground(img)
-    for imgPreproc in imagesNoBg:
-        listColorDominants.append(ColorDetector.detectColorsOf(imgPreproc))
-        #print(ColorDetector.detectColorsOf(imgPreproc))
-        showImage(imgPreproc)
-    print("final dominants list color : ",listColorDominants)
-
-    for colors in range(len(listColorDominants)):
-        for color in range(len(colors)):
-            #print("Voici une couleur : ", color)
-            if(color == )
+images = Loader.getImages(talking=True)
+ColorDetector.getDominantColors(images)
 
 
 #menu = Menu()
