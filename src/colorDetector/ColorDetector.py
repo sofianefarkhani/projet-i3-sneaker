@@ -1,14 +1,14 @@
+from typing import List
 from Data.Color import Color
 
 import cv2
 import numpy as np
 from skimage import io
 from preprocess.BackgroundSuppression import BackgroundSuppression
-
-
-
-
+from interface.ConfigLoader import ConfigLoader
 class ColorDetector:
+
+    nbrBackground = len(ConfigLoader.getVariable("background"))
     
     def detectColorsOf(shoeImage):
         '''Detects the two main colors of the given shoe, and returns them as a tuple.
@@ -28,7 +28,8 @@ class ColorDetector:
         
         listColorDominants = []
         listCounts = []
-        for i in range(3):
+
+        for i in range(ColorDetector.nbrBackground):
             #print("\n I : ",i)
             count = 0
 
@@ -67,9 +68,11 @@ class ColorDetector:
         maxCounts = 0
         for i in range(len(list)):
             if(list[i] > maxCounts):
+                #get the max pixel in one colors
                 maxCounts = list[i]
         for i in range(len(list)):
             if(list[i]!=maxCounts):
+                #delete the max count on the new list
                 newList.append(list[i])
         return newList, maxCounts
 
@@ -93,39 +96,74 @@ class ColorDetector:
         redColorBackground = [0,0,254]
         greenColorBackground = [0,254,0]
         blueColorBackground = [254,0,0]
-        newListBlue = []
-        newListRed = []
-        indexGreen = 0
-        indexBlue = 0
-        indexRed = 0
-        listCountGreen = []
-        listCountBlue = []
-        listCountRed = []
 
-        nbrImage = (int)(len(listColorDominants)/3)
         listeTest = listColorDominants.copy()
+
+        #Delete background of the list
+        listIntermediaire = []
         for elem in listeTest:
+            listInterm = []
             for subelement in elem :
+                temp = 0
                 for color in subelement:
                     newColor = color.tolist()
-                    print("\n",str(newColor))
-                    print("\n",str(greenColorBackground))
-                    print("\n",type(color))
-                    if(str(greenColorBackground) in str(newColor)):
-                        print("OUIIIIIIIIIIIIIIIIIIIII")
+                    if(str(greenColorBackground) in str(newColor) or str(redColorBackground) in str(newColor) or str(blueColorBackground) in str(newColor) ):
+                        print("")
                     else:
-                        print("NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOON")
+                        if(temp < ColorDetector.nbrBackground):
+                            listInterm.append(newColor)
+            listIntermediaire.append(listInterm)
+
+        #Inverse R and B to have a RGB color
+        for elem in listIntermediaire :
+            for subelement in elem :
+                subelement.reverse()
+        #print('\n',listIntermediaire)
         
+        #Convert the RGB code in Color
+        listFinal = []
+        for elem in listIntermediaire :
+            newList=[]
+            for subelement in elem : 
+                newList.append(Color(rgb = subelement))
+            listFinal.append(newList)
+
+        #print('\n',listFinal)
+
+        #Get primary color and secondary color
+        listColor = []
+        for i in range(0,len(listFinal), ColorDetector.nbrBackground):
+            listColorIntermediaire = []
+            for j in range(1,ColorDetector.nbrBackground):
+                for color in listFinal[i]:
+                    if(color.name in listFinal[j][0].name or color.name in listFinal[j][1].name):
+                        if(not(color.name in listColorIntermediaire) and len(listColorIntermediaire) < 2):
+                            listColorIntermediaire.append(color.name)
+                            #print("\n LISTE INTERMEDIAIRE : ",listColorIntermediaire)
+            listColor.append(listColorIntermediaire)
+        print("\n LISTE FINAL : ",listColor)
+        print("\n taille ",len(listColor))
+        
+
         """
-        for i in range(nbrImage):
-            newListGreen = []
-            for j in range(3):
-                if(listColorDominants[0 + 3*i][j][0] != greenColorBackground[0] and listColorDominants[0 + 3*i][j][1] != greenColorBackground[1] and listColorDominants[0 + 3*i][i][2] != greenColorBackground[2]):
-                    newListGreen.append(listColorDominants[0][j])
-                    indexGreen = j
-            #ICI COUNTS
-            listColorDominants[0+3*i] = newListGreen
+        listFinale = []
+        for i in range(0,len(listIntermediaire),3):
+            listeFinaleImage = []
+            for j in range(2):
+                if(listIntermediaire[i][j] in listIntermediaire[i+1] or listIntermediaire[i][j] in listIntermediaire[i+2]):
+                    #print("\n Image : ", listIntermediaire[i][j])
+                    if(listIntermediaire[i][j] not in listeFinaleImage):
+                        listeFinaleImage.append(listIntermediaire[i][j])
+                if(listIntermediaire[i+1][j] in listIntermediaire[i+2]):
+                    #print("\n Image : ", listIntermediaire[i][j])
+                    if(listIntermediaire[i][j] not in listeFinaleImage):
+                        listeFinaleImage.append(listIntermediaire[i+1][j])
+            listFinale.append(listeFinaleImage)
+        print("\nListe finale : ",listFinale)
+        print("\n taille liste : ", len(listFinale))
         """
+
+
 
         """
         for i in range(3):
