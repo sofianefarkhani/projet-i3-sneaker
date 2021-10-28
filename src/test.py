@@ -7,6 +7,7 @@ from Data.Type import Type
 import json
 from json import JSONEncoder
 import jsonpickle
+from interface.ConfigLoader import ConfigLoader
 from interface.Writer import Writer
 from interface.JsonReader import JsonReader 
 from interface.Loader import Loader
@@ -16,6 +17,8 @@ from menuPkg.Menu import Menu
 
 from colorDetector.ColorDetector import ColorDetector
 
+
+import ast
 #### Testing the creation of colors
 #Color.testColorCreation()
 
@@ -79,9 +82,10 @@ def showImage(img):
 images = Loader.getImages(talking=True)
 list = ColorDetector.getDominantColors(images)
 list = ColorDetector.deleteBackground(list)
-list = ColorDetector.reverseChannel(list)
-list = ColorDetector.convertRBGtoColor(list)
-listFinal = ColorDetector.getPrimaryAndSecondaryColor(list)
+#list = ColorDetector.reverseChannel(list)
+#list = ColorDetector.convertRBGtoColor(list)
+listFinal = ColorDetector.extractColor(list)
+#listFinal = ColorDetector.getPrimaryAndSecondaryColor(list)
 print('\n List Final des couleurs : ', listFinal)
 
 #menu = Menu()

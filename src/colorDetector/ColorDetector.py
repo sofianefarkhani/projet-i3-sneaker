@@ -6,6 +6,7 @@ import numpy as np
 from skimage import io
 from preprocess.BackgroundSuppression import BackgroundSuppression
 from interface.ConfigLoader import ConfigLoader
+import ast
 class ColorDetector:
 
     #Get the number of background used
@@ -20,7 +21,7 @@ class ColorDetector:
         average = shoeImage.mean(axis=0).mean(axis=0)
         pixels = np.float32(shoeImage.reshape(-1, 3))
 
-        n_colors = 7
+        n_colors = ColorDetector.nbrBackground + 4
         criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 200, .1)
         flags = cv2.KMEANS_RANDOM_CENTERS
 
@@ -99,9 +100,14 @@ class ColorDetector:
         return listColorDominants
 
     def deleteBackground(listColorDominants):
-        redColorBackground = [0,0,254]
-        greenColorBackground = [0,254,0]
-        blueColorBackground = [254,0,0]
+        listColor = ConfigLoader.getVariable('background')
+        listColorBg = []
+        for color in listColor:
+            newColor = Color(rgb=[(elem * 255) for elem in ast.literal_eval(listColor[color])])
+            listColorBg.append(newColor)
+        #redColorBackground = [0,0,254]
+        #greenColorBackground = [0,254,0]
+        #blueColorBackground = [254,0,0]
         listeTest = listColorDominants.copy()
         listFinal = []
         for elem in listeTest:
@@ -110,9 +116,11 @@ class ColorDetector:
                 temp = 0
                 for color in subelement:
                     newColor = color.tolist()
-                    if(str(greenColorBackground) in str(newColor) or str(redColorBackground) in str(newColor) or str(blueColorBackground) in str(newColor) ):
-                        print("")
-                    else:
+                    newColor = Color(rgb=[newColor[2],newColor[1],newColor[0]])
+                    if [ (color.name) for color in listColorBg] != newColor.name:
+                    #if(str(greenColorBackground) in str(newColor) or str(redColorBackground) in str(newColor) or str(blueColorBackground) in str(newColor) ):
+                    #    print("")
+                    #else:
                         if(temp < ColorDetector.nbrBackground):
                             listInterm.append(newColor)
             listFinal.append(listInterm)
@@ -140,15 +148,27 @@ class ColorDetector:
         listColor = []
         for i in range(0,len(listFinal), ColorDetector.nbrBackground):
             listColorIntermediaire = []
-            for j in range(1,ColorDetector.nbrBackground+1):
-                for color in listFinal[i]:
-                    if(color.name in listFinal[j][0].name or color.name in listFinal[j][1].name):
+            for j in range(1,ColorDetector.nbrBackground):
+                for k in range(0,2,1):
+                    if(listFinal[i][k].name in listFinal[j][0].name or listFinal[i][k].name in listFinal[j][1].name):
                         #listColorIntermediaire.append(color.name)
-                        if(not(color.name in listColorIntermediaire)):
-                            listColorIntermediaire.append(color.name)
+                        if(listFinal[i][k].name in listColorIntermediaire):
+                            listColorIntermediaire.append(listFinal[i][k].name)
                             #print("\n LISTE INTERMEDIAIRE : ",listColorIntermediaire)
             listColor.append(listColorIntermediaire)
         return listColor
+
+    def extractColor(list):
+        colors = []
+        for item in list:
+            listInter = []
+            for i in range(0,len(item),ColorDetector.nbrBackground):
+                for j in range(len(item),i,-1):
+                    for k in range(0,2,1):
+                        if(list[i][k].name in list[j][0].name or list[i][k].name in list[j][1].name):
+                            listInter.append(list[i][k].name)
+            colors.append(listInter)
+        return colors
 
     def showImage(img):
         cv2.imshow("img", img)

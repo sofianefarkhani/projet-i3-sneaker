@@ -16,6 +16,6 @@ loader:
     reloadNumber: 1   # When we reach this number of loaded images or less, we try to load more.
 
 background:
-    b: (0.0,1.0,0.0)
+    g: (0.0,1.0,0.0)
     r: (0.0,0.0,1.0)
-    g: (1.0,0.0,0.0)
+    b: (1.0,0.0,0.0)
