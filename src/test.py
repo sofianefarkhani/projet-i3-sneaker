@@ -56,9 +56,6 @@ from colorDetector.ColorDetector import ColorDetector
 
 
 
-
-
-
 ##### Test loading of images
 ## images are loaded as we need them. 
 
