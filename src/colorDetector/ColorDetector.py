@@ -19,7 +19,7 @@ class ColorDetector:
         average = shoeImage.mean(axis=0).mean(axis=0)
         pixels = np.float32(shoeImage.reshape(-1, 3))
 
-        n_colors = 7
+        n_colors = 7 #modif this parameter in funtion of nbrBackground
         criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 200, .1)
         flags = cv2.KMEANS_RANDOM_CENTERS
 
@@ -134,51 +134,17 @@ class ColorDetector:
         listColor = []
         for i in range(0,len(listFinal), ColorDetector.nbrBackground):
             listColorIntermediaire = []
-            for j in range(1,ColorDetector.nbrBackground):
+            for j in range(1,ColorDetector.nbrBackground+1):
                 for color in listFinal[i]:
                     if(color.name in listFinal[j][0].name or color.name in listFinal[j][1].name):
-                        if(not(color.name in listColorIntermediaire) and len(listColorIntermediaire) < 2):
+                        #listColorIntermediaire.append(color.name)
+                        if(not(color.name in listColorIntermediaire)):
                             listColorIntermediaire.append(color.name)
                             #print("\n LISTE INTERMEDIAIRE : ",listColorIntermediaire)
             listColor.append(listColorIntermediaire)
         print("\n LISTE FINAL : ",listColor)
         print("\n taille ",len(listColor))
-        
 
-        """
-        listFinale = []
-        for i in range(0,len(listIntermediaire),3):
-            listeFinaleImage = []
-            for j in range(2):
-                if(listIntermediaire[i][j] in listIntermediaire[i+1] or listIntermediaire[i][j] in listIntermediaire[i+2]):
-                    #print("\n Image : ", listIntermediaire[i][j])
-                    if(listIntermediaire[i][j] not in listeFinaleImage):
-                        listeFinaleImage.append(listIntermediaire[i][j])
-                if(listIntermediaire[i+1][j] in listIntermediaire[i+2]):
-                    #print("\n Image : ", listIntermediaire[i][j])
-                    if(listIntermediaire[i][j] not in listeFinaleImage):
-                        listeFinaleImage.append(listIntermediaire[i+1][j])
-            listFinale.append(listeFinaleImage)
-        print("\nListe finale : ",listFinale)
-        print("\n taille liste : ", len(listFinale))
-        """
-
-
-
-        """
-        for i in range(3):
-            if(i != indexGreen):
-                listCountGreen.append(listCounts[i])
-        listCounts
-        """
-        
-
-        """
-    for colors in range(len(listColorDominants)):
-        for color in range(len(colors)):
-            print("Voici une couleur : ", color)
-            if(color == )
-            """
 
     def showImage(img):
         cv2.imshow("img", img)
