@@ -78,8 +78,13 @@ def showImage(img):
 # ConfigLoader.getVariable('mysql', 'other', 'tbeau')
 
 #BackgroundSuppression.testMaskColor()
+#Test for ColorDetector
 images = Loader.getImages(talking=True)
-ColorDetector.getDominantColors(images)
-
+list = ColorDetector.getDominantColors(images)
+list = ColorDetector.deleteBackground(list)
+list = ColorDetector.reverseChannel(list)
+list = ColorDetector.convertRBGtoColor(list)
+listFinal = ColorDetector.getPrimaryAndSecondaryColor(list)
+print('\n List Final des couleurs : ', listFinal)
 
 #menu = Menu()

@@ -8,37 +8,44 @@ from preprocess.BackgroundSuppression import BackgroundSuppression
 from interface.ConfigLoader import ConfigLoader
 class ColorDetector:
 
+    #Get the number of background used
     nbrBackground = len(ConfigLoader.getVariable("background"))
     
+    #function which allowed to get the dominants colors and the counts of pixels for each colors
     def detectColorsOf(shoeImage):
-        '''Detects the two main colors of the given shoe, and returns them as a tuple.
-        
-        So far it only returns a dummy values.'''
+
         #print('Color detector attributed a color to the given image.')
         #img = io.imread(shoeImage)[:, :, :-1]
+
         average = shoeImage.mean(axis=0).mean(axis=0)
         pixels = np.float32(shoeImage.reshape(-1, 3))
 
-        n_colors = 7 #modif this parameter in funtion of nbrBackground
+        n_colors = 7
         criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 200, .1)
         flags = cv2.KMEANS_RANDOM_CENTERS
 
+        #cv2 give in palette all the colors that we have in an image
         _, labels, palette = cv2.kmeans(pixels, n_colors, None, criteria, 10, flags)
+        #counts has the number of pixels for each colors in palette
         _, counts = np.unique(labels, return_counts=True)
         
         listColorDominants = []
         listCounts = []
 
+        #for each background, we take the dominants colors and the numbers of pixels for each dominants colors
         for i in range(ColorDetector.nbrBackground):
             #print("\n I : ",i)
             count = 0
 
+            #Get the dominants color
             dominant = palette[np.argmax(counts)]
+            #Delete the counts for the dominant color and put it in another variable
             counts,count = ColorDetector.getCounts(counts)
 
             #print("\n Palette initiale ", palette)
             #print("\n Dominant ", dominant)
 
+            #Get the new palette without the dominant and put the dominant in another variable
             palette, colorDominant = ColorDetector.getNewList(palette, dominant)
             listColorDominants.append(colorDominant)
             listCounts.append(count)
@@ -46,7 +53,7 @@ class ColorDetector:
                         
             #print("\n Palette maintenant ", palette)
             #print("\n Counts : ", counts)
-
+        #return of the list of dominant color and the list of the counts of pixel for each colors
         return np.uint8(listColorDominants),np.uint8(listCounts)
 
     def getNewList(list, dominant):
@@ -89,18 +96,14 @@ class ColorDetector:
                 listColorDominants.append(colors)
                 listCounts.append(counts)
                 #ColorDetector.showImage(imgPreproc)
+        return listColorDominants
 
-        #print("\nLISTE COULEURS ",np.uint8(listColorDominants))
-        #print("\nLISTE COUNT ",np.uint8(listCounts))
-
+    def deleteBackground(listColorDominants):
         redColorBackground = [0,0,254]
         greenColorBackground = [0,254,0]
         blueColorBackground = [254,0,0]
-
         listeTest = listColorDominants.copy()
-
-        #Delete background of the list
-        listIntermediaire = []
+        listFinal = []
         for elem in listeTest:
             listInterm = []
             for subelement in elem :
@@ -112,25 +115,28 @@ class ColorDetector:
                     else:
                         if(temp < ColorDetector.nbrBackground):
                             listInterm.append(newColor)
-            listIntermediaire.append(listInterm)
+            listFinal.append(listInterm)
+        return listFinal
 
-        #Inverse R and B to have a RGB color
+    #Inverse R and B to have a RGB color
+    def reverseChannel(listIntermediaire):
         for elem in listIntermediaire :
             for subelement in elem :
                 subelement.reverse()
-        #print('\n',listIntermediaire)
-        
-        #Convert the RGB code in Color
+        return listIntermediaire
+
+    #Convert RGB into color
+    def convertRBGtoColor(list):
         listFinal = []
-        for elem in listIntermediaire :
+        for elem in list :
             newList=[]
             for subelement in elem : 
                 newList.append(Color(rgb = subelement))
             listFinal.append(newList)
+        return listFinal
 
-        #print('\n',listFinal)
-
-        #Get primary color and secondary color
+    #Get the primary color and the secondary color
+    def getPrimaryAndSecondaryColor(listFinal):
         listColor = []
         for i in range(0,len(listFinal), ColorDetector.nbrBackground):
             listColorIntermediaire = []
@@ -142,9 +148,7 @@ class ColorDetector:
                             listColorIntermediaire.append(color.name)
                             #print("\n LISTE INTERMEDIAIRE : ",listColorIntermediaire)
             listColor.append(listColorIntermediaire)
-        print("\n LISTE FINAL : ",listColor)
-        print("\n taille ",len(listColor))
-
+        return listColor
 
     def showImage(img):
         cv2.imshow("img", img)
