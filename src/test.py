@@ -86,6 +86,6 @@ list = ColorDetector.deleteBackground(list)
 #list = ColorDetector.convertRBGtoColor(list)
 listFinal = ColorDetector.extractColor(list)
 #listFinal = ColorDetector.getPrimaryAndSecondaryColor(list)
-print('\n List Final des couleurs : ', listFinal)
+print('\n List Final des couleurs : ', list)
 
 #menu = Menu()
