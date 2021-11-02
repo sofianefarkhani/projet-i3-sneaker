@@ -39,7 +39,7 @@ if __name__ == '__main__':
     
     # Start BlackBoxes
     if procTalkative: print ('Creating %d consumers' % numProcesses)
-    consumers = [ BlackBox(tasks, testMode = True) for i in range(numProcesses) ]
+    consumers = [ BlackBox(tasks, results, testMode = True) for i in range(numProcesses) ]
     for bb in consumers:
         bb.start()
         

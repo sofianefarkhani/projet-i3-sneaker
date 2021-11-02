@@ -27,13 +27,15 @@ class BlackBox(multiprocessing.Process):
     #in prep for multithreading, we make some ids for each instance of the blackbox class
     nextBBIndexAvailable = 0
     
-    def __init__(self, task_queue, testMode:bool=False):
+    def __init__(self, task_queue, answerQueue, testMode:bool=False):
         '''Creates a blackbox and readies it to complete Tasks.'''
         self.id = BlackBox.assignId()
         
         self.testMode = testMode
-        multiprocessing.Process.__init__(self)
         self.taskQueue = task_queue
+        self.answerQueue = answerQueue
+        multiprocessing.Process.__init__(self)
+
     
     def run(self):
         '''Runs this Blackbox to deal with images in the task queue.
@@ -56,15 +58,15 @@ class BlackBox(multiprocessing.Process):
         print(self.name+' runnin')
         
         while True:
-            
             next_task = self.taskQueue.get()
             
-            if next_task is None: 
+            if next_task is None:
+                print ('NONE') 
                 if Utilities.shouldAutoRegulate():
                     if procTalkative: print ('%s: Requesting for main to close a blackbox' % proc_name)
                     self.result_queue.put(Answer(AnswerType.ENDREQ))
                     # the loader is overwhelmed; ask to kill a blackbox
-                else: continue                              # the loader may have a bit of lag; we wait a bit and try again
+                else: continue                           # the loader may have a bit of lag; we wait a bit and try again
             if next_task.type == TaskType.END:
                 break
             else: 

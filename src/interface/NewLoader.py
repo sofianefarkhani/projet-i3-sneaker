@@ -42,20 +42,24 @@ class Loader(multiprocessing.Process):
             
             if task is not None:
                 if task.type == LoaderTaskType.LOAD:
-                    batchSize = imgBatchSize = ConfigLoader.getVariable('loader', 'batchSize')
-                    if Utilities.loaderShouldTalk() : print('Loading '+str(batchSize)+' more images')
-                    for i in range(batchSize):
-                        img = next(imagesGenerator)
-                        if img is None:                 # if image generator yields None, this is the end of the db
-                            self.answerQueue.put(LoaderAnswer(LoaderAnswerType.NOMORE))
-                        else: # else append the image to the tasks
-                            self.bbTaskQueue.put(Task(TaskType.PROCESS, img))
-                    self.answerQueue.put(LoaderAnswer(LoaderAnswerType.LOADDONE))
+                    if ConfigLoader.getVariable('loader', 'takeFromLocalSource') == True:
+                        batchSize = imgBatchSize = ConfigLoader.getVariable('loader', 'batchSize')
+                        if Utilities.loaderShouldTalk() : print('Loading '+str(batchSize)+' more images')
+                        for i in range(batchSize):
+                            img = next(imagesGenerator)
+                            if img is None:                 # if image generator yields None, this is the end of the db
+                                self.answerQueue.put(LoaderAnswer(LoaderAnswerType.NOMORE))
+                            else: # else append the image to the tasks
+                                self.bbTaskQueue.put(Task(TaskType.PROCESS, img))
+                        self.answerQueue.put(LoaderAnswer(LoaderAnswerType.LOADDONE))
+                    else: 
+                        print('Oh no, getting from FTP is not yet implemented :\'(')
                 
                 elif task.type == LoaderTaskType.TERMINATE:
                     self.taskQueue.task_done()
                     break        
-            self.taskQueue.task_done()
+                
+                self.taskQueue.task_done()
                   
         self.answerQueue.put(LoaderAnswer(LoaderAnswerType.END))
     
