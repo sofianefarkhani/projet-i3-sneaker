@@ -29,6 +29,7 @@ class Utilities:
         return ConfigLoader.getVariable('runConfig', 'nbProcess') == 'auto'
 
     def shouldAutoRegulate():
+        '''Returns if the nb of '''
         return ConfigLoader.getVariable('runConfig', 'nbProcess') == 'auto'
 
     def iaShouldTalk():
@@ -42,3 +43,6 @@ class Utilities:
     
     def shouldReloadConfig():
         return ConfigLoader.getVariable('runConfig', 'dynamicConfig')
+    
+    def stopsWhenNoMoreImages():
+        return ConfigLoader.getVariable('runConfig', 'stopsAtEnd')

@@ -5,19 +5,22 @@
 
 
 runConfig:
-    nbProcess: default      # -> 'default' calculates for the number of processors you have.
+
+    stopsAtEnd: True  # When all the images in the database are dealt with, should we stop? 
+
+    nbProcess: 1      # -> 'default' calculates for the number of processors you have.
                             #       - some may be idling from time to time.
                             # -> 'auto' will auto adjusts the number of processes in accordance with the number of pending tasks
                             # -> any strictly positive number: sets the number of processes to this number.
     
     talkative:                  # all these options are for console messages with print()
-        processes: False        # to see the messages of the processes starting/ending
-        ias:       False        # to see a message each time a Blackbox starts a task, or finishes the processing of an image.
+        processes: True        # to see the messages of the processes starting/ending
+        ias:       True        # to see a message each time a Blackbox starts a task, or finishes the processing of an image.
         ias-detailed: False     # to see every single message from inside the blackboxes
-        loader:    False        # to see the messages of the loader
+        loader:    True        # to see the messages of the loader
     
     gui:
-        showImages: False       # Show each image when processed (stops the Blackbox from processing other images while on image is on display!!!)
+        showImages: True       # Show each image when processed (stops the Blackbox from processing other images while on image is on display!!!)
     
     dynamicConfig: False        # Setting to True reloads the configuration from the file at each loop of the BlackBox and of the main.  
                                 # This allows you to change the config while the application is running and see the effects in live.      
@@ -28,9 +31,10 @@ output:
     testData: ../out/testData.json  # the output file where we dump stuff that does not really matter, when we test stuff
 
 loader:
+    takeFromLocalSource: True  
     localImgSrc: ../img/test/
     batchSize: 4      # how many images should the loader load at once in the system
-    reloadNumber: 1   # When we reach this number of loaded images or less, we try to load more.
+    reloadNumber: 2   # When we reach this number of loaded images or less, we try to load more.
 
 background:
     b: (0.0,1.0,0.0)

@@ -1,10 +1,10 @@
 
 
 import cv2
-from processes.TaskType import TaskType
 
 from interface.Loader import Loader
 from interface.Writer import Writer
+from interface.ConfigLoader import ConfigLoader
 
 from colorDetector.ColorDetector import ColorDetector
 from sneakerExtractor.ShoeExtractor import ShoeExtractor
@@ -12,9 +12,10 @@ from typeDetector.TypeDetector import TypeDetector
 from preprocess.ImagePreprocessor import ImagePreprocessor
 
 from Data.Tag import Tag
+
 import multiprocessing
-from processes.TaskType import TaskType
-from interface.ConfigLoader import ConfigLoader
+from processes.Enums import *
+from processes.Task import Answer
 from processes.Utilities import Utilities
 
 
@@ -32,10 +33,8 @@ class BlackBox(multiprocessing.Process):
         
         self.testMode = testMode
         multiprocessing.Process.__init__(self)
-        self.task_queue = task_queue
+        self.taskQueue = task_queue
     
-    
-
     def run(self):
         '''Runs this Blackbox to deal with images in the task queue.
         
@@ -43,33 +42,47 @@ class BlackBox(multiprocessing.Process):
             -extract them\n
             -detect their colors (main and secondary)\n
             -detect their type (high or low)\n
-            -write the results in the output file.'''
+            -write the results in the output file.
             
+        It has to communicate with the main and the loader: 
+            - to get new tasks and to terminate its service, through taskQueue
+            - to send its status, through resultQueue'''
+        
+        
+        
         (numProcesses, procTalkative, bbTalkative) = Utilities.getRunningConfig()    
             
         proc_name = self.name
+        print(self.name+' runnin')
+        
         while True:
-            next_task = self.task_queue.get()
             
-            if next_task is None: # the loader may have a bit of lag; we wait a bit and try again
-                continue
+            next_task = self.taskQueue.get()
+            
+            if next_task is None: 
+                if Utilities.shouldAutoRegulate():
+                    if procTalkative: print ('%s: Requesting for main to close a blackbox' % proc_name)
+                    self.result_queue.put(Answer(AnswerType.ENDREQ))
+                    # the loader is overwhelmed; ask to kill a blackbox
+                else: continue                              # the loader may have a bit of lag; we wait a bit and try again
             if next_task.type == TaskType.END:
                 break
-            if next_task.img is None: # this should not happen, but i still left it as a precaution
-                continue
+            else: 
+                if next_task.img is None: # this should not happen, but i still left it as a precaution
+                    continue
+                
+                if bbTalkative: print ('%s: %s' % (proc_name, next_task))
+                self.compute(next_task.img)
+                
+                #answer = next_task()
+                
+                self.taskQueue.task_done()    # helps when we want to join threads at the end of the programm
+                #self.result_queue.put(answer)
+                
+                if Utilities.shouldReloadConfig():
+                    ConfigLoader.loadVars()
             
-            if bbTalkative: print ('%s: %s' % (proc_name, next_task))
-            self.compute(next_task.img)
-            
-            answer = next_task()
-            
-            self.task_queue.task_done()    # helps when we want to join threads at the end of the programm
-            #self.result_queue.put(answer)
-            
-            if Utilities.shouldReloadConfig():
-                ConfigLoader.loadVars()
-            
-        self.task_queue.task_done()
+        self.taskQueue.task_done()
         if procTalkative: print ('%s: End of service' % proc_name)
         return
     

@@ -4,7 +4,6 @@ import cv2
 from threading import Lock
 from interface.ConfigLoader import ConfigLoader
 from processes.Utilities import Utilities
-
 class Loader :
     '''The loader loads images and keeps them ready to use for any class that would request them.
     
@@ -34,17 +33,20 @@ class Loader :
     
     
     
-    def getImages():
+    def getImages(tasks):
         '''Returns an iterator that lets you get unlimited images.'''
         
         #while the application still runs, be ready to give images. (to one thread at a time though.)
         while not Loader.endOfService:
+            # nbLoaded = len(Loader.__images)
+            nbLoaded = tasks.qsize()
+            print (nbLoaded)
             with Loader.critical_function_lock:          #this part here should only be accessible to one thread at a time
-                if not Loader.endOfServiceOnNextNoImage and len(Loader.__images)<Loader.reloadNumber: #if we have not loaded all existing images and there are not many loaded images left
+                if not Loader.endOfServiceOnNextNoImage and nbLoaded<=Loader.reloadNumber: #if we have not loaded all existing images and there are not many loaded images left
                     Loader.loadImages()
                 
-                if len(Loader.__images)!=0:
-                    if Utilities.loaderShouldTalk() : print('Placing one more image in task queue: still '+str(len(Loader.__images))+' image(s) are ready')
+                if nbLoaded!=0:
+                    if Utilities.loaderShouldTalk() : print('Placing one more image in task queue: still '+str(nbLoaded-1)+' image(s) are ready')
                     yield Loader.getFirstImg();
                 else:
                     if Utilities.loaderShouldTalk() : print("No more images in store for now, returning None instead")
@@ -65,7 +67,7 @@ class Loader :
         if Utilities.loaderShouldTalk() : print('Loading '+str(number)+' more images')
         
         imgSuffix = '.png'
-        if number<=0: return;
+        if number<=0: return
         while (image := cv2.imread(Loader.localImgSrc+str(Loader.idOfNextImageToLoad)+imgSuffix)) is not None:
             Loader.__images.append(image)
             number -= 1
