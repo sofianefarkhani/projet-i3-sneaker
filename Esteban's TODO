@@ -1,4 +1,5 @@
-Readapt the blackboxes
+The blackbox should send a message when it stops running.
+I should implement a new utility class that handles the sending of messages between processes, and the printing/logging.
 
 Implement the nbProcess: auto mode
     adds more processes if loader is not nearing the end of service and we have not reloaded it in some time, and we do not exceed default number.
