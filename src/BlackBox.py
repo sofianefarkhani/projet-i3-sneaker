@@ -49,31 +49,24 @@ class BlackBox(multiprocessing.Process):
         It has to communicate with the main and the loader: 
             - to get new tasks and to terminate its service, through taskQueue
             - to send its status, through resultQueue'''
-        
-        
-        
+       
         (numProcesses, procTalkative, bbTalkative) = Utilities.getRunningConfig()    
-            
         proc_name = self.name
-        print(self.name+' runnin')
+        
+        if procTalkative: print ('%s: Start of service' % proc_name)
         
         while True:
-            next_task = self.taskQueue.get()
+            next_task = self.taskQueue.get() # blocks the process until a new task arrives
+            if Utilities.messagesShouldBeSpoken(): print('%s: Recieved message: %s' % (proc_name, str(next_task.type)))
             
-            if next_task is None:
-                print ('NONE') 
-                if Utilities.shouldAutoRegulate():
-                    if procTalkative: print ('%s: Requesting for main to close a blackbox' % proc_name)
-                    self.result_queue.put(Answer(AnswerType.ENDREQ))
-                    # the loader is overwhelmed; ask to kill a blackbox
-                else: continue                           # the loader may have a bit of lag; we wait a bit and try again
             if next_task.type == TaskType.END:
                 break
-            else: 
-                if next_task.img is None: # this should not happen, but i still left it as a precaution
-                    continue
+            
+            elif next_task.type == TaskType.PROCESS: 
+                if next_task.img is None: continue # this should not happen, but i still left it as a precaution
                 
                 if bbTalkative: print ('%s: %s' % (proc_name, next_task))
+                
                 self.compute(next_task.img)
                 
                 #answer = next_task()

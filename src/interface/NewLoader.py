@@ -34,11 +34,14 @@ class Loader(multiprocessing.Process):
         self.answerQueue = answerQueue
         
     def run(self):
+        (numProcesses, procTalkative, bbTalkative) = Utilities.getRunningConfig()
+        if procTalkative: print ('Loader: Start of service')
+        
         imagesGenerator = self.getImagesGenerator()
         
         while True:
             task = self.taskQueue.get() # gets the new task. If there is None, blocks the Loader until there is.
-            if Utilities.loaderShouldTalk() : print('Loader recieved task: '+str(task.type))
+            if Utilities.messagesShouldBeSpoken(): print('Loader: Recieved message: %s' % (str(task.type)))
             
             if task is not None:
                 if task.type == LoaderTaskType.LOAD:
@@ -47,9 +50,9 @@ class Loader(multiprocessing.Process):
                         if Utilities.loaderShouldTalk() : print('Loading '+str(batchSize)+' more images')
                         for i in range(batchSize):
                             img = next(imagesGenerator)
-                            if img is None:                 # if image generator yields None, this is the end of the db
+                            if img is None:                                     # if image generator yields None, this is the end of the db
                                 self.answerQueue.put(LoaderAnswer(LoaderAnswerType.NOMORE))
-                            else: # else append the image to the tasks
+                            else:                                               # else append the image to the tasks
                                 self.bbTaskQueue.put(Task(TaskType.PROCESS, img))
                         self.answerQueue.put(LoaderAnswer(LoaderAnswerType.LOADDONE))
                     else: 
@@ -62,7 +65,8 @@ class Loader(multiprocessing.Process):
                 self.taskQueue.task_done()
                   
         self.answerQueue.put(LoaderAnswer(LoaderAnswerType.END))
-    
+        if Utilities.messagesShouldBeSpoken(): print('Loader: Sent message: %s' % (str(LoaderAnswerType.END)))
+        if procTalkative: print ('Loader: End of service')
      # while not self.endOfService:
         #     print ('loader running '+__name__)
         #     # look if we have recieved any instructions

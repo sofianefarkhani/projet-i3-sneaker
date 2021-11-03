@@ -24,6 +24,8 @@ def processAnswer(tasks, results, currentlyRunningNb):
 
 
 if __name__ == '__main__':
+    
+    
     # Get basic parameters
     (numProcesses, procTalkative, bbTalkative) = Utilities.getRunningConfig()
     
@@ -32,6 +34,8 @@ if __name__ == '__main__':
     results = multiprocessing.Queue()
     loaderTasks = multiprocessing.JoinableQueue()
     loaderResults = multiprocessing.Queue()
+    
+    if procTalkative: print ('%s: Start of service' % __name__)
     
     # start the loader
     loader = Loader(loaderTasks, loaderResults, tasks)
@@ -47,15 +51,18 @@ if __name__ == '__main__':
     mainRunning = True
     currentlyRunningNb = len(consumers)
     loaderIsLoading = False
-    
+    loaderRunning = True
     
     # Main loop: checks for answers
     while mainRunning:
         # Check if we need to load more and the loader is not already trying to load more  
         
         if tasks.qsize()==0 and not loaderIsLoading:
-            loaderTasks.put(LoaderTask(LoaderTaskType.LOAD)) # sends task to loader.
-            loaderIsLoading = True
+            if loaderRunning: 
+                loaderTasks.put(LoaderTask(LoaderTaskType.LOAD)) # sends task to loader.
+                if Utilities.messagesShouldBeSpoken(): print('%s: Sent message: %s' % (__name__, str(LoaderTaskType.LOAD)))
+                loaderIsLoading = True
+            else: mainRunning = False
             
         # Process answers from the BlackBoxes.
         processAnswer(tasks, results, currentlyRunningNb)
@@ -63,11 +70,13 @@ if __name__ == '__main__':
         # Process answers from the loader
         currentAnswerNb = loaderResults.qsize()
         for i in range(currentAnswerNb):                                # for each answer
-            answer = loaderResults.get()    
+            answer = loaderResults.get()
+            if Utilities.messagesShouldBeSpoken(): print('%s: Recieved message: %s' % (__name__, str(answer.type)))   
             if answer.type == LoaderAnswerType.NOMORE:                      # if he says there are no more images to load
                 if Utilities.stopsWhenNoMoreImages():                       # if the run config is set to stop
                     loaderTasks.put(LoaderTask(LoaderTaskType.TERMINATE))       # terminate loader
-                    mainRunning = False                                         # break main loop
+                    if Utilities.messagesShouldBeSpoken(): print('%s: Sent message: %s' % (__name__, str(LoaderTaskType.TERMINATE)))
+                    loaderRunning = False                                         # break main loop
             elif answer.type == LoaderAnswerType.LOADDONE:                  # if he says he finished loading images: 
                 loaderIsLoading = False                                         # unlock the possibility of loading more images
         
@@ -78,12 +87,13 @@ if __name__ == '__main__':
     # BRUTALLY MURDER each blackbox when Loader ends its service 
     for i in range(numProcesses):
         tasks.put(Task(TaskType.END, None))
+        if Utilities.messagesShouldBeSpoken(): print('%s: Sent message: %s' % (__name__, str(TaskType.END)))
 
     # Wait for all of the tasks to finish
     tasks.join()
     loaderTasks.join()
     
-    if procTalkative: print("t'was fun working with you :D")
+    if procTalkative: print ('%s: End of service' % __name__)
     
 
 
