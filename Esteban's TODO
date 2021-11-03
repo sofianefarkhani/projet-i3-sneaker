@@ -1,4 +1,6 @@
-I should implement a new utility class that handles the sending of messages between processes, and the printing/logging.
+
+Need to wire the Herald to the ia-detailed prints.
+
 The blackbox should send a message when it stops running.
 
 Implement the nbProcess: auto mode

@@ -1,10 +1,10 @@
 
-from processes.Utilities import Utilities
+from interface.Herald import Herald
 
 
 
 class ShoeExtractor:
     
     def extractShoeFromImage(image, procName):
-        if Utilities.iaShouldTalkInDetail(): print("%s: Extracting shoe from the given image" % procName)
+        Herald.printShoeExtractor()
         return image

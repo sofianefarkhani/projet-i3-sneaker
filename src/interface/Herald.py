@@ -58,6 +58,7 @@ class Herald:
         if Utilities.iaShouldTalk(): 
             print('%s: New data written in the test output file.' % (procName))
     
+    
     # RECIEVING MESSAGES
     def getMessageFrom(procName, queue):
         '''Returns the next available message in the given queue, and prints/logs it if necessary.'''
@@ -75,3 +76,21 @@ class Herald:
             print('%s: Sent message: %s' % (procName, str(msg.type)))
     
     
+    # IA DETAILS
+    def printShoeExtractor(procName):
+        if Utilities.iaShouldTalkInDetail(): print("%s: Extracting shoe from the given image" % procName)
+        
+    def printPreprocessForShoeExtraction(procName):
+        if Utilities.iaShouldTalkInDetail(): print("%s: Preprocessing the image before detection and extraction of the shoe"% procName)
+        
+    def printPreprocessForColorIdentification(procName):
+        if Utilities.iaShouldTalkInDetail(): print("%s: Preprocessing the image before detecting the main colors of the shoe"% procName)
+        
+    def printPreprocessForTypeIdentification(procName):
+        if Utilities.iaShouldTalkInDetail(): print("%s: Preprocessing the image before detecting the type of the shoe"% procName)
+        
+    def printColorDetection(procName):
+        if Utilities.iaShouldTalkInDetail(): print('%s: Color detector attributed a color to the given image.'% procName)
+    
+    def printTypeDetection(procName):
+        if Utilities.iaShouldTalkInDetail(): print("%s: Detecting the type of the shoe"%procName)

@@ -1,6 +1,7 @@
 
 
 from Data.Type import Type
+from interface.Herald import Herald
 
 from processes.Utilities import Utilities
 
@@ -8,5 +9,5 @@ class TypeDetector:
     
     
     def detectTypeOfShoe(image, procName):
-        if Utilities.iaShouldTalkInDetail(): print("%s: Detecting the type of the shoe"%procName)
+        Herald.printTypeDetection(procName)
         return Type.HIGH
