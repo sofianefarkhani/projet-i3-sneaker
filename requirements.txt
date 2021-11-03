@@ -3,6 +3,6 @@ tensorflow
 keras
 jsonpickle
 sciPy
-jsonpickle
 PyYAML
 pandas
+colorama

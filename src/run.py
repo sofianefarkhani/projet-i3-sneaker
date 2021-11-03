@@ -6,6 +6,7 @@ from interface.ConfigLoader import ConfigLoader
 from interface.NewLoader    import Loader
 
 import multiprocessing
+from interface.Herald           import Herald
 from processes.Utilities        import Utilities
 from processes.Task             import *
 from processes.LoaderMessage    import *
@@ -25,6 +26,7 @@ def processAnswer(tasks, results, currentlyRunningNb):
 
 if __name__ == '__main__':
     
+    Herald.printStart(__name__)
     
     # Get basic parameters
     (numProcesses, procTalkative, bbTalkative) = Utilities.getRunningConfig()
@@ -35,14 +37,13 @@ if __name__ == '__main__':
     loaderTasks = multiprocessing.JoinableQueue()
     loaderResults = multiprocessing.Queue()
     
-    if procTalkative: print ('%s: Start of service' % __name__)
+    
     
     # start the loader
     loader = Loader(loaderTasks, loaderResults, tasks)
     loader.start()
     
     # Start BlackBoxes
-    if procTalkative: print ('Creating %d consumers' % numProcesses)
     consumers = [ BlackBox(tasks, results, testMode = True) for i in range(numProcesses) ]
     for bb in consumers:
         bb.start()
@@ -59,23 +60,22 @@ if __name__ == '__main__':
         
         if tasks.qsize()==0 and not loaderIsLoading:
             if loaderRunning: 
-                loaderTasks.put(LoaderTask(LoaderTaskType.LOAD)) # sends task to loader.
-                if Utilities.messagesShouldBeSpoken(): print('%s: Sent message: %s' % (__name__, str(LoaderTaskType.LOAD)))
+                Herald.queueMessageIn(__name__, loaderTasks, LoaderTask(LoaderTaskType.LOAD))
                 loaderIsLoading = True
             else: mainRunning = False
             
         # Process answers from the BlackBoxes.
         processAnswer(tasks, results, currentlyRunningNb)
 
-        # Process answers from the loader
+        # Process answers from the Loader
         currentAnswerNb = loaderResults.qsize()
         for i in range(currentAnswerNb):                                # for each answer
-            answer = loaderResults.get()
-            if Utilities.messagesShouldBeSpoken(): print('%s: Recieved message: %s' % (__name__, str(answer.type)))   
+            
+            answer = Herald.getMessageFrom(__name__, loaderResults)
+               
             if answer.type == LoaderAnswerType.NOMORE:                      # if he says there are no more images to load
                 if Utilities.stopsWhenNoMoreImages():                       # if the run config is set to stop
-                    loaderTasks.put(LoaderTask(LoaderTaskType.TERMINATE))       # terminate loader
-                    if Utilities.messagesShouldBeSpoken(): print('%s: Sent message: %s' % (__name__, str(LoaderTaskType.TERMINATE)))
+                    Herald.queueMessageIn(__name__, loaderTasks, LoaderTask(LoaderTaskType.TERMINATE))
                     loaderRunning = False                                         # break main loop
             elif answer.type == LoaderAnswerType.LOADDONE:                  # if he says he finished loading images: 
                 loaderIsLoading = False                                         # unlock the possibility of loading more images
@@ -86,15 +86,13 @@ if __name__ == '__main__':
     
     # BRUTALLY MURDER each blackbox when Loader ends its service 
     for i in range(numProcesses):
-        tasks.put(Task(TaskType.END, None))
-        if Utilities.messagesShouldBeSpoken(): print('%s: Sent message: %s' % (__name__, str(TaskType.END)))
-
+        Herald.queueMessageIn(__name__, tasks, Task(TaskType.END, None))
+        
     # Wait for all of the tasks to finish
     tasks.join()
     loaderTasks.join()
     
-    if procTalkative: print ('%s: End of service' % __name__)
-    
+    Herald.printTermination(__name__)
 
 
 

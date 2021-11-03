@@ -2,15 +2,16 @@
 import os
 import cv2
 import multiprocessing
-from interface.ConfigLoader import ConfigLoader
-from processes.Utilities import Utilities
-from processes.Task import *
-from processes.Enums import *
-from processes.LoaderMessage import *
+from interface.ConfigLoader     import ConfigLoader
+from interface.Herald           import Herald
+from processes.Utilities        import Utilities
+from processes.Task             import *
+from processes.Enums            import *
+from processes.LoaderMessage    import *
 
 
 class Loader(multiprocessing.Process):
-    '''A class that runs in a separate process, and spends its time loading images.
+    '''A class that runs in a separate process, and spends its time loading images when requested.
     
     It communicates with the main through:
         -self.taskQueue: a queue of things the loader has to do.
@@ -35,19 +36,20 @@ class Loader(multiprocessing.Process):
         
     def run(self):
         (numProcesses, procTalkative, bbTalkative) = Utilities.getRunningConfig()
-        if procTalkative: print ('Loader: Start of service')
+        Herald.printStart('Loader')
         
         imagesGenerator = self.getImagesGenerator()
         
         while True:
-            task = self.taskQueue.get() # gets the new task. If there is None, blocks the Loader until there is.
-            if Utilities.messagesShouldBeSpoken(): print('Loader: Recieved message: %s' % (str(task.type)))
+            task = Herald.getMessageFrom('Loader', self.taskQueue)
             
             if task is not None:
                 if task.type == LoaderTaskType.LOAD:
                     if ConfigLoader.getVariable('loader', 'takeFromLocalSource') == True:
-                        batchSize = imgBatchSize = ConfigLoader.getVariable('loader', 'batchSize')
-                        if Utilities.loaderShouldTalk() : print('Loading '+str(batchSize)+' more images')
+                        batchSize = ConfigLoader.getVariable('loader', 'batchSize')
+                        
+                        Herald.printLoading(batchSize)
+                        
                         for i in range(batchSize):
                             img = next(imagesGenerator)
                             if img is None:                                     # if image generator yields None, this is the end of the db
@@ -56,7 +58,7 @@ class Loader(multiprocessing.Process):
                                 self.bbTaskQueue.put(Task(TaskType.PROCESS, img))
                         self.answerQueue.put(LoaderAnswer(LoaderAnswerType.LOADDONE))
                     else: 
-                        print('Oh no, getting from FTP is not yet implemented :\'(')
+                        Herald.printError('Oh no, getting images from FTP is not yet implemented :\'(')
                 
                 elif task.type == LoaderTaskType.TERMINATE:
                     self.taskQueue.task_done()
@@ -64,25 +66,8 @@ class Loader(multiprocessing.Process):
                 
                 self.taskQueue.task_done()
                   
-        self.answerQueue.put(LoaderAnswer(LoaderAnswerType.END))
-        if Utilities.messagesShouldBeSpoken(): print('Loader: Sent message: %s' % (str(LoaderAnswerType.END)))
-        if procTalkative: print ('Loader: End of service')
-     # while not self.endOfService:
-        #     print ('loader running '+__name__)
-        #     # look if we have recieved any instructions
-            
-        #     # do we need to load more images? 
-        #     if self.bbTaskQueue.qsize() <= ConfigLoader.getVariable('loader', 'reloadNumber'):
-        #         batchSize = imgBatchSize = ConfigLoader.getVariable('loader', 'batchSize')
-        #         if Utilities.loaderShouldTalk() : print('Loading '+str(batchSize)+' more images')
-        #         for i in range(batchSize):
-        #             img = next(imagesGenerator)
-        #             if img is None: # if image generator yields None, this is the end.
-        #                 self.endOfService = True
-        #                 break
-        #             else: # else append the image to the tasks
-        #                 self.bbTaskQueue.put(Task(TaskType.PROCESS, img))
-        # at the end of service, send an answer so that the main process knows
+        Herald.queueMessageIn('Loader', self.answerQueue, LoaderAnswer(LoaderAnswerType.END))
+        Herald.printTermination('Loader')
         
         
         
@@ -94,7 +79,8 @@ class Loader(multiprocessing.Process):
         if localLoading: 
             files = os.listdir(localFile)
             for file in files:
-                if Utilities.loaderShouldTalk() : print('    - Loaded '+ localFile+file)
+                Herald.signalLoad(localFile+file)
+                
                 yield cv2.imread(localFile+file)
         
         yield None

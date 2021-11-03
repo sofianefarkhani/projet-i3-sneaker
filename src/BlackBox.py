@@ -1,8 +1,6 @@
-
-
 import cv2
 
-from interface.Loader import Loader
+from interface.Herald import Herald
 from interface.Writer import Writer
 from interface.ConfigLoader import ConfigLoader
 
@@ -53,21 +51,19 @@ class BlackBox(multiprocessing.Process):
         (numProcesses, procTalkative, bbTalkative) = Utilities.getRunningConfig()    
         proc_name = self.name
         
-        if procTalkative: print ('%s: Start of service' % proc_name)
+        Herald.printStart(proc_name)
         
         while True:
-            next_task = self.taskQueue.get() # blocks the process until a new task arrives
-            if Utilities.messagesShouldBeSpoken(): print('%s: Recieved message: %s' % (proc_name, str(next_task.type)))
+            nextTask = Herald.getMessageFrom(proc_name, self.taskQueue)
             
-            if next_task.type == TaskType.END:
+            if nextTask.type == TaskType.END:
                 break
             
-            elif next_task.type == TaskType.PROCESS: 
-                if next_task.img is None: continue # this should not happen, but i still left it as a precaution
+            elif nextTask.type == TaskType.PROCESS: 
+                if nextTask.img is None: continue # this should not happen, but i still left it as a precaution
                 
-                if bbTalkative: print ('%s: %s' % (proc_name, next_task))
                 
-                self.compute(next_task.img)
+                self.compute(nextTask.img)
                 
                 #answer = next_task()
                 
@@ -78,19 +74,25 @@ class BlackBox(multiprocessing.Process):
                     ConfigLoader.loadVars()
             
         self.taskQueue.task_done()
-        if procTalkative: print ('%s: End of service' % proc_name)
+        Herald.printTermination(proc_name)
         return
     
     def compute(self, img):
-        if img is None and not Loader.endOfService: 
-            return 
-        elif Loader.endOfService:
-            return 'exit'
         
-        shoeImg = ShoeExtractor.extractShoeFromImage(ImagePreprocessor.preprocessForShoeExtraction(img, self.name), self.name)
+        shoeImg = ShoeExtractor.extractShoeFromImage(
+            ImagePreprocessor.preprocessForShoeExtraction(img, self.name), 
+            self.name
+        )
         
-        (mainColor, secondaryColor) = ColorDetector.detectColorsOf(ImagePreprocessor.preprocessForColorsIdentification(shoeImg, self.name), self.name)
-        typeOfShoe = TypeDetector.detectTypeOfShoe(ImagePreprocessor.preprocessForTypeIdentification(shoeImg, self.name), self.name)
+        (mainColor, secondaryColor) = ColorDetector.detectColorsOf(
+            ImagePreprocessor.preprocessForColorsIdentification(shoeImg, self.name), 
+            self.name
+        )
+        
+        typeOfShoe = TypeDetector.detectTypeOfShoe(
+            ImagePreprocessor.preprocessForTypeIdentification(shoeImg, self.name), 
+            self.name
+        )
         
         tag = Tag(0) # yeah temporary id for now we don't care too much about that
         
@@ -99,10 +101,11 @@ class BlackBox(multiprocessing.Process):
         tag.setSecondaryColor(secondaryColor)
         
         if self.testMode:
-            if Utilities.iaShouldTalk(): print('%s: New data written in the test output file.' % (self.name))
-            Writer.outputTagAsJson(tag, ConfigLoader.getVariable('output', 'testData'))
+            Writer.outputTagAsJson(tag, ConfigLoader.getVariable('output', 'testData'))  
         else:
             Writer.outputTagAsJson(tag)
+            
+        Herald.printWrittenData(self.name)
         
         self.showImage(img)
     
