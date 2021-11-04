@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 from BlackBox import BlackBox
 
-from interface.ConfigLoader import ConfigLoader
-from interface.NewLoader    import Loader
+from interface.ConfigLoader     import ConfigLoader
+from interface.Loader           import Loader
 
 import multiprocessing
 from interface.Herald           import Herald
@@ -13,15 +13,6 @@ from processes.LoaderMessage    import *
 from processes.Enums            import *
 import queue
 
-
-def processAnswer(tasks, results, currentlyRunningNb):
-    if Utilities.shouldAutoRegulate():
-        try: 
-            next_answer = results.get(False)
-            if next_answer.type == AnswerType.ENDREQ and currentlyRunningNb>1:
-                tasks.put(Task(TaskType.END, None))
-                currentlyRunningNb-=1
-        except: queue.Empty
 
 
 if __name__ == '__main__':
@@ -56,8 +47,15 @@ if __name__ == '__main__':
     
     # Main loop: checks for answers
     while mainRunning:
-        # Check if we need to load more and the loader is not already trying to load more  
         
+        # check if everyone is still fine
+        if currentlyRunningNb<=0 and loaderRunning==False: #  nobody running... Can only be a mistake. Destroy all tasks, exit the program.
+            for i in range(tasks.qsize()):
+                t = Herald.getMessageFrom(__name__, tasks)
+                tasks.task_done()
+            mainRunning = False
+        
+        # Check if we need to load more and the loader is not already trying to load more  
         if tasks.qsize()==0 and not loaderIsLoading:
             if loaderRunning: 
                 Herald.queueMessageIn(__name__, loaderTasks, LoaderTask(LoaderTaskType.LOAD))
@@ -65,12 +63,19 @@ if __name__ == '__main__':
             else: mainRunning = False
             
         # Process answers from the BlackBoxes.
-        processAnswer(tasks, results, currentlyRunningNb)
+        currentAnswerNb = results.qsize()
+        for i in range(currentAnswerNb):                                # for each answer
+            answer = Herald.getMessageFrom(__name__, results)
+            if answer.type == AnswerType.BOXENDSERVICE:
+                currentlyRunningNb -= 1
+                if currentlyRunningNb <= 0: # this is an issue, politely stop the program.
+                    Herald.queueMessageIn(__name__, loaderTasks, LoaderTask(LoaderTaskType.TERMINATE))
+                    Herald.printError('No blackboxes are running. Politely stopping the program.')
+        
 
         # Process answers from the Loader
         currentAnswerNb = loaderResults.qsize()
         for i in range(currentAnswerNb):                                # for each answer
-            
             answer = Herald.getMessageFrom(__name__, loaderResults)
                
             if answer.type == LoaderAnswerType.NOMORE:                      # if he says there are no more images to load
@@ -79,13 +84,15 @@ if __name__ == '__main__':
                     loaderRunning = False                                         # break main loop
             elif answer.type == LoaderAnswerType.LOADDONE:                  # if he says he finished loading images: 
                 loaderIsLoading = False                                         # unlock the possibility of loading more images
-        
+            elif answer.type == LoaderAnswerType.END:
+                loaderRunning = False   
+            
         if Utilities.shouldReloadConfig():
             ConfigLoader.loadVars()
     
     
     # BRUTALLY MURDER each blackbox when Loader ends its service 
-    for i in range(numProcesses):
+    for i in range(currentlyRunningNb):
         Herald.queueMessageIn(__name__, tasks, Task(TaskType.END, None))
         
     # Wait for all of the tasks to finish
@@ -94,7 +101,7 @@ if __name__ == '__main__':
     
     Herald.printTermination(__name__)
 
-
+    
 
 
 

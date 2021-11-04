@@ -15,7 +15,7 @@ import multiprocessing
 from processes.Enums import *
 from processes.Task import Answer
 from processes.Utilities import Utilities
-
+import traceback
 
 class BlackBox(multiprocessing.Process):
     '''The BlackBox coordinates all the image dealings and the extraction of the values.
@@ -47,35 +47,39 @@ class BlackBox(multiprocessing.Process):
         It has to communicate with the main and the loader: 
             - to get new tasks and to terminate its service, through taskQueue
             - to send its status, through resultQueue'''
-       
-        (numProcesses, procTalkative, bbTalkative) = Utilities.getRunningConfig()    
         proc_name = self.name
+        try:
+            (numProcesses, procTalkative, bbTalkative) = Utilities.getRunningConfig()    
+            
+            Herald.printStart(proc_name)
+            
+            while True:
+                
+                nextTask = Herald.getMessageFrom(proc_name, self.taskQueue)
+                
+                if nextTask.type == TaskType.END: break
+                
+                elif nextTask.type == TaskType.PROCESS: 
+                    if nextTask.img is None: continue # this should not happen, but i still left it as a precaution
+                    
+                    self.compute(nextTask.img)
+                    
+                    self.taskQueue.task_done()    # helps when we want to join threads at the end of the programm
+                    
+                    if Utilities.shouldReloadConfig():
+                        ConfigLoader.loadVars()
+            
+            self.taskQueue.task_done()
+            
+        except Exception as e:
+            try: self.taskQueue.task_done()
+            except: Herald.printError('A dev broke the basic skeletton of the BlackBox.') 
+                
+            Herald.printError(proc_name+' encountered an error, and stopped its execution. See the error below: \n')
+            Herald.printError(traceback.format_exc())
         
-        Herald.printStart(proc_name)
-        
-        while True:
-            nextTask = Herald.getMessageFrom(proc_name, self.taskQueue)
-            
-            if nextTask.type == TaskType.END:
-                break
-            
-            elif nextTask.type == TaskType.PROCESS: 
-                if nextTask.img is None: continue # this should not happen, but i still left it as a precaution
-                
-                
-                self.compute(nextTask.img)
-                
-                #answer = next_task()
-                
-                self.taskQueue.task_done()    # helps when we want to join threads at the end of the programm
-                #self.result_queue.put(answer)
-                
-                if Utilities.shouldReloadConfig():
-                    ConfigLoader.loadVars()
-            
-        self.taskQueue.task_done()
+        Herald.queueMessageIn(proc_name, self.answerQueue, Answer(AnswerType.BOXENDSERVICE))
         Herald.printTermination(proc_name)
-        return
     
     def compute(self, img):
         
