@@ -2,7 +2,7 @@ from Data.Color import Color
 
 
 
-from interface.Herald import Herald
+from utilities.Herald import Herald
 class ColorDetector:
     
     

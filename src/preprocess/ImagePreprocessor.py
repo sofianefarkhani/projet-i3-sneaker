@@ -4,7 +4,7 @@
 
 
 
-from interface.Herald import Herald
+from utilities.Herald import Herald
 class ImagePreprocessor:
     
     

@@ -2,17 +2,17 @@
 # -*- coding: utf-8 -*-
 from BlackBox import BlackBox
 
-from interface.ConfigLoader     import ConfigLoader
+from utilities.configUtilities.ConfigLoader import ConfigLoader
+from utilities.Herald                       import Herald
+from utilities.configUtilities.ProcConfig   import ProcConfig
+
 from interface.Loader           import Loader
 
+import queue
 import multiprocessing
-from interface.Herald           import Herald
-from processes.Utilities        import Utilities
 from processes.Task             import *
 from processes.LoaderMessage    import *
 from processes.Enums            import *
-import queue
-
 
 
 if __name__ == '__main__':
@@ -20,7 +20,7 @@ if __name__ == '__main__':
     Herald.printStart(__name__)
     
     # Get basic parameters
-    (numProcesses, procTalkative, bbTalkative) = Utilities.getRunningConfig()
+    (numProcesses, procTalkative, bbTalkative) = ProcConfig.getRunningConfig()
     
     # Establish communication queues
     tasks = multiprocessing.JoinableQueue()
@@ -79,7 +79,7 @@ if __name__ == '__main__':
             answer = Herald.getMessageFrom(__name__, loaderResults)
                
             if answer.type == LoaderAnswerType.NOMORE:                      # if he says there are no more images to load
-                if Utilities.stopsWhenNoMoreImages():                       # if the run config is set to stop
+                if ProcConfig.stopsWhenNoMoreImages():                       # if the run config is set to stop
                     Herald.queueMessageIn(__name__, loaderTasks, LoaderTask(LoaderTaskType.TERMINATE))
                     loaderRunning = False                                         # break main loop
             elif answer.type == LoaderAnswerType.LOADDONE:                  # if he says he finished loading images: 
@@ -87,7 +87,7 @@ if __name__ == '__main__':
             elif answer.type == LoaderAnswerType.END:
                 loaderRunning = False   
             
-        if Utilities.shouldReloadConfig():
+        if ProcConfig.shouldReloadConfig():
             ConfigLoader.loadVars()
     
     

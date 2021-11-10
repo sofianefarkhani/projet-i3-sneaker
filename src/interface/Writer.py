@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 import json
-from Data.Tag import Tag
 import jsonpickle
-from interface.ConfigLoader import ConfigLoader
+from Data.Tag import Tag
+from utilities.configUtilities.ConfigLoader import ConfigLoader
 class Writer(json.JSONEncoder):
     '''The Writer writes JSON. 
     

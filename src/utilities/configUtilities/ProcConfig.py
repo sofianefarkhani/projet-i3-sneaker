@@ -1,13 +1,13 @@
 
-from interface.ConfigLoader import ConfigLoader
+from utilities.configUtilities.ConfigLoader import ConfigLoader
 import multiprocessing
 
-class Utilities:
+class ProcConfig:
     '''A class specifically made to access the config for the processes.'''
     
     def getRunningConfig():
         '''Returns (numProcesses, procTalkative, bbTalkative) from config.yaml'''
-        numProcesses = Utilities.calcNbProcessus()
+        numProcesses = ProcConfig.calcNbProcessus()
         procTalkative = ConfigLoader.getVariable('runConfig', 'talkative', 'processes')
         bbTalkative = ConfigLoader.getVariable('runConfig', 'talkative', 'ias')
         return (numProcesses, procTalkative, bbTalkative)

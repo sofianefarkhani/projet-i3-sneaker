@@ -1,14 +1,16 @@
 
 import os
 import cv2
+
 import multiprocessing
-from interface.ConfigLoader     import ConfigLoader
-from interface.Herald           import Herald
-from processes.Utilities        import Utilities
 from processes.Task             import *
 from processes.Enums            import *
 from processes.LoaderMessage    import *
 
+from utilities.configUtilities.ConfigLoader     import ConfigLoader
+from utilities.Herald                           import Herald
+from utilities.configUtilities.ProcConfig       import ProcConfig
+from utilities.configUtilities.LoadConfig       import LoadConfig
 
 class Loader(multiprocessing.Process):
     '''A class that runs in a separate process, and spends its time loading images when requested.
@@ -35,7 +37,7 @@ class Loader(multiprocessing.Process):
         self.answerQueue = answerQueue
         
     def run(self):
-        (numProcesses, procTalkative, bbTalkative) = Utilities.getRunningConfig()
+        (numProcesses, procTalkative, bbTalkative) = ProcConfig.getRunningConfig()
         Herald.printStart('Loader')
         
         imagesGenerator = self.getImagesGenerator()
@@ -45,8 +47,8 @@ class Loader(multiprocessing.Process):
             
             if task is not None:
                 if task.type == LoaderTaskType.LOAD:
-                    if ConfigLoader.getVariable('loader', 'takeFromLocalSource') == True:
-                        batchSize = ConfigLoader.getVariable('loader', 'batchSize')
+                    if LoadConfig.getIfLocalSource() == True:
+                        batchSize = LoadConfig.getBatchSize()
                         
                         Herald.printLoading(batchSize)
                         
@@ -73,10 +75,9 @@ class Loader(multiprocessing.Process):
         
         
     def getImagesGenerator(self):
-        localLoading = ConfigLoader.getVariable('loader','takeFromLocalSource')
-        localFile = ConfigLoader.getVariable('loader','localImgSrc')
+        localFile = LoadConfig.getLocalImageSource()
         
-        if localLoading: 
+        if LoadConfig.getIfLocalSource(): 
             files = os.listdir(localFile)
             for file in files:
                 Herald.signalLoad(localFile+file)

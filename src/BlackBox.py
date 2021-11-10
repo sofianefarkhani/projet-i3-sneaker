@@ -1,8 +1,10 @@
 import cv2
 
-from interface.Herald import Herald
 from interface.Writer import Writer
-from interface.ConfigLoader import ConfigLoader
+
+from utilities.Herald import Herald
+from utilities.configUtilities.ConfigLoader import ConfigLoader
+from utilities.configUtilities.ProcConfig import ProcConfig
 
 from colorDetector.ColorDetector import ColorDetector
 from sneakerExtractor.ShoeExtractor import ShoeExtractor
@@ -14,7 +16,7 @@ from Data.Tag import Tag
 import multiprocessing
 from processes.Enums import *
 from processes.Task import Answer
-from processes.Utilities import Utilities
+
 import traceback
 
 class BlackBox(multiprocessing.Process):
@@ -49,7 +51,7 @@ class BlackBox(multiprocessing.Process):
             - to send its status, through resultQueue'''
         proc_name = self.name
         try:
-            (numProcesses, procTalkative, bbTalkative) = Utilities.getRunningConfig()    
+            (numProcesses, procTalkative, bbTalkative) = ProcConfig.getRunningConfig()    
             
             Herald.printStart(proc_name)
             
@@ -66,7 +68,7 @@ class BlackBox(multiprocessing.Process):
                     
                     self.taskQueue.task_done()    # helps when we want to join threads at the end of the programm
                     
-                    if Utilities.shouldReloadConfig():
+                    if ProcConfig.shouldReloadConfig():
                         ConfigLoader.loadVars()
             
             self.taskQueue.task_done()

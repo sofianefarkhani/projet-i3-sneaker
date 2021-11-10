@@ -1,9 +1,7 @@
 
 
 from Data.Type import Type
-from interface.Herald import Herald
-
-from processes.Utilities import Utilities
+from utilities.Herald import Herald
 
 class TypeDetector:
     
