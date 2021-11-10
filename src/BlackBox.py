@@ -3,6 +3,7 @@ import cv2
 from interface.Writer import Writer
 
 from utilities.Herald import Herald
+from utilities.configUtilities.BBConfig import BBConfig
 from utilities.configUtilities.ConfigLoader import ConfigLoader
 from utilities.configUtilities.ProcConfig import ProcConfig
 
@@ -107,7 +108,7 @@ class BlackBox(multiprocessing.Process):
         tag.setSecondaryColor(secondaryColor)
         
         if self.testMode:
-            Writer.outputTagAsJson(tag, ConfigLoader.getVariable('output', 'testData'))  
+            Writer.outputTagAsJson(tag, BBConfig.getTestOutputFile())  
         else:
             Writer.outputTagAsJson(tag)
             
@@ -119,7 +120,7 @@ class BlackBox(multiprocessing.Process):
         '''Shows an image if the config allows it. 
         
         Stops this BlackBox from executing anything new while the image is on display.'''
-        if ConfigLoader.getVariable('runConfig', 'gui', 'showImages'):
+        if BBConfig.getIfShowImages():
             cv2.imshow("From blackbox "+str(self.id), img)
             cv2.waitKey(0)
             cv2.destroyAllWindows()

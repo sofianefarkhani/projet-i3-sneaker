@@ -3,7 +3,7 @@
 import json
 import jsonpickle
 from Data.Tag import Tag
-from utilities.configUtilities.ConfigLoader import ConfigLoader
+from utilities.configUtilities.BBConfig import BBConfig
 class Writer(json.JSONEncoder):
     '''The Writer writes JSON. 
     
@@ -15,7 +15,7 @@ class Writer(json.JSONEncoder):
     #     raise ValueError("Writer take only Tags object, your object is not Tags")
     #     return json.JSONEncoder.json_convert(self, obj)
         
-    def outputTagAsJson(tag:Tag, outputFilePath:str=ConfigLoader.getVariable('output', 'data')):
+    def outputTagAsJson(tag:Tag, outputFilePath:str=BBConfig.getOutputFile()):
         '''Writes the given tag under the Json format in the output file: ../out/data.json .
         
         Checks if the tag is complete first. 

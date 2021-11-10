@@ -7,7 +7,6 @@ from processes.Task             import *
 from processes.Enums            import *
 from processes.LoaderMessage    import *
 
-from utilities.configUtilities.ConfigLoader     import ConfigLoader
 from utilities.Herald                           import Herald
 from utilities.configUtilities.ProcConfig       import ProcConfig
 from utilities.configUtilities.LoadConfig       import LoadConfig
@@ -83,6 +82,9 @@ class Loader(multiprocessing.Process):
                 Herald.signalLoad(localFile+file)
                 
                 yield cv2.imread(localFile+file)
+        
+        else: 
+            print ('Not implemented yet you dumbdumb')
         
         yield None
                 

@@ -6,7 +6,6 @@ from Data.Type import Type
 import json
 from json import JSONEncoder
 import jsonpickle
-from interface.ConfigLoader import ConfigLoader
 from interface.Writer import Writer
 from interface.JsonReader import JsonReader 
 from interface.Loader import Loader

@@ -3,7 +3,7 @@ from utilities.configUtilities.ConfigLoader import ConfigLoader
 import multiprocessing
 
 class ProcConfig:
-    '''A class specifically made to access the config for the processes.'''
+    '''A class specifically made to access the config for the multiprocessing side of things.'''
     
     def getRunningConfig():
         '''Returns (numProcesses, procTalkative, bbTalkative) from config.yaml'''
