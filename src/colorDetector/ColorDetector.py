@@ -123,7 +123,7 @@ class ColorDetector:
                     #    print("")
                     #else:
                         if(temp < ColorDetector.nbrBackground):
-                            listInterm.append(newColor)
+                            listInterm.append(newColor.name)
             listFinal.append(listInterm)
         return listFinal
 
@@ -143,6 +143,7 @@ class ColorDetector:
                 newList.append(Color(rgb = subelement))
             listFinal.append(newList)
         return listFinal
+
     """
     #Get the primary color and the secondary color
     def getPrimaryAndSecondaryColor(listFinal):
@@ -163,16 +164,34 @@ class ColorDetector:
     def extractColor(list):
         colors = []
         for item in list:
-            listInter = []
-            print("##########################")
-            print(item)
+            while(list != []):
+                listInter = []
+                for i in range(ColorDetector.nbrBackground):
+                    listInter.append(list.pop(0))
+                dictionnary = {}
+                for i in range(len(listInter)):
+                    for j in range(len(listInter[i])):
+                        if(listInter[i][j] in dictionnary):
+                            dictionnary[listInter[i][j]] = dictionnary[listInter[i][j]] + 1
+                        else:
+                            dictionnary[listInter[i][j]] = 1
+                    listColor = []        
+                    for k in range(2):
+                        maxValue = max(dictionnary, key=dictionnary.get)
+                        listColor.append(maxValue)
+                        dictionnary.pop(maxValue)
+                colors.append(listColor)
+        return colors
+
+            """
             for i in range(0,len(item),ColorDetector.nbrBackground):
                 for j in range(len(item),i,-1):
                     for k in range(0,2,1):
                         if(list[i][k].name in list[j][0].name or list[i][k].name in list[j][1].name):
                             listInter.append(list[i][k].name)
             colors.append(listInter)
-        return 
+        return listInter
+        """
 
     def showImage(img):
         cv2.imshow("img", img)
