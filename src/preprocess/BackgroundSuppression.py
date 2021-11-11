@@ -15,6 +15,12 @@ class BackgroundSuppression:
     __MASK_ERODE_ITER = 10
 
     def replaceBackground(image):
+        """
+        Replace the background of an image by three color define in config.yaml.
+        
+        :param image: image load by OpenCV
+        :return: list of images
+        """
         __MASK_COLOR = ConfigLoader.getVariable('background')
         imagesNoBg = []
         if image is not None:
