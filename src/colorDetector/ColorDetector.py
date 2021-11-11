@@ -22,7 +22,7 @@ class ColorDetector:
         pixels = np.float32(shoeImage.reshape(-1, 3))
 
         n_colors = ColorDetector.nbrBackground + 4
-        criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 200, .1)
+        criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 10, .1)
         flags = cv2.KMEANS_RANDOM_CENTERS
 
         #cv2 give in palette all the colors that we have in an image
@@ -123,7 +123,7 @@ class ColorDetector:
                     #    print("")
                     #else:
                         if(temp < ColorDetector.nbrBackground):
-                            listInterm.append(newColor.name)
+                            listInterm.append(newColor)
             listFinal.append(listInterm)
         return listFinal
 
@@ -171,19 +171,21 @@ class ColorDetector:
                 dictionnary = {}
                 for i in range(len(listInter)):
                     for j in range(len(listInter[i])):
-                        if(listInter[i][j] in dictionnary):
-                            dictionnary[listInter[i][j]] = dictionnary[listInter[i][j]] + 1
+                        if(j in dictionnary):
+                            dictionnary[j] = dictionnary[j] + 1
                         else:
-                            dictionnary[listInter[i][j]] = 1
+                            dictionnary[j] = 1
                     listColor = []        
                     for k in range(2):
                         maxValue = max(dictionnary, key=dictionnary.get)
-                        listColor.append(maxValue)
+                        #print('\n Max value : ',maxValue)
+                        #print('\n Name color : ',listInter[i][maxValue].name)
+                        listColor.append(listInter[i][maxValue])
                         dictionnary.pop(maxValue)
                 colors.append(listColor)
         return colors
 
-            """
+        """
             for i in range(0,len(item),ColorDetector.nbrBackground):
                 for j in range(len(item),i,-1):
                     for k in range(0,2,1):
@@ -192,6 +194,35 @@ class ColorDetector:
             colors.append(listInter)
         return listInter
         """
+
+    def getRatio(list, images):
+        margiRgbCode = ConfigLoader.getVariable('color_detection','margin')
+        listColor = ConfigLoader.getVariable('background')
+        listColorBg = []
+        listRatioImages = []
+        for color in listColor:
+            bgColor = np.array([(elem * 255) for elem in ast.literal_eval(listColor[color])], np.uint8)
+            listColorBg.append(bgColor)
+
+        for i in range(len(images)):
+            imagesNoBg = BackgroundSuppression.replaceBackground(images[i])
+            listRatioImage = []
+            for j in range(len(imagesNoBg)):
+                img = imagesNoBg[j]
+                height, width, _ = img.shape
+                listRatio = []
+                dstBg = cv2.inRange(img, listColorBg[j], listColorBg[j])
+                ratioBg = cv2.countNonZero(dstBg)/(height*width)
+                denominatorRatioColorFound = 1 - ratioBg
+                for k in range(len(list[i])):
+                    rgbColorFound = np.array(list[i][k].rgb, np.uint8)
+                    dstColorFound = cv2.inRange(img,rgbColorFound-margiRgbCode, rgbColorFound+margiRgbCode)
+                    ratioColorFound = cv2.countNonZero(dstColorFound)/(height*width)
+                    ratioColorFound /= denominatorRatioColorFound
+                    listRatio.append(ratioColorFound)
+            listRatioImage.append(listRatio)
+            listRatioImages.append(listRatioImage)
+        return listRatioImages
 
     def showImage(img):
         cv2.imshow("img", img)

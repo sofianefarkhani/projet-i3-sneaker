@@ -19,3 +19,6 @@ background:
     g: (0.0,1.0,0.0)
     r: (0.0,0.0,1.0)
     b: (1.0,0.0,0.0)
+
+color_detection:
+    margin: 20

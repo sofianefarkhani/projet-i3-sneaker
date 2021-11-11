@@ -14,6 +14,7 @@ from interface.Loader import Loader
 import cv2
 from preprocess.BackgroundSuppression import BackgroundSuppression
 from menuPkg.Menu import Menu
+import numpy as np
 
 from colorDetector.ColorDetector import ColorDetector
 
@@ -67,6 +68,13 @@ def showImage(img):
     cv2.waitKey(0)
     cv2.destroyAllWindows()  
 
+def cloneImages(images):
+    imagesList = []
+    for img in images:
+        if isinstance(img,np.ndarray):
+            imagesList.append(img)
+    return imagesList
+
 # images = Loader.getImages(talking=True);
 #for img in images:
 #     showImage(img)
@@ -80,12 +88,17 @@ def showImage(img):
 #BackgroundSuppression.testMaskColor()
 #Test for ColorDetector
 images = Loader.getImages(talking=True)
-list = ColorDetector.getDominantColors(images)
+imagesClone = cloneImages(images)
+print('\n########## COLOR DETECTION START ##########')
+list = ColorDetector.getDominantColors(imagesClone)
 list = ColorDetector.deleteBackground(list)
 #list = ColorDetector.reverseChannel(list)
 #list = ColorDetector.convertRBGtoColor(list)
 listFinal = ColorDetector.extractColor(list)
 #listFinal = ColorDetector.getPrimaryAndSecondaryColor(list)
-print('\n List Final des couleurs : ', list)
+print('\n List Final des couleurs : ', listFinal)
+listRatio = ColorDetector.getRatio(listFinal,imagesClone)
+print('\n List ratio : ', listRatio)
+print('\n########## COLOR DETECTION END ##########')
 
 #menu = Menu()
