@@ -51,5 +51,5 @@ class BackgroundSuppression:
             for key in __MASK_COLOR:
                 masked = (mask_stack * image) + ((1-mask_stack) * ast.literal_eval(__MASK_COLOR[key]))
                 imagesNoBg.append((masked * 255).astype('uint8'))
-         # Blend
+        # Blend
         return imagesNoBg
