@@ -140,13 +140,6 @@ class ColorDetector:
             listFinal.append(listInterm)
         return listFinal
 
-    #Inverse R and B to have a RGB color
-    def reverseChannel(listIntermediaire):
-        for elem in listIntermediaire :
-            for subelement in elem :
-                subelement.reverse()
-        return listIntermediaire
-
     def extractColor(list):
         """
         Function extract primary and secondary color for each image
