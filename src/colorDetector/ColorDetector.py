@@ -206,7 +206,7 @@ class ColorDetector:
     def getBackgroundColors(mode):
         """
         Load background colors in a list
-        
+
         :param mode: type of object in color list
             - color : color object
             - np : nparray with uint8 for rgb code
@@ -217,10 +217,28 @@ class ColorDetector:
         listColorBg = []
         print()
         for color in listColor:
-            if mode is 'color':
+            if mode == 'color':
                 newColor = Color(rgb=[(elem * 255) for elem in ast.literal_eval(listColor[color])])
                 listColorBg.append(newColor.name)
-            elif mode is 'np':
+            elif mode == 'np':
                 bgColor = np.array([(elem * 255) for elem in ast.literal_eval(listColor[color])], np.uint8)
                 listColorBg.append(bgColor)
         return listColorBg
+
+    def extractProcess(images):
+        """
+        Function grouping together all the treatments
+
+        :param images: list of images
+
+        :return :
+            - list of primary and secondary color for each image
+            - list of ratio for primary and secondary color
+        """
+        print('\n########## COLOR DETECTION START ##########')
+        list = ColorDetector.getDominantColors(images)
+        list = ColorDetector.deleteBackground(list)
+        listFinal = ColorDetector.extractColor(list)
+        listRatio = ColorDetector.getRatio(listFinal,images)
+        print('\n########## COLOR DETECTION END ##########')
+        return listFinal, listRatio
