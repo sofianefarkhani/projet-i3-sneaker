@@ -21,5 +21,5 @@ background:
     b: (1.0,0.0,0.0)
 
 color_detection:
-    attempts: 10
-    margin: 20
+    attempts: 10    # Max iteration for kmeans function
+    margin: 20      # Margin for pixel detection when calculating the ratio
