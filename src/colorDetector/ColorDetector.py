@@ -119,11 +119,7 @@ class ColorDetector:
         :return : list of dominant colors without background color of images
         """
         # load list of background color
-        listColor = ConfigLoader.getVariable('background')
-        listColorBg = []
-        for color in listColor:
-            newColor = Color(rgb=[(elem * 255) for elem in ast.literal_eval(listColor[color])])
-            listColorBg.append(newColor.name)
+        listColorBg = ColorDetector.getBackgroundColors('color')
 
         listeTest = listColorDominants.copy()
         listFinal = []
@@ -183,12 +179,8 @@ class ColorDetector:
         margiRgbCode = ConfigLoader.getVariable('color_detection','margin')
 
         # load background colors
-        listColor = ConfigLoader.getVariable('background')
-        listColorBg = []
         listRatioImages = []
-        for color in listColor:
-            bgColor = np.array([(elem * 255) for elem in ast.literal_eval(listColor[color])], np.uint8)
-            listColorBg.append(bgColor)
+        listColorBg = ColorDetector.getBackgroundColors('np')
 
         # calculate ratio with OpenCV
         for i in range(len(images)):
@@ -210,3 +202,16 @@ class ColorDetector:
             listRatioImage.append(listRatio)
             listRatioImages.append(listRatioImage)
         return listRatioImages
+
+    def getBackgroundColors(mode):
+        listColor = ConfigLoader.getVariable('background')
+        listColorBg = []
+        print()
+        for color in listColor:
+            if mode is 'color':
+                newColor = Color(rgb=[(elem * 255) for elem in ast.literal_eval(listColor[color])])
+                listColorBg.append(newColor.name)
+            elif mode is 'np':
+                bgColor = np.array([(elem * 255) for elem in ast.literal_eval(listColor[color])], np.uint8)
+                listColorBg.append(bgColor)
+        return listColorBg
