@@ -231,11 +231,11 @@ class ColorDetector:
 
         :param list : dominant colors list
         """
-        for item in list:
-            print('---------- ITEM ----------')
-            for color in item:
+        for i in range(len(list)):
+            print('--------------------- IMAGE ',i+1 ,'---------------------')
+            for color in list[i]:
                 print('Color (name, rgb): (',color.name,',',color.rgb,')')
-            print('--------------------------\n')
+            print('----------------------------------------------------\n')
 
     def extractProcess(images):
         """
