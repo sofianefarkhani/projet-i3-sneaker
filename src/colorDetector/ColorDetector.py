@@ -20,10 +20,6 @@ class ColorDetector:
 
         :return : list of dominant color and the list of the counts of pixel for each colors
         """
-
-        #print('Color detector attributed a color to the given image.')
-        #img = io.imread(shoeImage)[:, :, :-1]
-
         average = shoeImage.mean(axis=0).mean(axis=0)
         pixels = np.float32(shoeImage.reshape(-1, 3))
 
@@ -49,17 +45,11 @@ class ColorDetector:
             #Delete the counts for the dominant color and put it in another variable
             counts,count = ColorDetector.getCounts(counts)
 
-            #print("\n Palette initiale ", palette)
-            #print("\n Dominant ", dominant)
-
             #Get the new palette without the dominant and put the dominant in another variable
             palette, colorDominant = ColorDetector.getNewList(palette, dominant)
             listColorDominants.append(colorDominant)
             listCounts.append(count)
-            #print("\n ListeCouleur : ",listColorDominants)
-                        
-            #print("\n Palette maintenant ", palette)
-            #print("\n Counts : ", counts)
+            
         #return of the list of dominant color and the list of the counts of pixel for each colors
         return np.uint8(listColorDominants),np.uint8(listCounts)
 
@@ -114,12 +104,10 @@ class ColorDetector:
         counts = []
         for img in images:
             imagesNoBg = BackgroundSuppression.replaceBackground(img)
-            #img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
             for imgPreproc in imagesNoBg:
                 colors,counts = ColorDetector.detectColorsOf(imgPreproc)
                 listColorDominants.append(colors)
                 listCounts.append(counts)
-                #ColorDetector.showImage(imgPreproc)
         return listColorDominants
 
     def deleteBackground(listColorDominants):
@@ -130,7 +118,6 @@ class ColorDetector:
 
         :return : list of dominant colors without background color of images
         """
-
         # load list of background color
         listColor = ConfigLoader.getVariable('background')
         listColorBg = []
@@ -159,16 +146,6 @@ class ColorDetector:
             for subelement in elem :
                 subelement.reverse()
         return listIntermediaire
-
-    #Convert RGB into color
-    def convertRBGtoColor(list):
-        listFinal = []
-        for elem in list :
-            newList=[]
-            for subelement in elem : 
-                newList.append(Color(rgb = subelement))
-            listFinal.append(newList)
-        return listFinal
 
     def extractColor(list):
         """
@@ -200,16 +177,6 @@ class ColorDetector:
                         dictionnary.pop(maxValue)
                 colors.append(listColor)
         return colors
-
-        """
-            for i in range(0,len(item),ColorDetector.nbrBackground):
-                for j in range(len(item),i,-1):
-                    for k in range(0,2,1):
-                        if(list[i][k].name in list[j][0].name or list[i][k].name in list[j][1].name):
-                            listInter.append(list[i][k].name)
-            colors.append(listInter)
-        return listInter
-        """
 
     def getRatio(list, images):
         """
@@ -250,8 +217,3 @@ class ColorDetector:
             listRatioImage.append(listRatio)
             listRatioImages.append(listRatioImage)
         return listRatioImages
-
-    def showImage(img):
-        cv2.imshow("img", img)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
