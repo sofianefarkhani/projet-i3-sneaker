@@ -204,6 +204,15 @@ class ColorDetector:
         return listRatioImages
 
     def getBackgroundColors(mode):
+        """
+        Load background colors in a list
+        
+        :param mode: type of object in color list
+            - color : color object
+            - np : nparray with uint8 for rgb code
+        
+        :return : list of background colors
+        """
         listColor = ConfigLoader.getVariable('background')
         listColorBg = []
         print()
