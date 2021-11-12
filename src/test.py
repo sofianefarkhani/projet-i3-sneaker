@@ -70,9 +70,12 @@ def showImage(img):
 
 def cloneImages(images):
     imagesList = []
-    for img in images:
-        if isinstance(img,np.ndarray):
-            imagesList.append(img)
+    if len(images) > 0:
+        for img in images:
+            if isinstance(img,np.ndarray):
+                imagesList.append(img)
+    else:
+        imagesList = -1
     return imagesList
 
 # images = Loader.getImages(talking=True);

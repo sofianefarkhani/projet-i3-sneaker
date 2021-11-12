@@ -236,9 +236,13 @@ class ColorDetector:
             - list of ratio for primary and secondary color
         """
         print('\n########## COLOR DETECTION START ##########')
-        list = ColorDetector.getDominantColors(images)
-        list = ColorDetector.deleteBackground(list)
-        listFinal = ColorDetector.extractColor(list)
-        listRatio = ColorDetector.getRatio(listFinal,images)
+        if len(images) > 0:
+            list = ColorDetector.getDominantColors(images)
+            list = ColorDetector.deleteBackground(list)
+            listFinal = ColorDetector.extractColor(list)
+            listRatio = ColorDetector.getRatio(listFinal,images)
+        else:
+            print("Error : no images loaded")
+            listFinal, listRatio = -1, -1
         print('\n########## COLOR DETECTION END ##########')
         return listFinal, listRatio
