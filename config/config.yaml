@@ -21,4 +21,5 @@ background:
     b: (1.0,0.0,0.0)
 
 color_detection:
+    attempts: 10
     margin: 20

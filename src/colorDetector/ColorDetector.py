@@ -28,7 +28,7 @@ class ColorDetector:
         flags = cv2.KMEANS_RANDOM_CENTERS
 
         #cv2 give in palette all the colors that we have in an image
-        _, labels, palette = cv2.kmeans(pixels, n_colors, None, criteria, 10, flags)
+        _, labels, palette = cv2.kmeans(pixels, n_colors, None, criteria, ConfigLoader.getVariable('color_detection','attempts'), flags)
         #counts has the number of pixels for each colors in palette
         _, counts = np.unique(labels, return_counts=True)
         
