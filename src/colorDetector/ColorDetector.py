@@ -224,6 +224,18 @@ class ColorDetector:
                 bgColor = np.array([(elem * 255) for elem in ast.literal_eval(listColor[color])], np.uint8)
                 listColorBg.append(bgColor)
         return listColorBg
+    
+    def printListColor(list):
+        """
+        Print informations of dominant color list
+
+        :param list : dominant colors list
+        """
+        for item in list:
+            print('---------- ITEM ----------')
+            for color in item:
+                print('Color (name, rgb): (',color.name,',',color.rgb,')')
+            print('--------------------------\n')
 
     def extractProcess(images):
         """
@@ -235,7 +247,7 @@ class ColorDetector:
             - list of primary and secondary color for each image
             - list of ratio for primary and secondary color
         """
-        print('\n########## COLOR DETECTION START ##########')
+        print('Color detection started ...')
         if len(images) > 0:
             list = ColorDetector.getDominantColors(images)
             list = ColorDetector.deleteBackground(list)
@@ -244,5 +256,5 @@ class ColorDetector:
         else:
             print("Error : no images loaded")
             listFinal, listRatio = -1, -1
-        print('\n########## COLOR DETECTION END ##########')
+        print('Color detection DONE !')
         return listFinal, listRatio
