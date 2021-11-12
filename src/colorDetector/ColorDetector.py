@@ -12,8 +12,14 @@ class ColorDetector:
     #Get the number of background used
     nbrBackground = len(ConfigLoader.getVariable("background"))
     
-    #function which allowed to get the dominants colors and the counts of pixels for each colors
     def detectColorsOf(shoeImage):
+        """
+        Function which allowed to get the dominants colors and the counts of pixels for each colors
+
+        :param shoeImage: image load
+
+        :return : list of dominant color and the list of the counts of pixel for each colors
+        """
 
         #print('Color detector attributed a color to the given image.')
         #img = io.imread(shoeImage)[:, :, :-1]
@@ -58,6 +64,14 @@ class ColorDetector:
         return np.uint8(listColorDominants),np.uint8(listCounts)
 
     def getNewList(list, dominant):
+        """
+        Get the new palette without the dominant and put the dominant in another variable
+
+        :param list: list of the main colors
+        :param dominant: dominant color
+
+        :return : list without dominant color, list exclusively compose of dominant color
+        """
         newList = []
         newListDominant = []
         xInNewList = 0
@@ -72,6 +86,10 @@ class ColorDetector:
         return newList, newListDominant
 
     def getCounts(list):
+        """
+        :param list
+        :return : two list
+        """
         newList = []
         maxCounts = 0
         for i in range(len(list)):
@@ -85,6 +103,11 @@ class ColorDetector:
         return newList, maxCounts
 
     def getDominantColors(images):
+        """
+        :param images: list of images load
+
+        :return : list of dominant color
+        """
         listColorDominants = []
         listCounts = []
         colors = []
@@ -100,14 +123,21 @@ class ColorDetector:
         return listColorDominants
 
     def deleteBackground(listColorDominants):
+        """
+        Delete background colors of list of dominant colors
+
+        :param listColorDominants: list of dominant colors
+
+        :return : list of dominant colors without background color of images
+        """
+
+        # load list of background color
         listColor = ConfigLoader.getVariable('background')
         listColorBg = []
         for color in listColor:
             newColor = Color(rgb=[(elem * 255) for elem in ast.literal_eval(listColor[color])])
             listColorBg.append(newColor.name)
-        #redColorBackground = [0,0,254]
-        #greenColorBackground = [0,254,0]
-        #blueColorBackground = [254,0,0]
+
         listeTest = listColorDominants.copy()
         listFinal = []
         for elem in listeTest:
@@ -117,11 +147,7 @@ class ColorDetector:
                 for color in subelement:
                     newColor = color.tolist()
                     newColor = Color(rgb=[newColor[2],newColor[1],newColor[0]])
-                    #if [(color.name) for color in listColorBg] != newColor.name:
                     if (newColor.name not in listColorBg):
-                    #if(str(greenColorBackground) in str(newColor) or str(redColorBackground) in str(newColor) or str(blueColorBackground) in str(newColor) ):
-                    #    print("")
-                    #else:
                         if(temp < ColorDetector.nbrBackground):
                             listInterm.append(newColor)
             listFinal.append(listInterm)
@@ -144,24 +170,14 @@ class ColorDetector:
             listFinal.append(newList)
         return listFinal
 
-    """
-    #Get the primary color and the secondary color
-    def getPrimaryAndSecondaryColor(listFinal):
-        listColor = []
-        for i in range(0,len(listFinal), ColorDetector.nbrBackground):
-            listColorIntermediaire = []
-            for j in range(1,ColorDetector.nbrBackground):
-                for k in range(0,2,1):
-                    if(listFinal[i][k].name in listFinal[j][0].name or listFinal[i][k].name in listFinal[j][1].name):
-                        #listColorIntermediaire.append(color.name)
-                        if(listFinal[i][k].name in listColorIntermediaire):
-                            listColorIntermediaire.append(listFinal[i][k].name)
-                            #print("\n LISTE INTERMEDIAIRE : ",listColorIntermediaire)
-            listColor.append(listColorIntermediaire)
-        return listColor
-        """
-
     def extractColor(list):
+        """
+        Function extract primary and secondary color for each image
+
+        :param list: list of dominant colors without background colors
+
+        :return : list contains primary and secondary color for each image
+        """
         colors = []
         for item in list:
             while(list != []):
@@ -196,7 +212,17 @@ class ColorDetector:
         """
 
     def getRatio(list, images):
+        """
+        Function estimate ratio of primary and secondary color for each image of the image list
+
+        :param list: list of primary and secondary color for each images
+        :param images: list of images
+
+        :return : list of ratio for primary and secondary color for each image of the list
+        """
         margiRgbCode = ConfigLoader.getVariable('color_detection','margin')
+
+        # load background colors
         listColor = ConfigLoader.getVariable('background')
         listColorBg = []
         listRatioImages = []
@@ -204,6 +230,7 @@ class ColorDetector:
             bgColor = np.array([(elem * 255) for elem in ast.literal_eval(listColor[color])], np.uint8)
             listColorBg.append(bgColor)
 
+        # calculate ratio with OpenCV
         for i in range(len(images)):
             imagesNoBg = BackgroundSuppression.replaceBackground(images[i])
             listRatioImage = []
