@@ -37,7 +37,7 @@ def trainAIV1():
 
     # Full connection
     model.add(Dense(units=1024, activation='relu'))
-    model.add(Dense(units=1, activation='softmax'))
+    model.add(Dense(units=1, activation='sigmoid'))
     model.add(Activation("relu"))
     model.add(Dropout(0.5))
     # Compiling the CNN
@@ -49,6 +49,26 @@ def trainAIV1():
 
 
     model.fit(trainingSet, validation_data=testSet, batch_size=32, epochs=25)  # set steps_per_epoch=3000 and validation_steps=1000 with real data
+    model.save("model.h5", overwrite=True)
+    model.save_weights('weights.h5', overwrite=True)
+    # model.load_weights('weights.h5')
+    from keras.preprocessing.image import ImageDataGenerator
+
+    test_datagen = ImageDataGenerator(rescale=1./255)
+    test_generator = test_datagen.flow_from_directory(
+            "/home/vedoc/Images/Sneaker-data/test temp",
+            target_size=(120, 120),
+            batch_size=32,
+            color_mode="grayscale",
+            class_mode='binary',
+            shuffle=False)
+
+    #make the prediction
+    prediction=model.predict(test_generator, verbose=1)
+
+    print(prediction)
+
+
 
     # """
     # Tensorboard log

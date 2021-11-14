@@ -32,11 +32,11 @@ def getDataseTrainingIA(target_size=(64, 64), ratio=0.8):
     dataFrameTest = pandas.DataFrame(data=dataFrameTest)
 
     import os
-    print("##############################  "+str(os.getcwd())) 
+    # print("##############################  "+str(os.getcwd())) 
     
-    print ('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
-    print (dataFrameTraining)
-    print(ConfigLoader.getVariable('input', 'trainingImagesFolder'))
+    # print ('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
+    # print (dataFrameTraining)
+    # print(ConfigLoader.getVariable('input', 'trainingImagesFolder'))
     
     trainingSet = train_datagen.flow_from_dataframe(
         dataframe=dataFrameTraining,
@@ -93,9 +93,9 @@ def shuffleDataSet(dataset, ratio):
     dataFrameTraining = {'id': idTraining, 'label': labelTraining}
     dataFrameTest = {'id': idTest, 'label': labelTest}
 
-    print (dataFrameTraining['id'])
-    print (dataFrameTraining['label'])
-    print (dataFrameTest['id'])
-    print (dataFrameTest['label'])
+    # print (dataFrameTraining['id'])
+    # print (dataFrameTraining['label'])
+    # print (dataFrameTest['id'])
+    # print (dataFrameTest['label'])
 
     return (dataFrameTraining, dataFrameTest)
