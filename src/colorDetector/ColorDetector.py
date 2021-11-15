@@ -237,6 +237,9 @@ class ColorDetector:
         return list
 
     def persistanceColor(list):
+        """
+        :param list : list of primary and secondary color
+        """
         seuil = ConfigLoader.getVariable('color_detection','seuil')
         for dict in list:
             listKeySuppr = []
@@ -253,8 +256,6 @@ class ColorDetector:
 
             if(len(listKeySuppr) != 0):
                 dict.pop(key)
-            
-            return dict
 
     def rangeRatioRGB(colorFound):
         """
@@ -330,11 +331,9 @@ class ColorDetector:
             listFinal = ColorDetector.extractColor(list)
             listRatio = ColorDetector.getRatio(listFinal,images)
             res = ColorDetector.associateRatioColor(listFinal, listRatio)
-            print('Res no filter : ',res)
             ColorDetector.persistanceColor(res)
-            print('Res : ',res)
         else:
             print("Error : no images loaded")
-            listFinal, listRatio = -1, -1
+            res = -1
         print('Color detection DONE !')
-        return listFinal, listRatio
+        return res
