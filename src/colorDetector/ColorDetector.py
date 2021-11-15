@@ -198,14 +198,14 @@ class ColorDetector:
                     moinsRGB, plusRGB = ColorDetector.rangeRatioRGB(rgbColorFound)
 
                     dstColorFound = cv2.inRange(img,moinsRGB, plusRGB)
-                    print("\n###################################################")
-                    print("\n moins :",moinsRGB)
-                    print("\n plus :",plusRGB)
+                    #print("\n###################################################")
+                    #print("\n moins :",moinsRGB)
+                    #print("\n plus :",plusRGB)
                     ratioColorFound = cv2.countNonZero(dstColorFound)/(height*width)
                     ratioColorFound /= denominatorRatioColorFound
-                    print("\n Ratio : ",ratioColorFound)
-                    print("\n COULEUR : ",rgbColorFound)
-                    print("\n###################################################")
+                    #print("\n Ratio : ",ratioColorFound)
+                    #print("\n COULEUR : ",rgbColorFound)
+                    #print("\n###################################################")
                     listRatio.append(ratioColorFound)
                 listRatioImage.append(listRatio)
             listRatioImages.append(listRatioImage)
@@ -215,7 +215,7 @@ class ColorDetector:
             sumItem = []
             ratioColor1 = 0
             ratioColor2 = 0
-            print(item)
+            #print(item)
             for i in range(len(item)):
                 ratioColor1 = ratioColor1 + item[i][0]
                 ratioColor2 = ratioColor2 + item[i][1]
@@ -224,8 +224,18 @@ class ColorDetector:
             sumItem.append(ratioColor1)
             sumItem.append(ratioColor2)
             listSumItem.append(sumItem)
-        print("\n LISTE SOMME",listSumItem)
+        #print("\n LISTE SOMME",listSumItem)
         return listRatioImages
+
+    def associateRatioColor(listColor, listRatio):
+        list = []
+        for i in range(len(listColor)):
+            dictRatio = {}
+            for j in range(len(listColor[i])):
+                dictRatio[listColor[i][j].name] = listRatio[i][j]
+            list.append(dictRatio)
+        return list
+
 
     def rangeRatioRGB(colorFound):
         """
@@ -300,6 +310,8 @@ class ColorDetector:
             list = ColorDetector.deleteBackground(list)
             listFinal = ColorDetector.extractColor(list)
             listRatio = ColorDetector.getRatio(listFinal,images)
+            res = ColorDetector.associateRatioColor(listFinal, listRatio)
+            print('Res : ',res)
         else:
             print("Error : no images loaded")
             listFinal, listRatio = -1, -1
