@@ -10,6 +10,7 @@ class ColorEnum(Enum):
     GRAY  = [128, 128, 128]
     SILVER = [206, 206, 206]
     ANTHRACITE = [48, 48, 48]
+    LICORICE = [27, 18, 18]
     RED   = [255, 0, 0]
     BORDEAUX = [109, 7, 26]
     GRENADINE = [233, 56, 63]
@@ -37,7 +38,6 @@ class ColorEnum(Enum):
     BROWN = [88, 41, 0]
     HAZEL = [149, 86, 40]
     BEIGE = [200, 173, 127]
-    LIGHT_BEIGE = [245, 245, 220]
     CHESTNUT = [167, 103, 38]
     
     def colorExist(ColorName:str):
