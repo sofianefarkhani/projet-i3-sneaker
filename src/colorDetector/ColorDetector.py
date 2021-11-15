@@ -239,15 +239,22 @@ class ColorDetector:
     def persistanceColor(list):
         seuil = ConfigLoader.getVariable('color_detection','seuil')
         for dict in list:
+            listKeySuppr = []
             if dict[max(dict, key=dict.get)] >= seuil:
                 keys = dict.keys
                 for key in dict:
                     if dict[key] < seuil:
-                        dict.pop(key)
-            else:
-                keys = dict.keys
-                if dict[keys[0]] != dict[keys[1]]:
-                    dict.pop(min(dict, key=dict.get))
+                        #dict.pop(key)
+                        listKeySuppr.append(key)
+            if(len(listKeySuppr) != 0):
+                dict.pop(key)
+
+            print("\n DICO : ",dict)
+            #else:
+            #    keys = dict.keys
+            #    if dict[keys[0]] != dict[keys[1]]:
+            #        #dict.pop(min(dict, key=dict.get))
+            #        listKeySuppr.append(min(dict, key=dict.get))
 
     def rangeRatioRGB(colorFound):
         """
