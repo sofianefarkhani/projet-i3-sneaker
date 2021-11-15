@@ -18,9 +18,9 @@ class ColorEnum(Enum):
     YELLOW = [255, 255, 0]
     PINK = [253, 108, 158]
     MAGENTA = [255, 0, 255]
-    VIOLET = [102, 0, 153]
+    PURPLE = [102, 0, 153]
     MAUVE = [212, 115, 212]
-    MARRON = [88, 41, 0]
+    BROWN = [88, 41, 0]
     BEIGE = [200, 173, 127]
     
     
@@ -38,10 +38,10 @@ class ColorEnum(Enum):
 
     def getClosestColorByRGB(r, g, b):
         maxDivergence = 1
-        for color in mcolors.CSS4_COLORS: #search for the basic color closest to the given rgb code. 
-            rc = mcolors.to_rgb(color)[0]*255.0
-            gc = mcolors.to_rgb(color)[1]*255.0
-            bc = mcolors.to_rgb(color)[2]*255.0
+        for color in ColorEnum: #search for the basic color closest to the given rgb code. 
+            rc = color.value[0]
+            gc = color.value[1]
+            bc = color.value[2]
             
             difRc = abs(rc-r)/255.0
             difGc = abs(gc-g)/255.0
@@ -53,9 +53,9 @@ class ColorEnum(Enum):
         return decidedC
 
     def getColorByName(name:str):
-        for color in mcolors.CSS4_COLORS:
-            if color.upper() == name.upper():
-                return (name, np.multiply(mcolors.to_rgb(color),255))
+        for color in ColorEnum:
+            if color.name in name.upper():
+                return (name, color.value)
             
         raise ValueError('The default color '+name+' does not exist. How very sad.')
 
