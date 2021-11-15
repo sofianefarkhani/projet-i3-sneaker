@@ -9,6 +9,7 @@ class ColorEnum(Enum):
     WHITE = [255, 255, 255]
     GRAY  = [128, 128, 128]
     SILVER = [206, 206, 206]
+    ANTHRACITE = [48, 48, 48]
     RED   = [255, 0, 0]
     BORDEAUX = [109, 7, 26]
     GRENADINE = [233, 56, 63]
