@@ -195,11 +195,35 @@ class ColorDetector:
                 denominatorRatioColorFound = 1 - ratioBg
                 for k in range(len(list[i])):
                     rgbColorFound = np.array(list[i][k].rgb, np.uint8)
-                    dstColorFound = cv2.inRange(img,rgbColorFound-margiRgbCode, rgbColorFound+margiRgbCode)
+                    moinsRGB = [0,0,0] #moinsRGB = rgbColorFound-margiRgbCode
+                    plusRGB = [0,0,0] #plusRGB  = rgbColorFound + margiRgbCode
+
+                    for i in range(len(moinsRGB)):
+                        if(rgbColorFound[i] - margiRgbCode < 0):
+                            moinsRGB[i] = 0
+                        else:
+                            moinsRGB[i] = rgbColorFound[i] - margiRgbCode
+
+                    for i in range(len(plusRGB)):
+                        if(rgbColorFound[i] + margiRgbCode > 255):
+                            plusRGB[i] = 255
+                        else:
+                            plusRGB[i] = rgbColorFound[i] + margiRgbCode
+
+                    moinsRGB = np.array(moinsRGB, np.uint8)
+                    plusRGB = np.array(plusRGB, np.uint8)
+
+                    dstColorFound = cv2.inRange(img,moinsRGB, plusRGB)
+                    print("\n###################################################")
+                    print("\n moins :",moinsRGB)
+                    print("\n plus :",plusRGB)
                     ratioColorFound = cv2.countNonZero(dstColorFound)/(height*width)
                     ratioColorFound /= denominatorRatioColorFound
+                    print("\n Ratio : ",ratioColorFound)
+                    print("\n COULEUR : ",rgbColorFound)
+                    print("\n###################################################")
                     listRatio.append(ratioColorFound)
-            listRatioImage.append(listRatio)
+                listRatioImage.append(listRatio)
             listRatioImages.append(listRatioImage)
         return listRatioImages
 
