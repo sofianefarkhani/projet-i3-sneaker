@@ -52,7 +52,11 @@ class Herald:
         if ProcConfig.loaderShouldTalk() : 
             print('No more images in database to load')
     
+    def printForLoader(msg):
+        if ProcConfig.loaderShouldTalk() : 
+            print(msg)
     
+
     # BLACKBOX SPECIFIC MESSAGES
     def printWrittenData(procName):
         if ProcConfig.iaShouldTalk(): 
@@ -94,3 +98,6 @@ class Herald:
     
     def printTypeDetection(procName):
         if ProcConfig.iaShouldTalkInDetail(): print("%s: Detecting the type of the shoe"%procName)
+        
+        
+    

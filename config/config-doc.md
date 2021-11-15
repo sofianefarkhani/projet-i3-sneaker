@@ -95,6 +95,15 @@ Tells the loader to fetch the images from a local directory, set in the next var
 Accepts a directory path.
 Tells the loader where to fetch images when in local source mode. 
 
+> remoteImgSrc: /resources
+
+Accepts a directory path, for the FTP server. 
+Tells the loader where to find its images on the FTP server. 
+
+Accepts a directory path.
+Tells the loader where to fetch images when in local source mode. 
+
+
 > batchSize: 4      
 
 Accepts a strictly positive integer. 

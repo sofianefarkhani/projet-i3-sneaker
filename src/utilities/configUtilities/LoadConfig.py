@@ -12,6 +12,9 @@ class LoadConfig:
     def getLocalImageSource():
         return ConfigLoader.getVariable('loader', 'localImgSrc')
     
+    def getRemoteImgSrc():
+        return ConfigLoader.getVariable('loader', 'remoteImgSrc')
+    
     def getBatchSize():
         return ConfigLoader.getVariable('loader', 'batchSize')
 

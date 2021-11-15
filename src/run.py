@@ -7,13 +7,13 @@ from utilities.Herald                       import Herald
 from utilities.configUtilities.ProcConfig   import ProcConfig
 
 from interface.Loader           import Loader
+from interface.Loader           import Connexion
 
 import queue
 import multiprocessing
 from processes.Task             import *
 from processes.LoaderMessage    import *
 from processes.Enums            import *
-
 
 if __name__ == '__main__':
     
@@ -31,7 +31,10 @@ if __name__ == '__main__':
     
     
     # start the loader
-    loader = Loader(loaderTasks, loaderResults, tasks)
+    
+    c = Connexion() 
+    
+    loader = Loader(loaderTasks, loaderResults, tasks, c)
     loader.start()
     
     # Start BlackBoxes
