@@ -4,15 +4,24 @@ import numpy as np
 
 class ColorEnum(Enum):
     '''Each ColorEnum is represented by the name of the color in uppercase, and has for value the rgb representation of the color.'''
-    RED   = [255, 0, 0]
-    GREEN = [0, 255, 0]
-    BLUE  = [0, 0, 255]
-    WHITE = [255, 255, 255]
     BLACK = [0, 0, 0]
+    WHITE = [255, 255, 255]
     GRAY  = [128, 128, 128]
-    AQUA  = [0, 255, 255]
-    FUSCHIA = [255, 0, 255]
-    YELLOW = [255, 255, 0]    
+    SILVER = [206, 206, 206]
+    RED   = [255, 0, 0]
+    BORDEAUX = [109, 7, 26]
+    BLUE  = [0, 0, 255]
+    CYAN = [43, 250, 250]
+    GREEN = [0, 255, 0]
+    EPINARD = [47, 79, 79]
+    ORANGE = [237, 127, 16]
+    YELLOW = [255, 255, 0]
+    PINK = [253, 108, 158]
+    MAGENTA = [255, 0, 255]
+    VIOLET = [102, 0, 153]
+    MAUVE = [212, 115, 212]
+    MARRON = [88, 41, 0]
+    BEIGE = [200, 173, 127]
     
     
     def colorExist(ColorName:str):
