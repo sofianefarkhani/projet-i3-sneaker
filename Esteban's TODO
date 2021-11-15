@@ -1,5 +1,3 @@
-(DONE) Add some separate doc for the configurations. We don't want the comments to get destroyed someday. That'd be sad.
-
 () Add utility classes. procrastination to its maximum. Utility classes are used to load stuff from a single function without having to change the calls to parameters whenever we change things, 
 
 Implement the nbProcess: auto mode

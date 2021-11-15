@@ -32,7 +32,7 @@ output:
     testData: ../out/testData.json  # the output file where we dump stuff that does not really matter, when we test stuff
 
 loader:
-    takeFromLocalSource: False  
+    takeFromLocalSource: True  
     localImgSrc: ../img/test/
     remoteImgSrc: /resources
     batchSize: 4      # how many images should the loader load at once in the system

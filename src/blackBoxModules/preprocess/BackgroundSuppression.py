@@ -6,6 +6,8 @@ import numpy as np
 from interface.ConfigLoader import ConfigLoader
 import ast
 
+from utilities.configUtilities.BBConfig import BBConfig
+
 class BackgroundSuppression:
 
     __BLUR = 21
@@ -15,7 +17,7 @@ class BackgroundSuppression:
     __MASK_ERODE_ITER = 10
 
     def replaceBackground(image):
-        __MASK_COLOR = ConfigLoader.getVariable('background')
+        __MASK_COLOR = BBConfig.getBackground()
         imagesNoBg = []
         if image is not None:
             gray = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)

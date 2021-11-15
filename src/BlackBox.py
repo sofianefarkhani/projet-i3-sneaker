@@ -7,10 +7,10 @@ from utilities.configUtilities.BBConfig import BBConfig
 from utilities.configUtilities.ConfigLoader import ConfigLoader
 from utilities.configUtilities.ProcConfig import ProcConfig
 
-from colorDetector.ColorDetector import ColorDetector
-from sneakerExtractor.ShoeExtractor import ShoeExtractor
-from typeDetector.TypeDetector import TypeDetector
-from preprocess.ImagePreprocessor import ImagePreprocessor
+from blackBoxModules.colorDetector.ColorDetector import ColorDetector
+from blackBoxModules.sneakerExtractor.ShoeExtractor import ShoeExtractor
+from blackBoxModules.typeDetector.TypeDetector import TypeDetector
+from blackBoxModules.preprocess.ImagePreprocessor import ImagePreprocessor
 
 from Data.Tag import Tag
 

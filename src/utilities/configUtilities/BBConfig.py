@@ -13,3 +13,6 @@ class BBConfig:
         
     def getOutputFile():
         return ConfigLoader.getVariable('output', 'data')
+    
+    def getBackground():
+        ConfigLoader.getVariable('background')

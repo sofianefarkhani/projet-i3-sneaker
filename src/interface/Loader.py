@@ -105,12 +105,13 @@ class Loader(multiprocessing.Process):
             with pysftp.Connection(host=self.connexion.hostname, username=self.connexion.username, password=self.connexion.password, cnopts=cnopts) as sftp:
                 Herald.printForLoader("Connection to FTP server succesfully established !")
                 Herald.printForLoader("Loading the list of images name... Please wait. This could take up to a few minutes, depending on the number of images in the distant folder.")
+                Herald.printForLoader("Please don't ctrl c during this time")
+                
                 
                 sftp.cwd(LoadConfig.getRemoteImgSrc())
                 
-                
+                # load names with a waiting animation
                 done = False
-                #here is the animation
                 def animate():
                     for c in itertools.cycle(['|', '/', '-', '\\']):
                         if done :
