@@ -214,17 +214,32 @@ class ColorDetector:
                     plusRGB = np.array(plusRGB, np.uint8)
 
                     dstColorFound = cv2.inRange(img,moinsRGB, plusRGB)
-                    #print("\n###################################################")
-                    #print("\n moins :",moinsRGB)
-                    #print("\n plus :",plusRGB)
+                    print("\n###################################################")
+                    print("\n moins :",moinsRGB)
+                    print("\n plus :",plusRGB)
                     ratioColorFound = cv2.countNonZero(dstColorFound)/(height*width)
                     ratioColorFound /= denominatorRatioColorFound
-                    #print("\n Ratio : ",ratioColorFound)
-                    #print("\n COULEUR : ",rgbColorFound)
-                    #print("\n###################################################")
+                    print("\n Ratio : ",ratioColorFound)
+                    print("\n COULEUR : ",rgbColorFound)
+                    print("\n###################################################")
                     listRatio.append(ratioColorFound)
                 listRatioImage.append(listRatio)
             listRatioImages.append(listRatioImage)
+        listSumItem = []
+        for item in listRatioImages:
+            sumItem = []
+            ratioColor1 = 0
+            ratioColor2 = 0
+            print(item)
+            for i in range(len(item)):
+                ratioColor1 = ratioColor1 + item[i][0]
+                ratioColor2 = ratioColor2 + item[i][1]
+            ratioColor1 = ratioColor1/len(item)
+            ratioColor2 = ratioColor2/len(item)
+            sumItem.append(ratioColor1)
+            sumItem.append(ratioColor2)
+            listSumItem.append(sumItem)
+        print("\n LISTE SOMME",listSumItem)
         return listRatioImages
 
     def getBackgroundColors(mode):
