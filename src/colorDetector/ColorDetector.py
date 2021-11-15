@@ -225,7 +225,7 @@ class ColorDetector:
             sumItem.append(ratioColor2)
             listSumItem.append(sumItem)
         #print("\n LISTE SOMME",listSumItem)
-        return listRatioImages
+        return listSumItem
 
     def associateRatioColor(listColor, listRatio):
         list = []
@@ -236,6 +236,18 @@ class ColorDetector:
             list.append(dictRatio)
         return list
 
+    def persistanceColor(list):
+        seuil = ConfigLoader.getVariable('color_detection','seuil')
+        for dict in list:
+            if dict[max(dict, key=dict.get)] >= seuil:
+                keys = dict.keys
+                for key in dict:
+                    if dict[key] < seuil:
+                        dict.pop(key)
+            else:
+                keys = dict.keys
+                if dict[keys[0]] != dict[keys[1]]:
+                    dict.pop(min(dict, key=dict.get))
 
     def rangeRatioRGB(colorFound):
         """
@@ -311,6 +323,8 @@ class ColorDetector:
             listFinal = ColorDetector.extractColor(list)
             listRatio = ColorDetector.getRatio(listFinal,images)
             res = ColorDetector.associateRatioColor(listFinal, listRatio)
+            print('Res no filter : ',res)
+            ColorDetector.persistanceColor(res)
             print('Res : ',res)
         else:
             print("Error : no images loaded")
