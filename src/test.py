@@ -89,9 +89,9 @@ def cloneImages(images):
 #Test for ColorDetector
 images = Loader.getImages(talking=True)
 imagesClone = cloneImages(images)
-listFinal, listRatio = ColorDetector.extractProcess(imagesClone)
+listFinal, listRatio = ColorDetector.detection(imagesClone)
 #print('\n List Final des couleurs : ', listFinal)
 #ColorDetector.printListColor(listFinal)
-print('\n List ratio : ', listRatio)
+#print('\n List ratio : ', listRatio)
 
 #menu = Menu()

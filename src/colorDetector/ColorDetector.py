@@ -241,20 +241,20 @@ class ColorDetector:
         for dict in list:
             listKeySuppr = []
             if dict[max(dict, key=dict.get)] >= seuil:
-                keys = dict.keys
                 for key in dict:
                     if dict[key] < seuil:
-                        #dict.pop(key)
                         listKeySuppr.append(key)
+            else:
+                keys = dict.keys()
+                premierElem = str([*keys][0])
+                deuxiemeElem = str([*keys][1])
+                if (dict[premierElem] != dict[deuxiemeElem]):
+                    dict.pop(min(dict, key=dict.get))
+
             if(len(listKeySuppr) != 0):
                 dict.pop(key)
-
-            print("\n DICO : ",dict)
-            #else:
-            #    keys = dict.keys
-            #    if dict[keys[0]] != dict[keys[1]]:
-            #        #dict.pop(min(dict, key=dict.get))
-            #        listKeySuppr.append(min(dict, key=dict.get))
+            
+            return dict
 
     def rangeRatioRGB(colorFound):
         """
