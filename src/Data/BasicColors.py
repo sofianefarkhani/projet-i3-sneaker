@@ -40,20 +40,42 @@ class ColorEnum(Enum):
     LIGHT_BEIGE = [245, 245, 220]
     CHESTNUT = [167, 103, 38]
     
-    
     def colorExist(ColorName:str):
+        """
+        Verify existance of the color
+
+        :param ColorName : name of the color
+
+        :return : true (color exists) or false (color not exists)
+        """
         for C in ColorEnum:
             if C.name == ColorName.upper():
                 return True
         return False
     
     def getColor(name:str):
+        """
+        Get color by name
+
+        :param name : name of the color
+
+        :return : object color
+        """
         for C in ColorEnum:
             if C.name == name.upper():
                 return C
         return None
 
     def getClosestColorByRGB(r, g, b):
+        """
+        Generate color by rgb
+
+        :param r : red value
+        :param g : green value
+        :param b : blue value
+
+        : return : object color
+        """
         maxDivergence = 1
         for color in ColorEnum: #search for the basic color closest to the given rgb code. 
             rc = color.value[0]
@@ -66,10 +88,17 @@ class ColorEnum(Enum):
             generalDif = (difRc+difGc+difBc)/3 #the divergence measured between the two colors, measured in [0,1]
             if generalDif<maxDivergence:
                 maxDivergence = generalDif
-                decidedC = color;
+                decidedC = color.name;
         return decidedC
 
     def getColorByName(name:str):
+        """
+        Generate color by name
+
+        :param name : name of the color
+
+        :return : object color
+        """
         for color in ColorEnum:
             if color.name in name.upper():
                 return (name, color.value)
