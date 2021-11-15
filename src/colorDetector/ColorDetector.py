@@ -195,23 +195,7 @@ class ColorDetector:
                 denominatorRatioColorFound = 1 - ratioBg
                 for k in range(len(list[i])):
                     rgbColorFound = np.array(list[i][k].rgb, np.uint8)
-                    moinsRGB = [0,0,0] #moinsRGB = rgbColorFound-margiRgbCode
-                    plusRGB = [0,0,0] #plusRGB  = rgbColorFound + margiRgbCode
-
-                    for i in range(len(moinsRGB)):
-                        if(rgbColorFound[i] - margiRgbCode < 0):
-                            moinsRGB[i] = 0
-                        else:
-                            moinsRGB[i] = rgbColorFound[i] - margiRgbCode
-
-                    for i in range(len(plusRGB)):
-                        if(rgbColorFound[i] + margiRgbCode > 255):
-                            plusRGB[i] = 255
-                        else:
-                            plusRGB[i] = rgbColorFound[i] + margiRgbCode
-
-                    moinsRGB = np.array(moinsRGB, np.uint8)
-                    plusRGB = np.array(plusRGB, np.uint8)
+                    moinsRGB, plusRGB = ColorDetector.rangeRatioRGB(rgbColorFound)
 
                     dstColorFound = cv2.inRange(img,moinsRGB, plusRGB)
                     print("\n###################################################")
@@ -225,6 +209,7 @@ class ColorDetector:
                     listRatio.append(ratioColorFound)
                 listRatioImage.append(listRatio)
             listRatioImages.append(listRatioImage)
+            
         listSumItem = []
         for item in listRatioImages:
             sumItem = []
@@ -241,6 +226,29 @@ class ColorDetector:
             listSumItem.append(sumItem)
         print("\n LISTE SOMME",listSumItem)
         return listRatioImages
+
+    def rangeRatioRGB(colorFound):
+        """
+        :param colorFound : color use for the range
+
+        :return : minimal value, maximal value
+        """
+        moinsRGB = [0, 0, 0]
+        plusRGB = [0, 0, 0]
+        margiRgbCode = ConfigLoader.getVariable('color_detection','margin')
+
+        for i in range(len(colorFound)):
+            if colorFound[i]-margiRgbCode < 0:
+                moinsRGB[i] = 0
+            else:
+                moinsRGB[i] = colorFound[i] - margiRgbCode
+            
+            if(colorFound[i] + margiRgbCode > 255):
+                plusRGB[i] = 255
+            else:
+                plusRGB[i] = colorFound[i] + margiRgbCode
+        
+        return np.array(moinsRGB, np.uint8), np.array(plusRGB, np.uint8)
 
     def getBackgroundColors(mode):
         """
@@ -276,7 +284,7 @@ class ColorDetector:
                 print('Color (name, rgb): (',color.name,',',color.rgb,')')
             print('----------------------------------------------------\n')
 
-    def extractProcess(images):
+    def detection(images):
         """
         Function grouping together all the treatments
 
