@@ -1,18 +1,25 @@
 #A file to test anything you need in the moment.
 
+from numpy.lib.type_check import imag
 from Data.Color import Color
 from Data.Tag import Tag
 from Data.Type import Type
 import json
 from json import JSONEncoder
 import jsonpickle
+from interface.ConfigLoader import ConfigLoader
 from interface.Writer import Writer
 from interface.JsonReader import JsonReader 
 from interface.Loader import Loader
 import cv2
 from preprocess.BackgroundSuppression import BackgroundSuppression
 from menuPkg.Menu import Menu
+import numpy as np
 
+from colorDetector.ColorDetector import ColorDetector
+
+
+import ast
 #### Testing the creation of colors
 #Color.testColorCreation()
 
@@ -53,9 +60,6 @@ from menuPkg.Menu import Menu
 
 
 
-
-
-
 ##### Test loading of images
 ## images are loaded as we need them. 
 
@@ -63,6 +67,13 @@ def showImage(img):
     cv2.imshow("img", img)
     cv2.waitKey(0)
     cv2.destroyAllWindows()  
+
+def cloneImages(images):
+    imagesList = []
+    for img in images:
+        if isinstance(img,np.ndarray):
+            imagesList.append(img)
+    return imagesList
 
 # images = Loader.getImages(talking=True);
 #for img in images:
@@ -75,10 +86,10 @@ def showImage(img):
 # ConfigLoader.getVariable('mysql', 'other', 'tbeau')
 
 #BackgroundSuppression.testMaskColor()
-#images = Loader.getImages(talking=True);
-#for img in images:
-#    imagesNoBg = BackgroundSuppression.replaceBackground(img)
-#    for imgPreproc in imagesNoBg:
-#        showImage(imgPreproc)
+#Test for ColorDetector
+images = Loader.getImages(talking=True)
+imagesClone = cloneImages(images)
+listColorsDetect = ColorDetector.detection(imagesClone)
+print('Colors detect : ',listColorsDetect)
 
 #menu = Menu()

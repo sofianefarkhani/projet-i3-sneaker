@@ -69,7 +69,7 @@ class Loader :
             
         if Loader.talking : print('Loading '+str(number)+' more images')
         
-        imgSuffix = '.png'
+        imgSuffix = '.jpg'
         if number<=0: return;
         while (image := cv2.imread(Loader.localImgSrc+str(Loader.idOfNextImageToLoad)+imgSuffix)) is not None:
             Loader.__images.append(image)
