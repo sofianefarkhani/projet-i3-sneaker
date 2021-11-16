@@ -17,6 +17,7 @@ from menuPkg.Menu import Menu
 import numpy as np
 
 from colorDetector.ColorDetector import ColorDetector
+from preprocess.Contrast import Contrast
 
 
 import ast
@@ -89,7 +90,9 @@ def cloneImages(images):
 #Test for ColorDetector
 images = Loader.getImages(talking=True)
 imagesClone = cloneImages(images)
-listColorsDetect = ColorDetector.detection(imagesClone)
-print('Colors detect : ',listColorsDetect)
+for img in imagesClone:
+    Contrast.run(img)
+#listColorsDetect = ColorDetector.detection(imagesClone)
+#print('Colors detect : ',listColorsDetect)
 
 #menu = Menu()
