@@ -20,6 +20,8 @@ from colorDetector.ColorDetector import ColorDetector
 from preprocess.ContrastAndBrightness import ContrastAndBrightness
 
 import ast
+
+from preprocess.ImagePreprocessor import ImagePreprocessor
 #### Testing the creation of colors
 #Color.testColorCreation()
 
@@ -90,7 +92,7 @@ def cloneImages(images):
 images = Loader.getImages(talking=True)
 imagesClone = cloneImages(images)
 for img in imagesClone:
-    ContrastAndBrightness.getContrast(img)
+    ImagePreprocessor.contrastAndBrightnessAdjustment(img)
 #listColorsDetect = ColorDetector.detection(imagesClone)
 #print('Colors detect : ',listColorsDetect)
 

@@ -1,22 +1,18 @@
-
-
-
-
-
-
-
-
+import cv2
+from skimage.exposure import is_low_contrast
+from ContrastAndBrightness import ContrastAndBrightness
 class ImagePreprocessor:
-    
-    
-    def preprocessForShoeExtraction(image):
-        print("Preprocessing the image before detection and extraction of the shoe")
-        return image
-    
-    def preprocessForColorsIdentification(image):
-        print("Preprocessing the image before detecting the main colors of the shoe")
-        return image
-    
-    def preprocessForTypeIdentification(image):
-        print("Preprocessing the image before detecting the type of the shoe")
-        return image
+
+    def contrastAndBrightnessAdjustment(image):
+        """
+        Adjust contrast and brightness of an image if image has a low contrast
+        
+        :param image : 
+        """
+        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        if is_low_contrast(gray, fraction_threshold=0.35):
+            print('Start contrast and brightness adjustment')
+            ContrastAndBrightness.printInfoContrast(image, "LOW CONTRAST", (0, 0, 255))
+            imageAdjust = ContrastAndBrightness.adjustment(image)
+            ContrastAndBrightness.showImage(imageAdjust)
+            print('Contrast and brightness adjustment : DONE')
