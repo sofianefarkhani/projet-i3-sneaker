@@ -2,13 +2,15 @@ The wise Beaver's big dam of logs:
 ---------------------------------------
 __main__: Sent message: LoaderTaskType.LOAD
 ---------------------------------------
+BlackBox-2: Start of service
+---------------------------------------
 Loader: Start of service
 ---------------------------------------
 Loader: Recieved message: LoaderTaskType.LOAD
 ---------------------------------------
 Loading 4 more images
 ---------------------------------------
-BlackBox-2: Start of servicepg
+    - Loaded ../img/test/1.jpg
 ---------------------------------------
 Loader: Sent message: TaskType.PROCESS
 ---------------------------------------
@@ -20,13 +22,15 @@ Loader: Sent message: TaskType.PROCESS
 ---------------------------------------
 Loader: Sent message: TaskType.PROCESS
 ---------------------------------------
-    - Loaded ../img/test/12.png
----------------------------------------
 BlackBox-2: Recieved message: TaskType.PROCESS
+---------------------------------------
+    - Loaded ../img/test/12.png
 ---------------------------------------
 Loader: Sent message: TaskType.PROCESS
 ---------------------------------------
 __main__: Recieved message: LoaderAnswerType.LOADDONE
+---------------------------------------
+BlackBox-2: Recieved message: TaskType.PROCESS
 ---------------------------------------
 BlackBox-2: Recieved message: TaskType.PROCESS
 ---------------------------------------
@@ -37,8 +41,6 @@ __main__: Sent message: LoaderTaskType.LOAD
 Loader: Recieved message: LoaderTaskType.LOAD
 ---------------------------------------
 Loading 4 more images
----------------------------------------
-BlackBox-2: Recieved message: TaskType.PROCESS
 ---------------------------------------
     - Loaded ../img/test/13.png
 ---------------------------------------
@@ -64,6 +66,8 @@ BlackBox-2: Recieved message: TaskType.PROCESS
 ---------------------------------------
 BlackBox-2: Recieved message: TaskType.PROCESS
 ---------------------------------------
+BlackBox-2: Recieved message: TaskType.PROCESS
+---------------------------------------
 __main__: Sent message: LoaderTaskType.LOAD
 ---------------------------------------
 Loader: Recieved message: LoaderTaskType.LOAD
@@ -72,7 +76,7 @@ Loading 4 more images
 ---------------------------------------
     - Loaded ../img/test/17.png
 ---------------------------------------
-BlackBox-2: Recieved message: TaskType.PROCESS
+Loader: Sent message: TaskType.PROCESS
 ---------------------------------------
     - Loaded ../img/test/18.png
 ---------------------------------------
@@ -110,19 +114,35 @@ Loader: Sent message: TaskType.PROCESS
 ---------------------------------------
 Loader: Sent message: TaskType.PROCESS
 ---------------------------------------
-Loader: Sent message: LoaderAnswerType.NOMORE
+    - Loaded ../img/test/5.jpg
+---------------------------------------
+Loader: Sent message: TaskType.PROCESS
 ---------------------------------------
 __main__: Recieved message: LoaderAnswerType.NOMORE
 ---------------------------------------
 __main__: Sent message: LoaderTaskType.TERMINATE
 ---------------------------------------
+Loader: Recieved message: LoaderTaskType.TERMINATE
+---------------------------------------
+Loader: Sent message: LoaderAnswerType.END
+---------------------------------------
+__main__: Recieved message: TaskType.PROCESS
+---------------------------------------
+Loader: End of service
+---------------------------------------
 __main__: Recieved message: TaskType.PROCESS
 ---------------------------------------
 __main__: Recieved message: TaskType.PROCESS
+---------------------------------------
+__main__: Recieved message: LoaderAnswerType.LOADDONE
+---------------------------------------
+__main__: Recieved message: LoaderAnswerType.END
 ---------------------------------------
 __main__: Sent message: TaskType.END
 ---------------------------------------
 BlackBox-2: Recieved message: TaskType.END
+---------------------------------------
+__main__: End of service
 ---------------------------------------
 BlackBox-2: Sent message: AnswerType.BOXENDSERVICE
 ---------------------------------------

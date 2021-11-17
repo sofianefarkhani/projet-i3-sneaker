@@ -88,7 +88,7 @@ class BlackBox(multiprocessing.Process):
     
     
     def compute(self, img):
-        processedImg = ImagePreprocessor.preprocessForShoeExtraction(img, self.name)
+        # processedImg = ImagePreprocessor.preprocessForShoeExtraction(img, self.name)
         
         # shoeImg = ShoeExtractor.extractShoeFromImage(
         #     processedImg,
@@ -96,10 +96,10 @@ class BlackBox(multiprocessing.Process):
         # )
         
         
-        (mainColor, secondaryColor) = ColorDetector.detection(
-            processedImg,
-            self.name
-        )
+        # (mainColor, secondaryColor) = ColorDetector.detection(
+        #     processedImg,
+        #     self.name
+        # )
         
         # typeOfShoe = TypeDetector.detectTypeOfShoe(
         #     ImagePreprocessor.preprocessForTypeIdentification(shoeImg, self.name), 
