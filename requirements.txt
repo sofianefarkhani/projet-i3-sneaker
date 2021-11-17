@@ -7,3 +7,4 @@ PyYAML
 pandas
 colorama
 pysftp
+scikit-image
