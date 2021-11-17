@@ -47,7 +47,11 @@ Multiple options are available, and they all accept a boolean.
 
 - loader: False     
     To see when the loader loads its images. 
-    
+
+> logs
+
+The same as talkative, but for printing in the logs instead.
+
 > gui:
 
 To activate/deactivate graphics components. 
