@@ -50,24 +50,12 @@ class Color():
    
     def testColorCreation():
         c = Color("almost magenta", [255,25,255])
-        print("\n\nHere are the end results: this you asked for the color:")
-        print (c.name)
-        print (c.rgb)
         
         c = Color(rgb = [255,25,255])
-        print("\n\nHere are the end results: this you asked for the color:")
-        print (c.name)
-        print (c.rgb)
         
         c = Color("AQUA")
-        print("\n\nHere are the end results: this you asked for the color:")
-        print (c.name)
-        print (c.rgb)
         
         c = Color()
-        print("\n\nHere are the end results: this you asked for the color:")
-        print (c.name)
-        print (c.rgb)
         
     def toString(self):
         return self.__dict__

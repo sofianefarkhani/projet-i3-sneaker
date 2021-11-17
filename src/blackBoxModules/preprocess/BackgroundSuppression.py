@@ -3,7 +3,6 @@
 
 import cv2
 import numpy as np
-from interface.ConfigLoader import ConfigLoader
 import ast
 
 from utilities.configUtilities.BBConfig import BBConfig
@@ -26,6 +25,7 @@ class BackgroundSuppression:
         __MASK_COLOR = BBConfig.getBackground()
         imagesNoBg = []
         if image is not None:
+            
             gray = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
             edges = cv2.Canny(gray, BackgroundSuppression.__CANNY_THRESH_1, BackgroundSuppression.__CANNY_THRESH_2)
             edges = cv2.dilate(edges, None)
@@ -55,6 +55,7 @@ class BackgroundSuppression:
             #-- Blend masked image into MASK_COLOR background --------------------------------------
             mask_stack  = mask_stack.astype('float32') / 255.0          # Use float matrices, 
             image         = image.astype('float32') / 255.0                 #  for easy blending
+
 
             for key in __MASK_COLOR:
                 masked = (mask_stack * image) + ((1-mask_stack) * ast.literal_eval(__MASK_COLOR[key]))

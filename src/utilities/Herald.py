@@ -13,12 +13,16 @@ from processes.LoaderMessage    import *
 from processes.Enums            import *
 import queue
 
+
+
 class Herald:
     '''A utility class that processes use to transmit/print/log messages.
     
     This class is basically a fancy way to send signals between processes, and log them.
     Its nothing complicated, just used to hide stuff where the rest of the code is more important. 
     It will all by itself queue the messages, and print the infos / log them.'''
+    
+   
     
     
     # PRINTING / LOGGING
@@ -31,14 +35,14 @@ class Herald:
     def printStart(procName):
         '''Announces the start of a process in the terminal.'''
         if ConfigLoader.getVariable('runConfig', 'talkative', 'processes'): 
-            print ('%s: Start of service' % procName)
+            print (Fore.CYAN+'%s: Start of service' % procName+Style.RESET_ALL)
         if ConfigLoader.getVariable('runConfig', 'logs', 'processes'): 
             Beaver.log('%s: Start of service' % procName)
             
     def printTermination(procName):
         '''Announces the end of a process in the terminal.'''
         if ConfigLoader.getVariable('runConfig', 'talkative', 'processes'): 
-            print ('%s: End of service' % procName)
+            print (Fore.CYAN+'%s: End of service' % procName+Style.RESET_ALL)
         if ConfigLoader.getVariable('runConfig', 'logs', 'processes'): 
             Beaver.log('%s: End of service' % procName)
     
@@ -46,14 +50,14 @@ class Herald:
     def printLoading(number):
         '''Announces in the terminal that the Loader will load more images.'''
         if ProcConfig.loaderShouldTalk() : 
-            print('Loading '+str(number)+' more images')
+            print(Fore.BLUE+'Loading '+str(number)+' more images'+Style.RESET_ALL)
         if ConfigLoader.getVariable('runConfig', 'logs', 'loader')==True:
             Beaver.log('Loading '+str(number)+' more images')
     
     def signalLoad(imgName):
         '''Announces in the terminal that an image was loaded successfully.'''
         if ProcConfig.loaderShouldTalk() : 
-            print('    - Loaded '+ imgName)
+            print(Fore.BLUE+'    - Loaded '+ imgName+Style.RESET_ALL)
         if ConfigLoader.getVariable('runConfig', 'logs', 'loader')==True:
             Beaver.log('    - Loaded '+ imgName)    
             
@@ -61,7 +65,7 @@ class Herald:
     def printNoMoreImages():
         '''Announces in the terminal that the Loader reached the end of the database.'''
         if ProcConfig.loaderShouldTalk() : 
-            print('No more images in database to load')
+            print(Fore.BLUE+'No more images in database to load'+Style.RESET_ALL)
         if ConfigLoader.getVariable('runConfig', 'logs', 'loader')==True:
             Beaver.log('No more images in database to load') 
     
@@ -83,7 +87,7 @@ class Herald:
         '''Returns the next available message in the given queue, and prints/logs it if necessary.'''
         message = queue.get()
         if ProcConfig.messagesShouldBeSpoken(): 
-            print('%s: Recieved message: %s' % (procName, str(message.type)))
+            print(Style.BRIGHT+Fore.MAGENTA+procName+Style.NORMAL+': Recieved message: %s' % str(message.type))
         if ConfigLoader.getVariable('runConfig', 'logs', 'messages'):
             Beaver.log('%s: Recieved message: %s' % (procName, str(message.type))) 
         return message
@@ -94,7 +98,7 @@ class Herald:
         '''Places the given message in the given queue, and prints/logs the action if necessary.'''
         queue.put(msg)
         if ProcConfig.messagesShouldBeSpoken(): 
-            print('%s: Sent message: %s' % (procName, str(msg.type)))
+            print(Style.BRIGHT+Fore.MAGENTA+procName+Style.NORMAL+': Sent message: %s' % str(msg.type))
         if ConfigLoader.getVariable('runConfig', 'logs', 'messages'):
             Beaver.log('%s: Sent message: %s' % (procName, str(msg.type))) 
         

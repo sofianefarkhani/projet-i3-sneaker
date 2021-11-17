@@ -88,32 +88,34 @@ class BlackBox(multiprocessing.Process):
     
     
     def compute(self, img):
+        processedImg = ImagePreprocessor.preprocessForShoeExtraction(img, self.name)
         
-        shoeImg = ShoeExtractor.extractShoeFromImage(
-            ImagePreprocessor.preprocessForShoeExtraction(img, self.name), 
+        # shoeImg = ShoeExtractor.extractShoeFromImage(
+        #     processedImg,
+        #     self.name
+        # )
+        
+        
+        (mainColor, secondaryColor) = ColorDetector.detection(
+            processedImg,
             self.name
         )
         
-        (mainColor, secondaryColor) = ColorDetector.detectColorsOf(
-            ImagePreprocessor.preprocessForColorsIdentification(shoeImg, self.name), 
-            self.name
-        )
+        # typeOfShoe = TypeDetector.detectTypeOfShoe(
+        #     ImagePreprocessor.preprocessForTypeIdentification(shoeImg, self.name), 
+        #     self.name
+        # )
         
-        typeOfShoe = TypeDetector.detectTypeOfShoe(
-            ImagePreprocessor.preprocessForTypeIdentification(shoeImg, self.name), 
-            self.name
-        )
+        # tag = Tag(0) # yeah temporary id for now we don't care too much about that
         
-        tag = Tag(0) # yeah temporary id for now we don't care too much about that
+        # tag.setType(typeOfShoe)
+        # tag.setMainColor(mainColor)
+        # tag.setSecondaryColor(secondaryColor)
         
-        tag.setType(typeOfShoe)
-        tag.setMainColor(mainColor)
-        tag.setSecondaryColor(secondaryColor)
-        
-        if self.testMode:
-            Writer.outputTagAsJson(tag, BBConfig.getTestOutputFile())  
-        else:
-            Writer.outputTagAsJson(tag)
+        # if self.testMode:
+        #     Writer.outputTagAsJson(tag, BBConfig.getTestOutputFile())  
+        # else:
+        #     Writer.outputTagAsJson(tag)
             
         Herald.printWrittenData(self.name)
         

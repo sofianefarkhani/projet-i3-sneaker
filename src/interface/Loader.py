@@ -50,7 +50,6 @@ class Loader(multiprocessing.Process):
         self.connexion = connexion
         
     def run(self):
-        (numProcesses, procTalkative, bbTalkative) = ProcConfig.getRunningConfig()
         Herald.printStart('Loader')
         
         imagesGenerator = self.getImagesGenerator()
@@ -67,9 +66,9 @@ class Loader(multiprocessing.Process):
                     for i in range(batchSize):
                         img = next(imagesGenerator)
                         if img is None:        # if image generator yields None, this is the end of the db
-                            self.answerQueue.put(LoaderAnswer(LoaderAnswerType.NOMORE))
+                            Herald.queueMessageIn('Loader', self.answerQueue, LoaderAnswer(LoaderAnswerType.NOMORE))
                         else:                  # else append the image to the tasks
-                            self.bbTaskQueue.put(Task(TaskType.PROCESS, img))
+                            Herald.queueMessageIn('Loader', self.bbTaskQueue, Task(TaskType.PROCESS, img))
                     self.answerQueue.put(LoaderAnswer(LoaderAnswerType.LOADDONE))
                 
                 elif task.type == LoaderTaskType.TERMINATE:
@@ -92,7 +91,7 @@ class Loader(multiprocessing.Process):
             for file in files:
                 Herald.signalLoad(localFile+file)
                 
-                yield cv2.imread(localFile+file)
+                yield cv2.imread(localFile+file, cv2.IMREAD_COLOR)
         
         else: 
             # print ('Not implemented yet you dumbdumb')
@@ -137,7 +136,7 @@ class Loader(multiprocessing.Process):
                     sftp.get(temp, '../img/temp/'+temp)  
                     
                     # yield image from folder
-                    yield cv2.imread('../img/temp/'+temp)
+                    yield cv2.imread('../img/temp/'+temp, cv2.IMREAD_COLOR)
                     
                     # remove image from cache
                     os.remove('../img/temp/'+temp)

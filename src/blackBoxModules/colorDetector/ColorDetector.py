@@ -3,9 +3,8 @@ from Data.Color import Color
 
 import cv2
 import numpy as np
-from skimage import io
-from preprocess.BackgroundSuppression import BackgroundSuppression
-from interface.ConfigLoader import ConfigLoader
+from blackBoxModules.preprocess.BackgroundSuppression import BackgroundSuppression
+from utilities.configUtilities.ConfigLoader import ConfigLoader
 import ast
 
 
@@ -40,7 +39,7 @@ class ColorDetector:
 
         #for each background, we take the dominants colors and the numbers of pixels for each dominants colors
         for i in range(ColorDetector.nbrBackground):
-            #print("\n I : ",i)
+            
             count = 0
 
             #Get the dominants color
@@ -95,9 +94,9 @@ class ColorDetector:
                 newList.append(list[i])
         return newList, maxCounts
 
-    def getDominantColors(images):
+    def getDominantColors(image):
         """
-        :param images: list of images load
+        :param image: loaded image
 
         :return : list of dominant color
         """
@@ -105,12 +104,12 @@ class ColorDetector:
         listCounts = []
         colors = []
         counts = []
-        for img in images:
-            imagesNoBg = BackgroundSuppression.replaceBackground(img)
-            for imgPreproc in imagesNoBg:
-                colors,counts = ColorDetector.detectColorsOf(imgPreproc)
-                listColorDominants.append(colors)
-                listCounts.append(counts)
+        
+        imagesNoBg = BackgroundSuppression.replaceBackground(image)
+        for imgPreproc in imagesNoBg:
+            colors,counts = ColorDetector.detectColorsOf(imgPreproc)
+            listColorDominants.append(colors)
+            listCounts.append(counts)
         return listColorDominants
 
     def deleteBackground(listColorDominants):
@@ -163,71 +162,63 @@ class ColorDetector:
                     listColor = []        
                     for k in range(2):
                         maxValue = max(dictionnary, key=dictionnary.get)
-                        #print('\n Max value : ',maxValue)
-                        #print('\n Name color : ',listInter[i][maxValue].name)
+                        
                         listColor.append(listInter[i][maxValue])
                         dictionnary.pop(maxValue)
                 colors.append(listColor)
         return colors
 
-    def getRatio(list, images):
+    def getRatio(list, image):
         """
         Function estimate ratio of primary and secondary color for each image of the image list
 
         :param list: list of primary and secondary color for each images
-        :param images: list of images
+        :param image: image
 
         :return : list of ratio for primary and secondary color for each image of the list
         """
         margiRgbCode = ConfigLoader.getVariable('color_detection','margin')
 
         # load background colors
-        listRatioImages = []
         listColorBg = ColorDetector.getBackgroundColors('np')
 
         # calculate ratio with OpenCV
-        for i in range(len(images)):
-            imagesNoBg = BackgroundSuppression.replaceBackground(images[i])
-            listRatioImage = []
-            for j in range(len(imagesNoBg)):
-                img = imagesNoBg[j]
-                height, width, _ = img.shape
-                listRatio = []
-                dstBg = cv2.inRange(img, listColorBg[j], listColorBg[j])
-                ratioBg = cv2.countNonZero(dstBg)/(height*width)
-                denominatorRatioColorFound = 1 - ratioBg
-                for k in range(len(list[i])):
-                    rgbColorFound = np.array(list[i][k].rgb, np.uint8)
-                    moinsRGB, plusRGB = ColorDetector.rangeRatioRGB(rgbColorFound)
+        imagesNoBg = BackgroundSuppression.replaceBackground(image)
+        listRatioImage = []
+        for j in range(len(imagesNoBg)):
+            img = imagesNoBg[j]
+            height, width, _ = img.shape
+            listRatio = []
+            dstBg = cv2.inRange(img, listColorBg[j], listColorBg[j])
+            ratioBg = cv2.countNonZero(dstBg)/(height*width)
+            denominatorRatioColorFound = 1 - ratioBg
+            for k in range(len(list[0])):
+                rgbColorFound = np.array(list[0][k].rgb, np.uint8)
+                moinsRGB, plusRGB = ColorDetector.rangeRatioRGB(rgbColorFound)
 
-                    dstColorFound = cv2.inRange(img,moinsRGB, plusRGB)
-                    #print("\n###################################################")
-                    #print("\n moins :",moinsRGB)
-                    #print("\n plus :",plusRGB)
-                    ratioColorFound = cv2.countNonZero(dstColorFound)/(height*width)
-                    ratioColorFound /= denominatorRatioColorFound
-                    #print("\n Ratio : ",ratioColorFound)
-                    #print("\n COULEUR : ",rgbColorFound)
-                    #print("\n###################################################")
-                    listRatio.append(ratioColorFound)
-                listRatioImage.append(listRatio)
-            listRatioImages.append(listRatioImage)
+                dstColorFound = cv2.inRange(img,moinsRGB, plusRGB)
+                
+                ratioColorFound = cv2.countNonZero(dstColorFound)/(height*width)
+                ratioColorFound /= denominatorRatioColorFound
+                
+                listRatio.append(ratioColorFound)
+            listRatioImage.append(listRatio)
             
         listSumItem = []
-        for item in listRatioImages:
-            sumItem = []
-            ratioColor1 = 0
-            ratioColor2 = 0
-            #print(item)
-            for i in range(len(item)):
-                ratioColor1 = ratioColor1 + item[i][0]
-                ratioColor2 = ratioColor2 + item[i][1]
-            ratioColor1 = ratioColor1/len(item)
-            ratioColor2 = ratioColor2/len(item)
-            sumItem.append(ratioColor1)
-            sumItem.append(ratioColor2)
-            listSumItem.append(sumItem)
-        #print("\n LISTE SOMME",listSumItem)
+        
+        sumItem = []
+        ratioColor1 = 0
+        ratioColor2 = 0
+        
+        for i in range(len(listRatioImage)):
+            ratioColor1 = ratioColor1 + listRatioImage[i][0]
+            ratioColor2 = ratioColor2 + listRatioImage[i][1]
+        ratioColor1 = ratioColor1/len(listRatioImage)
+        ratioColor2 = ratioColor2/len(listRatioImage)
+        sumItem.append(ratioColor1)
+        sumItem.append(ratioColor2)
+        listSumItem.append(sumItem)
+        
         return listSumItem
 
     def associateRatioColor(listColor, listRatio):
@@ -295,7 +286,6 @@ class ColorDetector:
         """
         listColor = ConfigLoader.getVariable('background')
         listColorBg = []
-        print()
         for color in listColor:
             if mode == 'color':
                 newColor = Color(rgb=[(elem * 255) for elem in ast.literal_eval(listColor[color])])
@@ -305,19 +295,9 @@ class ColorDetector:
                 listColorBg.append(bgColor)
         return listColorBg
     
-    def printListColor(list):
-        """
-        Print informations of dominant color list
+    
 
-        :param list : dominant colors list
-        """
-        for i in range(len(list)):
-            print('--------------------- IMAGE ',i+1 ,'---------------------')
-            for color in list[i]:
-                print('Color (name, rgb): (',color.name,',',color.rgb,')')
-            print('----------------------------------------------------\n')
-
-    def detection(images):
+    def detection(image, procname):
         """
         Function grouping together all the treatments
 
@@ -327,16 +307,20 @@ class ColorDetector:
             - list of primary and secondary color for each image
             - list of ratio for primary and secondary color
         """
-        print('Color detection started ...')
-        if len(images) > 0:
-            list = ColorDetector.getDominantColors(images)
-            list = ColorDetector.deleteBackground(list)
-            listFinal = ColorDetector.extractColor(list)
-            listRatio = ColorDetector.getRatio(listFinal,images)
-            res = ColorDetector.associateRatioColor(listFinal, listRatio)
-            ColorDetector.persistanceColor(res)
-        else:
-            print("Error : no images loaded")
-            res = -1
-        print('Color detection DONE !')
-        return res
+        Herald.printColorDetection(procname)
+        
+        list = ColorDetector.getDominantColors(image)
+        list = ColorDetector.deleteBackground(list)
+        listFinal = ColorDetector.extractColor(list)
+        listRatio = ColorDetector.getRatio(listFinal,image)
+        res = ColorDetector.associateRatioColor(listFinal, listRatio)
+        
+        ColorDetector.persistanceColor(res)
+        
+        keyList = res[0].keys()
+        mainColor = Color(str([*keyList][0]))
+        secondaryColor = None
+        if len(keyList)>1:
+            secondaryColor = Color(str([*keyList][1]))
+        
+        return (mainColor, secondaryColor)

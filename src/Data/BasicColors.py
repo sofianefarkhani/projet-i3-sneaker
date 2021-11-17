@@ -12,6 +12,7 @@ class ColorEnum(Enum):
     ANTHRACITE = [48, 48, 48]
     LICORICE = [27, 18, 18]
     RED   = [255, 0, 0]
+    REAL_RED   = [250, 0, 0]
     BORDEAUX = [109, 7, 26]
     GRENADINE = [233, 56, 63]
     BLUE  = [0, 0, 255]

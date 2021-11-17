@@ -15,8 +15,6 @@ class JsonReader:
         
         tagList = [] 
         
-        #print(lines)
-        
         if verbalOutput: print('decoding '+str(len(lines))+" objects:")
         
         for line in lines:

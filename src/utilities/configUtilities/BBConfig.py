@@ -15,4 +15,4 @@ class BBConfig:
         return ConfigLoader.getVariable('output', 'data')
     
     def getBackground():
-        ConfigLoader.getVariable('background')
+        return ConfigLoader.getVariable('background')

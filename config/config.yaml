@@ -8,13 +8,13 @@ runConfig:
 
     stopsAtEnd: True  # When all the images in the database are dealt with, should we stop? 
 
-    nbProcess: 4      # -> 'default' calculates for the number of processors you have.
+    nbProcess: 1      # -> 'default' calculates for the number of processors you have.
                             #       - some may be idling from time to time.
                             # -> 'auto' will auto adjusts the number of processes in accordance with the number of pending tasks
                             # -> any strictly positive number: sets the number of processes to this number.
     
     talkative:                   # all these options are for console messages with print()
-        processes:      True    # to see the messages of the processes starting/ending
+        processes:      False    # to see the messages of the processes starting/ending
         messages:       True    # to see a message everytime a message is sent/recieved between two processes.
         ias:            False    # to see a message each time a Blackbox starts a task, or finishes the processing of an image.
         ias-detailed:   False    # to see every single message from inside the blackboxes
@@ -23,11 +23,11 @@ runConfig:
     logs: 
         file:           ../out/logs.log
         removePrevious: True
-        processes:      False   
-        messages:       False    
+        processes:      True   
+        messages:       True    
         ias:            False    
         ias-detailed:   False  
-        loader:         False
+        loader:         True
 
     gui:
         showImages: True       # Show each image when processed (stops the Blackbox from processing other images while the image is on display!!!)
