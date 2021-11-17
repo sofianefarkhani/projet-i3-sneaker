@@ -91,8 +91,7 @@ def cloneImages(images):
 images = Loader.getImages(talking=True)
 imagesClone = cloneImages(images)
 for img in imagesClone:
-    msg, colorMsg = Contrast.getContrast(img)
-    Contrast.printImage(img, msg, colorMsg)
+    Contrast.getContrast(img)
 #listColorsDetect = ColorDetector.detection(imagesClone)
 #print('Colors detect : ',listColorsDetect)
 
