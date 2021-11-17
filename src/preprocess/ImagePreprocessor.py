@@ -1,6 +1,6 @@
 import cv2
 from skimage.exposure import is_low_contrast
-from ContrastAndBrightness import ContrastAndBrightness
+from preprocess.ContrastAndBrightness import ContrastAndBrightness
 class ImagePreprocessor:
 
     def contrastAndBrightnessAdjustment(image):
