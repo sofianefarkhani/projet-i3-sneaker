@@ -13,7 +13,7 @@ class ImagePreprocessor:
         if is_low_contrast(gray, fraction_threshold=0.35):
             print('Start contrast and brightness adjustment')
             #ContrastAndBrightness.printInfoContrast(image, "LOW CONTRAST", (0, 0, 255))
-            imageAdjust = ContrastAndBrightness.adjustment(image)
+            image = ContrastAndBrightness.adjustment(image)
             #ContrastAndBrightness.showImage(imageAdjust)
             print('Contrast and brightness adjustment : DONE')
-            return imageAdjust
+        return image
