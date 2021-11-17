@@ -92,7 +92,10 @@ def cloneImages(images):
 images = Loader.getImages(talking=True)
 imagesClone = cloneImages(images)
 for img in imagesClone:
-    ImagePreprocessor.contrastAndBrightnessAdjustment(img)
+    newImg = ImagePreprocessor.contrastAndBrightnessAdjustment(img)
+    newImgNoBg = BackgroundSuppression.replaceBackground(newImg)
+    for test in newImgNoBg:
+        showImage(test) 
 #listColorsDetect = ColorDetector.detection(imagesClone)
 #print('Colors detect : ',listColorsDetect)
 
