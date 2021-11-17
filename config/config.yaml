@@ -20,6 +20,15 @@ runConfig:
         ias-detailed:   False    # to see every single message from inside the blackboxes
         loader:         True     # to see the messages of the loader
     
+    logs: 
+        file:           ../out/logs.log
+        removePrevious: True
+        processes:      True   
+        messages:       True    
+        ias:            True    
+        ias-detailed:   True  
+        loader:         True
+
     gui:
         showImages: True       # Show each image when processed (stops the Blackbox from processing other images while the image is on display!!!)
 

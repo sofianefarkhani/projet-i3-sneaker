@@ -84,6 +84,9 @@ class BlackBox(multiprocessing.Process):
         Herald.queueMessageIn(proc_name, self.answerQueue, Answer(AnswerType.BOXENDSERVICE))
         Herald.printTermination(proc_name)
     
+    
+    
+    
     def compute(self, img):
         
         shoeImg = ShoeExtractor.extractShoeFromImage(

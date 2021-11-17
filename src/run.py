@@ -4,6 +4,7 @@ from BlackBox import BlackBox
 
 from utilities.configUtilities.ConfigLoader import ConfigLoader
 from utilities.Herald                       import Herald
+from utilities.Beaver                       import Beaver
 from utilities.configUtilities.ProcConfig   import ProcConfig
 
 from interface.Loader           import Loader
@@ -18,6 +19,7 @@ from processes.Enums            import *
 if __name__ == '__main__':
     
     Herald.printStart(__name__)
+    Beaver.reinitLogsIfNeeded()
     
     # Get basic parameters
     (numProcesses, procTalkative, bbTalkative) = ProcConfig.getRunningConfig()
