@@ -14,12 +14,7 @@ class ContrastAndBrightness:
         alpha = 2.0     # alpha is between 1.0 and 3.0
         beta = 50        # beta is between 0 and 100
 
-        imageAdjust = np.zeros(image.shape, image.dtype)
-
-        for y in range(image.shape[0]):
-            for x in range(image.shape[1]):
-                for c in range(image.shape[2]):
-                    imageAdjust[y,x,c] = np.clip(alpha*image[y,x,c]+beta, 0, 255)
+        imageAdjust = cv2.convertScaleAbs(image, alpha=alpha, beta=beta)
 
         return imageAdjust
 
