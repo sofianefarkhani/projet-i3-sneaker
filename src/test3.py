@@ -10,7 +10,8 @@ from keras.models import load_model
 from tensorflow.keras import initializers
 from tensorflow.keras.optimizers import RMSprop
 from trainAI.getDatasetTrainingIA import getDataseTrainingIA
-from keras.applications.vgg16 import VGG16
+
+# https://towardsdatascience.com/10-minutes-to-building-a-cnn-binary-image-classifier-in-tensorflow-4e216b2034aa
 
 
 def trainAIV1():
@@ -60,6 +61,7 @@ def trainAIV1():
     # model.compile(optimizer='adam', loss='categorical_crossentropy',
     #               metrics=['accuracy'])
     model.compile(loss='binary_crossentropy',optimizer=RMSprop(lr=0.001),metrics='accuracy')
+
     model.summary()
 
     (trainingSet, testSet) = getDataseTrainingIA(
@@ -89,6 +91,7 @@ def trainAIV1():
 
 
 trainAIV1()
+exit()
 
 model = load_model('model.h5')
 model.load_weights('weights.h5')
@@ -96,7 +99,7 @@ model.load_weights('weights.h5')
 
 test_datagen = ImageDataGenerator(rescale=1./255)
 test_generator = test_datagen.flow_from_directory(
-    "/home/vedoc/Images/Sneaker-data/test_temp",
+    "/mnt/424cf323-70f0-406a-ae71-29e3da370aec/Sneaker-data/test_temp/",
     target_size=(200, 200),
     batch_size=1,
     color_mode="grayscale",
@@ -104,9 +107,14 @@ test_generator = test_datagen.flow_from_directory(
     shuffle=False)
 
 # make the prediction
-prediction = model.predict(
+predictions = model.predict(
     test_generator, verbose=1)
+
 # print(model.get_config())
 # print(model.get_weights())
 # model.predict_on_batch();
-print(prediction)
+print(predictions)
+
+with open("output.txt", "w") as txt_file:
+    for line in predictions:
+        txt_file.write(" ".join(line) + "\n")
