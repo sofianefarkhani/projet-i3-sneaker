@@ -1,19 +1,51 @@
 # devs: 
 #   to get data from this file, use: 
 #       ConfigLoader.getVariable('loader', 'batchSize')    (for exemple)
+#   The data is loaded whole in the ConfigLoader, and then reloaded on demand.
 
 
 runConfig:
-    nbProcess: default             # 'default' calculates for the number of procs you have.
 
+    stopsAtEnd: True  # When all the images in the database are dealt with, should we stop? 
+
+    nbProcess: 4      # -> 'default' calculates for the number of processors you have.
+                            #       - some may be idling from time to time.
+                            # -> 'auto' will auto adjusts the number of processes in accordance with the number of pending tasks
+                            # -> any strictly positive number: sets the number of processes to this number.
+    
+    talkative:                   # all these options are for console messages with print()
+        processes:      True    # to see the messages of the processes starting/ending
+        messages:       True    # to see a message everytime a message is sent/recieved between two processes.
+        ias:            False    # to see a message each time a Blackbox starts a task, or finishes the processing of an image.
+        ias-detailed:   False    # to see every single message from inside the blackboxes
+        loader:         True     # to see the messages of the loader
+    
+    logs: 
+        file:           ../out/logs.log
+        removePrevious: True
+        processes:      False   
+        messages:       False    
+        ias:            False    
+        ias-detailed:   False  
+        loader:         False
+
+    gui:
+        showImages: True       # Show each image when processed (stops the Blackbox from processing other images while the image is on display!!!)
+
+    dynamicConfig: False        # Setting to True reloads the configuration from the file at each loop of the BlackBox and of the main.  
+                                # This allows you to change the config while the application is running and see the effects in live.      
+                                # /!\ Loading values from a file frequently has an impact on the running time of the app (not much, but still). 
+                                # /!\ If you want to set it to True, you NEED TO SET IT BEFORE RUNNING THE APPLICATION.
 output:
-    data: ../out/data.json         # the output for image tags
-    testData: ../out/testData.json # the output file where we dump stuff that does not really matter, when we test stuff
+    data: ../out/data.json          # the output for image tags
+    testData: ../out/testData.json  # the output file where we dump stuff that does not really matter, when we test stuff
 
 loader:
+    takeFromLocalSource: True  
     localImgSrc: ../img/test/
+    remoteImgSrc: /resources
     batchSize: 4      # how many images should the loader load at once in the system
-    reloadNumber: 1   # When we reach this number of loaded images or less, we try to load more.
+    reloadNumber: 2   # When we reach this number of loaded images or less, we try to load more.
 
 background:
     g: (0.0,1.0,0.0)

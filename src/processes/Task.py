@@ -1,5 +1,5 @@
 
-from Data.TaskType import TaskType
+from processes.Enums import *
 import time
 
 class Task(object):
@@ -9,6 +9,17 @@ class Task(object):
     def __init__(self, taskType:TaskType, img = None):
         self.type = taskType
         self.img = img
+    def __call__(self):
+        time.sleep(0.1) # pretend to take some time to do the work
+        return '%s' % (self.type)
+    def __str__(self):
+        return '%s' % (self.type)
+class Answer(object):
+    """An Answer is sent to the Main by a BlackBox. 
+    
+    It contains an AnswerType that caracterizes it."""
+    def __init__(self, taskType:AnswerType):
+        self.type = taskType
     def __call__(self):
         time.sleep(0.1) # pretend to take some time to do the work
         return '%s' % (self.type)

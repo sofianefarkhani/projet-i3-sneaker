@@ -1,51 +1,113 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 from BlackBox import BlackBox
-from Data.TaskType import TaskType
-from interface.Loader import Loader
+
+from utilities.configUtilities.ConfigLoader import ConfigLoader
+from utilities.Herald                       import Herald
+from utilities.Beaver                       import Beaver
+from utilities.configUtilities.ProcConfig   import ProcConfig
+from utilities.configUtilities.LoadConfig   import LoadConfig
+
+from interface.Loader           import Loader
+from interface.Loader           import Connexion
+
+import queue
 import multiprocessing
-from multiprocessing import Process
-from Data.Task import Task
-import time
-from interface.ConfigLoader import ConfigLoader
-
-
-def calcNbProcessus():
-    request = ConfigLoader.getVariable('runConfig', 'nbProcess')
-    if request == 'default':
-        return multiprocessing.cpu_count() -1
-    else:
-        return request
+from processes.Task             import *
+from processes.LoaderMessage    import *
+from processes.Enums            import *
 
 if __name__ == '__main__':
+    
+    Herald.printStart(__name__)
+    Beaver.reinitLogsIfNeeded()
+    
+    # Get basic parameters
+    (numProcesses, procTalkative, bbTalkative) = ProcConfig.getRunningConfig()
+    
     # Establish communication queues
     tasks = multiprocessing.JoinableQueue()
     results = multiprocessing.Queue()
+    loaderTasks = multiprocessing.JoinableQueue()
+    loaderResults = multiprocessing.Queue()
     
-    # Start consumers
-    num_processes = calcNbProcessus()
-    print ('Creating %d consumers' % num_processes)
-    consumers = [ BlackBox(tasks, testMode = True) for i in range(num_processes) ]
+    
+    
+    # start the loader
+    
+    c = Connexion() 
+    
+    loader = Loader(loaderTasks, loaderResults, tasks, c)
+    loader.start()
+    
+    # Start BlackBoxes
+    consumers = [ BlackBox(tasks, results, testMode = True) for i in range(numProcesses) ]
     for bb in consumers:
         bb.start()
-    
-    # Enqueue jobs
-    images = Loader.getImages(True);
-    for img in images:
-        if Loader.endOfService: 
-            break
-        tasks.put(Task(TaskType.PROCESS, img))
-        #time.sleep(2)
         
-    # job is finished: kill each blackbox
-    for i in range(num_processes):
-        tasks.put(Task(TaskType.END, img))
+    # create the variables that will keep track of the state of stuff
+    mainRunning = True
+    currentlyRunningNb = len(consumers)
+    loaderIsLoading = False
+    loaderRunning = True
+    
+    # Main loop: checks for answers
+    while mainRunning:
+        
+        # check if everyone is still fine
+        if currentlyRunningNb<=LoadConfig.getReloadNumber() and loaderRunning==False: #  nobody running... Can only be a mistake. Destroy all tasks, exit the program.
+            for i in range(tasks.qsize()):
+                t = Herald.getMessageFrom(__name__, tasks)
+                tasks.task_done()
+            mainRunning = False
+        
+        # Check if we need to load more and the loader is not already trying to load more  
+        if tasks.qsize()==0 and not loaderIsLoading:
+            if loaderRunning: 
+                Herald.queueMessageIn(__name__, loaderTasks, LoaderTask(LoaderTaskType.LOAD))
+                loaderIsLoading = True
+            else: mainRunning = False
+            
+        # Process answers from the BlackBoxes.
+        currentAnswerNb = results.qsize()
+        for i in range(currentAnswerNb):                                # for each answer
+            answer = Herald.getMessageFrom(__name__, results)
+            if answer.type == AnswerType.BOXENDSERVICE:
+                currentlyRunningNb -= 1
+                if currentlyRunningNb <= 0: # this is an issue, politely stop the program.
+                    Herald.queueMessageIn(__name__, loaderTasks, LoaderTask(LoaderTaskType.TERMINATE))
+                    Herald.printError('No blackboxes are running. Politely stopping the program.')
+        
 
+        # Process answers from the Loader
+        currentAnswerNb = loaderResults.qsize()
+        for i in range(currentAnswerNb):                                # for each answer
+            answer = Herald.getMessageFrom(__name__, loaderResults)
+               
+            if answer.type == LoaderAnswerType.NOMORE:                      # if he says there are no more images to load
+                if ProcConfig.stopsWhenNoMoreImages():                       # if the run config is set to stop
+                    Herald.queueMessageIn(__name__, loaderTasks, LoaderTask(LoaderTaskType.TERMINATE))
+                    loaderRunning = False                                         # break main loop
+            elif answer.type == LoaderAnswerType.LOADDONE:                  # if he says he finished loading images: 
+                loaderIsLoading = False                                         # unlock the possibility of loading more images
+            elif answer.type == LoaderAnswerType.END:
+                loaderRunning = False   
+            
+        if ProcConfig.shouldReloadConfig():
+            ConfigLoader.loadVars()
+    
+    
+    # BRUTALLY MURDER each blackbox when Loader ends its service 
+    for i in range(currentlyRunningNb):
+        Herald.queueMessageIn(__name__, tasks, Task(TaskType.END, None))
+        
     # Wait for all of the tasks to finish
     tasks.join()
+    loaderTasks.join()
     
+    Herald.printTermination(__name__)
 
-
+    
 
 
 

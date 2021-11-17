@@ -7,6 +7,9 @@ from skimage import io
 from preprocess.BackgroundSuppression import BackgroundSuppression
 from interface.ConfigLoader import ConfigLoader
 import ast
+
+
+from utilities.Herald import Herald
 class ColorDetector:
 
     #Get the number of background used
