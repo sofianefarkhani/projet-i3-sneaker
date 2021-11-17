@@ -14,9 +14,9 @@ runConfig:
                             # -> any strictly positive number: sets the number of processes to this number.
     
     talkative:                   # all these options are for console messages with print()
-        processes:      False    # to see the messages of the processes starting/ending
-        messages:       False    # to see a message everytime a message is sent/recieved between two processes.
-        ias:            True    # to see a message each time a Blackbox starts a task, or finishes the processing of an image.
+        processes:      True    # to see the messages of the processes starting/ending
+        messages:       True    # to see a message everytime a message is sent/recieved between two processes.
+        ias:            False    # to see a message each time a Blackbox starts a task, or finishes the processing of an image.
         ias-detailed:   False    # to see every single message from inside the blackboxes
         loader:         True     # to see the messages of the loader
     

@@ -13,7 +13,6 @@ from processes.Enums            import *
 from processes.LoaderMessage    import *
 
 from utilities.Herald                           import Herald
-from utilities.Beaver                           import Beaver
 from utilities.configUtilities.ProcConfig       import ProcConfig
 from utilities.configUtilities.LoadConfig       import LoadConfig
 
@@ -78,9 +77,10 @@ class Loader(multiprocessing.Process):
                     break        
                 
                 self.taskQueue.task_done()
-                
+                  
         Herald.queueMessageIn('Loader', self.answerQueue, LoaderAnswer(LoaderAnswerType.END))
         Herald.printTermination('Loader')
+        
         
         
         

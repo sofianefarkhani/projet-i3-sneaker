@@ -6,6 +6,7 @@ from utilities.configUtilities.ConfigLoader import ConfigLoader
 from utilities.Herald                       import Herald
 from utilities.Beaver                       import Beaver
 from utilities.configUtilities.ProcConfig   import ProcConfig
+from utilities.configUtilities.LoadConfig   import LoadConfig
 
 from interface.Loader           import Loader
 from interface.Loader           import Connexion
@@ -54,7 +55,7 @@ if __name__ == '__main__':
     while mainRunning:
         
         # check if everyone is still fine
-        if currentlyRunningNb<=0 and loaderRunning==False: #  nobody running... Can only be a mistake. Destroy all tasks, exit the program.
+        if currentlyRunningNb<=LoadConfig.getReloadNumber() and loaderRunning==False: #  nobody running... Can only be a mistake. Destroy all tasks, exit the program.
             for i in range(tasks.qsize()):
                 t = Herald.getMessageFrom(__name__, tasks)
                 tasks.task_done()
