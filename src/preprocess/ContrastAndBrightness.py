@@ -2,10 +2,14 @@ import cv2
 from skimage.exposure import is_low_contrast
 import numpy as np
 
-class Contrast:
-
+class ContrastAndBrightness:
 
     def getContrast(image):
+        """
+        Realize all treatment for increase quality of an image
+
+        :param image
+        """
         # convert image in gray image
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     
@@ -14,14 +18,20 @@ class Contrast:
         if is_low_contrast(gray, fraction_threshold=0.35):
             msg = "Low contrast : YES"
             color = (0, 0, 255)
-            Contrast.printInfoContrast(image, msg, color)
-            imageAdjust = Contrast.adjustment(image)
-            Contrast.showImage(imageAdjust)
+            ContrastAndBrightness.printInfoContrast(image, msg, color)
+            imageAdjust = ContrastAndBrightness.adjustment(image)
+            ContrastAndBrightness.showImage(imageAdjust)
 
         #Contrast.printInfoContrast(image, msg, color)
 
     def adjustment(image):
+        """
+        Adjust contrast and brightness of an image
 
+        :param image : original image
+
+        :return : image with new contrast and new brightness
+        """
         alpha = 2.0     # alpha is between 1.0 and 3.0
         beta = 50        # beta is between 0 and 100
 

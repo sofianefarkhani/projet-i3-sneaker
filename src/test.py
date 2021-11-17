@@ -17,8 +17,7 @@ from menuPkg.Menu import Menu
 import numpy as np
 
 from colorDetector.ColorDetector import ColorDetector
-from preprocess.Contrast import Contrast
-
+from preprocess.ContrastAndBrightness import ContrastAndBrightness
 
 import ast
 #### Testing the creation of colors
@@ -91,7 +90,7 @@ def cloneImages(images):
 images = Loader.getImages(talking=True)
 imagesClone = cloneImages(images)
 for img in imagesClone:
-    Contrast.getContrast(img)
+    ContrastAndBrightness.getContrast(img)
 #listColorsDetect = ColorDetector.detection(imagesClone)
 #print('Colors detect : ',listColorsDetect)
 
