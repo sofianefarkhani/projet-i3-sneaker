@@ -23,11 +23,11 @@ runConfig:
     logs: 
         file:           ../out/logs.log
         removePrevious: True
-        processes:      True   
-        messages:       True    
-        ias:            True    
-        ias-detailed:   True  
-        loader:         True
+        processes:      False   
+        messages:       False    
+        ias:            False    
+        ias-detailed:   False  
+        loader:         False
 
     gui:
         showImages: True       # Show each image when processed (stops the Blackbox from processing other images while the image is on display!!!)
