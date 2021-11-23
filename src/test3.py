@@ -10,8 +10,20 @@ from keras.models import load_model
 from tensorflow.keras import initializers
 from tensorflow.keras.optimizers import RMSprop
 from trainAI.getDatasetTrainingIA import getDataseTrainingIA
+import tensorflow as tf
 
 # https://towardsdatascience.com/10-minutes-to-building-a-cnn-binary-image-classifier-in-tensorflow-4e216b2034aa
+
+import os 
+os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
+import os
+os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"   # see issue #152
+os.environ["CUDA_VISIBLE_DEVICES"]="0"
+
+gpu_devices = tf.config.experimental.list_physical_devices('GPU')
+for device in gpu_devices:
+    tf.config.experimental.set_memory_growth(device, True)
+
 
 
 def trainAIV1():
@@ -60,7 +72,7 @@ def trainAIV1():
 
     # model.compile(optimizer='adam', loss='categorical_crossentropy',
     #               metrics=['accuracy'])
-    model.compile(loss='binary_crossentropy',optimizer=RMSprop(lr=0.001),metrics='accuracy')
+    model.compile(loss='binary_crossentropy',optimizer=RMSprop(learning_rate=0.001),metrics='accuracy')
 
     model.summary()
 
@@ -72,25 +84,26 @@ def trainAIV1():
     model.save("model.h5", overwrite=True)
     model.save_weights('weights.h5', overwrite=True)
 
-    test_datagen = ImageDataGenerator(rescale=1./255)
-    test_generator = test_datagen.flow_from_directory(
-        "/home/vedoc/Images/Sneaker-data/test_temp",
-        target_size=(200, 200),
-        batch_size=32,
-        color_mode="grayscale",
-        class_mode=None,
-        shuffle=False)
+    # test_datagen = ImageDataGenerator(rescale=1./255)
+    # test_generator = test_datagen.flow_from_directory(
+    #     "/home/vedoc/Images/Sneaker-data/test_temp",
+    #     target_size=(200, 200),
+    #     batch_size=32,
+    #     color_mode="grayscale",
+    #     class_mode=None,
+    #     shuffle=False)
 
-    # make the prediction
-    prediction = model.predict(
-        test_generator, verbose=1, steps=len(test_generator.filenames))
-    # print(model.get_config())
-    # print(model.get_weights())
-    # model.predict_on_batch();
-    print(prediction)
+    # # make the prediction
+    # prediction = model.predict(
+    #     test_generator, verbose=1, steps=len(test_generator.filenames))
+    # # print(model.get_config())
+    # # print(model.get_weights())
+    # # model.predict_on_batch();
+    # print(prediction)
 
-
-trainAIV1()
+# with tf.device('/cpu:0'):
+with tf.device("/gpu:0"):
+    trainAIV1()
 exit()
 
 model = load_model('model.h5')
