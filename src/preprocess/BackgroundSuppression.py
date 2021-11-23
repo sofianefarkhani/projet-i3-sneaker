@@ -10,8 +10,6 @@ from skimage import feature
 class BackgroundSuppression:
 
     __BLUR = 21
-    __CANNY_THRESH_1 = 20
-    __CANNY_THRESH_2 = 20
     __MASK_DILATE_ITER = 10
     __MASK_ERODE_ITER = 10
 
