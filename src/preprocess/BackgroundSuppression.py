@@ -25,7 +25,7 @@ class BackgroundSuppression:
         if image is not None:
             gray = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
             highThresh, _ = cv2.threshold(gray, 0, 255, cv2.THRESH_TOZERO + cv2.THRESH_OTSU)
-            lowThresh = 0.2*highThresh
+            lowThresh = 0.6*highThresh
             edges = cv2.Canny(gray, lowThresh, highThresh)
             edges = cv2.dilate(edges, None)
             edges = cv2.erode(edges, None)
