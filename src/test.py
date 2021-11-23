@@ -95,7 +95,7 @@ for img in imagesClone:
     newImg = ImagePreprocessor.contrastAndBrightnessAdjustment(img)
     newImgNoBg = BackgroundSuppression.replaceBackground(newImg)
     for test in newImgNoBg:
-        showImage(test) 
+        showImage(test)
 #listColorsDetect = ColorDetector.detection(imagesClone)
 #print('Colors detect : ',listColorsDetect)
 

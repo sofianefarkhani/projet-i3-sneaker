@@ -5,6 +5,7 @@ import cv2
 import numpy as np
 from interface.ConfigLoader import ConfigLoader
 import ast
+from skimage import feature
 
 class BackgroundSuppression:
 
@@ -25,7 +26,9 @@ class BackgroundSuppression:
         imagesNoBg = []
         if image is not None:
             gray = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
-            edges = cv2.Canny(gray, BackgroundSuppression.__CANNY_THRESH_1, BackgroundSuppression.__CANNY_THRESH_2)
+            highThresh, _ = cv2.threshold(gray, 0, 255, cv2.THRESH_TOZERO + cv2.THRESH_OTSU)
+            lowThresh = 0.2*highThresh
+            edges = cv2.Canny(gray, lowThresh, highThresh)
             edges = cv2.dilate(edges, None)
             edges = cv2.erode(edges, None)
             contour_info = []
