@@ -55,19 +55,24 @@ if __name__ == '__main__':
     while mainRunning:
         
         # check if everyone is still fine
-        if currentlyRunningNb<=LoadConfig.getReloadNumber() and loaderRunning==False: #  nobody running... Can only be a mistake. Destroy all tasks, exit the program.
+        if currentlyRunningNb<=0 and loaderRunning==False: #  nobody running... Can only be a mistake. Destroy all tasks, exit the program.
             for i in range(tasks.qsize()):
                 t = Herald.getMessageFrom(__name__, tasks)
                 tasks.task_done()
             mainRunning = False
         
         # Check if we need to load more and the loader is not already trying to load more  
-        if tasks.qsize()==0 and not loaderIsLoading:
+        # If the loader is stopped and there aer no more tasks, stop the whole machine.
+        elif tasks.qsize()<=LoadConfig.getReloadNumber() and not loaderIsLoading:
             if loaderRunning: 
                 Herald.queueMessageIn(__name__, loaderTasks, LoaderTask(LoaderTaskType.LOAD))
                 loaderIsLoading = True
-            else: mainRunning = False
+            elif tasks.qsize()==0: 
+                mainRunning = False
+        
+        
             
+        
         # Process answers from the BlackBoxes.
         currentAnswerNb = results.qsize()
         for i in range(currentAnswerNb):                                # for each answer

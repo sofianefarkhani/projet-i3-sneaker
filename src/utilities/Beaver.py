@@ -18,3 +18,4 @@ class Beaver:
         logFile = ConfigLoader.getVariable('runConfig', 'logs', 'file')
         file_object = open(logFile, 'a')
         file_object.write("\n---------------------------------------\n"+msg)
+        file_object.close()

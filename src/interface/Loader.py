@@ -55,6 +55,7 @@ class Loader(multiprocessing.Process):
         imagesGenerator = self.getImagesGenerator()
         
         while True:
+            
             task = Herald.getMessageFrom('Loader', self.taskQueue)
             
             if task is not None:
@@ -65,8 +66,9 @@ class Loader(multiprocessing.Process):
                     
                     for i in range(batchSize):
                         img = next(imagesGenerator)
-                        if img is None:        # if image generator yields None, this is the end of the db
+                        if img is None:  # if image generator yields None, this is the end of the db
                             Herald.queueMessageIn('Loader', self.answerQueue, LoaderAnswer(LoaderAnswerType.NOMORE))
+                            break
                         else:                  # else append the image to the tasks
                             Herald.queueMessageIn('Loader', self.bbTaskQueue, Task(TaskType.PROCESS, img))
                     self.answerQueue.put(LoaderAnswer(LoaderAnswerType.LOADDONE))

@@ -20,9 +20,9 @@ Loader: Sent message: TaskType.PROCESS
 ---------------------------------------
     - Loaded ../img/test/11.png
 ---------------------------------------
-Loader: Sent message: TaskType.PROCESS
----------------------------------------
 BlackBox-2: Recieved message: TaskType.PROCESS
+---------------------------------------
+Loader: Sent message: TaskType.PROCESS
 ---------------------------------------
     - Loaded ../img/test/12.png
 ---------------------------------------
@@ -30,19 +30,15 @@ Loader: Sent message: TaskType.PROCESS
 ---------------------------------------
 __main__: Recieved message: LoaderAnswerType.LOADDONE
 ---------------------------------------
-BlackBox-2: Recieved message: TaskType.PROCESS
----------------------------------------
-BlackBox-2: Recieved message: TaskType.PROCESS
----------------------------------------
-BlackBox-2: Recieved message: TaskType.PROCESS
----------------------------------------
-__main__: Sent message: LoaderTaskType.LOAD
----------------------------------------
 Loader: Recieved message: LoaderTaskType.LOAD
 ---------------------------------------
 Loading 4 more images
 ---------------------------------------
     - Loaded ../img/test/13.png
+---------------------------------------
+__main__: Sent message: LoaderTaskType.LOAD
+---------------------------------------
+BlackBox-2: Recieved message: TaskType.PROCESS
 ---------------------------------------
 Loader: Sent message: TaskType.PROCESS
 ---------------------------------------
@@ -98,15 +94,15 @@ BlackBox-2: Recieved message: TaskType.PROCESS
 ---------------------------------------
 BlackBox-2: Recieved message: TaskType.PROCESS
 ---------------------------------------
-__main__: Sent message: LoaderTaskType.LOAD
----------------------------------------
-BlackBox-2: Recieved message: TaskType.PROCESS
----------------------------------------
 Loader: Recieved message: LoaderTaskType.LOAD
 ---------------------------------------
 Loading 4 more images
 ---------------------------------------
     - Loaded ../img/test/3.jpg
+---------------------------------------
+__main__: Sent message: LoaderTaskType.LOAD
+---------------------------------------
+BlackBox-2: Recieved message: TaskType.PROCESS
 ---------------------------------------
 Loader: Sent message: TaskType.PROCESS
 ---------------------------------------
@@ -118,25 +114,31 @@ Loader: Sent message: TaskType.PROCESS
 ---------------------------------------
 Loader: Sent message: TaskType.PROCESS
 ---------------------------------------
+Loader: Sent message: LoaderAnswerType.NOMORE
+---------------------------------------
 __main__: Recieved message: LoaderAnswerType.NOMORE
 ---------------------------------------
 __main__: Sent message: LoaderTaskType.TERMINATE
 ---------------------------------------
 Loader: Recieved message: LoaderTaskType.TERMINATE
 ---------------------------------------
-Loader: Sent message: LoaderAnswerType.END
+__main__: Recieved message: LoaderAnswerType.LOADDONE
 ---------------------------------------
-__main__: Recieved message: TaskType.PROCESS
+Loader: Sent message: LoaderAnswerType.END
 ---------------------------------------
 Loader: End of service
 ---------------------------------------
-__main__: Recieved message: TaskType.PROCESS
----------------------------------------
-__main__: Recieved message: TaskType.PROCESS
----------------------------------------
-__main__: Recieved message: LoaderAnswerType.LOADDONE
----------------------------------------
 __main__: Recieved message: LoaderAnswerType.END
+---------------------------------------
+BlackBox-2: Recieved message: TaskType.PROCESS
+---------------------------------------
+BlackBox-2: Recieved message: TaskType.PROCESS
+---------------------------------------
+BlackBox-2: Recieved message: TaskType.PROCESS
+---------------------------------------
+BlackBox-2: Recieved message: TaskType.PROCESS
+---------------------------------------
+BlackBox-2: Recieved message: TaskType.PROCESS
 ---------------------------------------
 __main__: Sent message: TaskType.END
 ---------------------------------------
