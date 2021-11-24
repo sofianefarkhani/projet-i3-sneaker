@@ -67,7 +67,8 @@ if __name__ == '__main__':
             if loaderRunning: 
                 Herald.queueMessageIn(__name__, loaderTasks, LoaderTask(LoaderTaskType.LOAD))
                 loaderIsLoading = True
-            elif tasks.qsize()==0: 
+            
+            elif tasks.qsize()==0: # NO MORE TASKS TO ACCOMLISH EVER! STOP EVERYTHING! 
                 mainRunning = False
         
         
@@ -75,7 +76,7 @@ if __name__ == '__main__':
         
         # Process answers from the BlackBoxes.
         currentAnswerNb = results.qsize()
-        for i in range(currentAnswerNb):                                # for each answer
+        for i in range(currentAnswerNb):    # for each answer
             answer = Herald.getMessageFrom(__name__, results)
             if answer.type == AnswerType.BOXENDSERVICE:
                 currentlyRunningNb -= 1

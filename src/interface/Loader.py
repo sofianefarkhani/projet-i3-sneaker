@@ -71,7 +71,7 @@ class Loader(multiprocessing.Process):
                             break
                         else:                  # else append the image to the tasks
                             Herald.queueMessageIn('Loader', self.bbTaskQueue, Task(TaskType.PROCESS, img))
-                    self.answerQueue.put(LoaderAnswer(LoaderAnswerType.LOADDONE))
+                    Herald.queueMessageIn('Loader', self.answerQueue, LoaderAnswer(LoaderAnswerType.LOADDONE))
                 
                 elif task.type == LoaderTaskType.TERMINATE:
                     self.taskQueue.task_done()
