@@ -1,10 +1,10 @@
 import cv2
 import numpy as np
-from skimage.exposure.exposure import histogram
+from skimage.exposure import histogram
 
 class ContrastAndBrightness:
 
-    def adjustment(image):
+    def adjustment(image, nbAlpha = 1, nbBeta = 1):
         """
         Adjust contrast and brightness of an image
 
@@ -17,7 +17,9 @@ class ContrastAndBrightness:
         alpha = 255 / (max - min)     
         beta = -min * alpha           
 
-        imageAdjust = cv2.convertScaleAbs(image, alpha=alpha, beta=beta)
+        imageAdjust = cv2.convertScaleAbs(image, alpha=alpha * nbAlpha, beta=beta * nbBeta)
+
+        ContrastAndBrightness.showImage(imageAdjust)
 
         return imageAdjust
 

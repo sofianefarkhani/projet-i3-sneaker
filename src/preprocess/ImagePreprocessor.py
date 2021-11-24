@@ -16,4 +16,6 @@ class ImagePreprocessor:
             image = ContrastAndBrightness.adjustment(image)
             #ContrastAndBrightness.showImage(imageAdjust)
             print('Contrast and brightness adjustment : DONE')
+        elif not(is_low_contrast(gray, fraction_threshold=0.75)): #revoir condition
+            image = ContrastAndBrightness.adjustment(image,1,2)
         return image
