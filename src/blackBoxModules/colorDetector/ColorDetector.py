@@ -121,12 +121,14 @@ class ColorDetector:
         :return : list of dominant colors without background color of images
         """
         # load list of background color
+        
         listColorBg = ColorDetector.getBackgroundColors('color')
 
         listeTest = listColorDominants.copy()
         listFinal = []
         for elem in listeTest:
             listInterm = []
+            listInterm2 = []
             for subelement in elem :
                 temp = 0
                 for color in subelement:
@@ -135,6 +137,7 @@ class ColorDetector:
                     if (newColor.name not in listColorBg):
                         if(temp < ColorDetector.nbrBackground):
                             listInterm.append(newColor)
+                            listInterm2.append(newColor.name)
             listFinal.append(listInterm)
         return listFinal
 
@@ -159,10 +162,9 @@ class ColorDetector:
                             dictionnary[j] = dictionnary[j] + 1
                         else:
                             dictionnary[j] = 1
-                    listColor = []        
+                    listColor = []       
                     for k in range(2):
                         maxValue = max(dictionnary, key=dictionnary.get)
-                        
                         listColor.append(listInter[i][maxValue])
                         dictionnary.pop(maxValue)
                 colors.append(listColor)

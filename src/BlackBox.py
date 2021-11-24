@@ -95,11 +95,14 @@ class BlackBox(multiprocessing.Process):
         #     self.name
         # )
         
-        (mainColor, secondaryColor) = ColorDetector.detection(
-            img,
-            self.name
-        )
         
+        try: 
+            (mainColor, secondaryColor) = ColorDetector.detection(
+                img,
+                self.name
+            )
+        except ValueError:
+            print('Oh no error :)') 
         # typeOfShoe = TypeDetector.detectTypeOfShoe(
         #     ImagePreprocessor.preprocessForTypeIdentification(shoeImg, self.name), 
         #     self.name
