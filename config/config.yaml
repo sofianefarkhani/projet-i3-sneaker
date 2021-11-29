@@ -8,7 +8,7 @@ runConfig:
 
     stopsAtEnd: True  # When all the images in the database are dealt with, should we stop? 
 
-    nbProcess: 3      # -> 'default' calculates for the number of processors you have.
+    nbProcess: 7      # -> 'default' calculates for the number of processors you have.
                             #       - some may be idling from time to time.
                             # -> 'auto' will auto adjusts the number of processes in accordance with the number of pending tasks
                             # -> any strictly positive number: sets the number of processes to this number.
@@ -44,8 +44,8 @@ loader:
     takeFromLocalSource: True  
     localImgSrc: ../img/test/
     remoteImgSrc: /resources
-    batchSize: 4      # how many images should the loader load at once in the system
-    reloadNumber: 2   # When we reach this number of loaded images or less, we try to load more.
+    batchSize: 1      # how many images should the loader load at once in the system
+    reloadNumber: 4   # When we reach this number of loaded images or less, we try to load more.
 
 background:
     g: (0.0,1.0,0.0)
