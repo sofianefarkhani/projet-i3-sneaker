@@ -8,13 +8,13 @@ runConfig:
 
     stopsAtEnd: True  # When all the images in the database are dealt with, should we stop? 
 
-    nbProcess: 7      # -> 'default' calculates for the number of processors you have.
+    nbProcess: 1      # -> 'default' calculates for the number of processors you have.
                             #       - some may be idling from time to time.
                             # -> 'auto' will auto adjusts the number of processes in accordance with the number of pending tasks
                             # -> any strictly positive number: sets the number of processes to this number.
     
     talkative:                   # all these options are for console messages with print()
-        processes:      True    # to see the messages of the processes starting/ending
+        processes:      False    # to see the messages of the processes starting/ending
         messages:       True    # to see a message everytime a message is sent/recieved between two processes.
         ias:            False    # to see a message each time a Blackbox starts a task, or finishes the processing of an image.
         ias-detailed:   False    # to see every single message from inside the blackboxes
@@ -25,7 +25,7 @@ runConfig:
         removePrevious: True
         processes:      True   
         messages:       True    
-        ias:            False    
+        ias:            True    
         ias-detailed:   False  
         loader:         True
 
@@ -41,10 +41,10 @@ output:
     testData: ../out/testData.json  # the output file where we dump stuff that does not really matter, when we test stuff
 
 loader:
-    takeFromLocalSource: True  
+    takeFromLocalSource: False  
     localImgSrc: ../img/test/
     remoteImgSrc: /resources
-    batchSize: 1      # how many images should the loader load at once in the system
+    batchSize: 5      # how many images should the loader load at once in the system
     reloadNumber: 4   # When we reach this number of loaded images or less, we try to load more.
 
 background:

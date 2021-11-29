@@ -2,71 +2,42 @@ The wise Beaver's big dam of logs:
 ---------------------------------------
 __main__: Sent message: LoaderTaskType.LOAD
 ---------------------------------------
-BlackBox-2: Start of service
----------------------------------------
-BlackBox-4: Start of service
----------------------------------------
-BlackBox-5: Start of service
----------------------------------------
-BlackBox-3: Start of service
----------------------------------------
-BlackBox-7: Start of service
----------------------------------------
 Loader: Start of service
 ---------------------------------------
 Loader: Recieved message: LoaderTaskType.LOAD
 ---------------------------------------
-Loading 1 more images
+Loading 5 more images
 ---------------------------------------
-    - Loaded ../img/test/12.png
+BlackBox-2: Start of service
+---------------------------------------
+Connection to FTP server succesfully established !
+---------------------------------------
+Loading the list of image names... Please wait. This could take up to a few minutes, depending on the number of images in the distant folder.
+---------------------------------------
+Please don't ctrl c during this time
+---------------------------------------
+
+238571 image names loaded! Starting task distribution
+---------------------------------------
+    - Loaded 011040-3--067866ab-4ed1-47a2-bf7c-a9dfd4214c5b.jpg
 ---------------------------------------
 Loader: Sent message: TaskType.PROCESS
+---------------------------------------
+    - Loaded 011040-4--31862546-2703-43f8-8fa4-81df3ab0d87a.jpg
 ---------------------------------------
 BlackBox-2: Recieved message: TaskType.PROCESS
 ---------------------------------------
-Loader: Sent message: LoaderAnswerType.LOADDONE
+Loader: Sent message: TaskType.PROCESS
 ---------------------------------------
-__main__: Recieved message: LoaderAnswerType.LOADDONE
----------------------------------------
-__main__: Sent message: LoaderTaskType.LOAD
----------------------------------------
-Loader: Recieved message: LoaderTaskType.LOAD
----------------------------------------
-Loading 1 more images
----------------------------------------
-    - Loaded ../img/test/13.png
+    - Loaded 011040-6--d63da439-4d60-4dca-9213-4a97c4802b46.jpg
 ---------------------------------------
 Loader: Sent message: TaskType.PROCESS
 ---------------------------------------
-BlackBox-4: Recieved message: TaskType.PROCESS
----------------------------------------
-Loader: Sent message: LoaderAnswerType.LOADDONE
----------------------------------------
-__main__: Recieved message: LoaderAnswerType.LOADDONE
----------------------------------------
-__main__: Sent message: LoaderTaskType.LOAD
----------------------------------------
-Loader: Recieved message: LoaderTaskType.LOAD
----------------------------------------
-Loading 1 more images
----------------------------------------
-    - Loaded ../img/test/14.png
+    - Loaded 015110-1--a5f5204a-06df-49af-8bff-f8959a6957f1.jpg
 ---------------------------------------
 Loader: Sent message: TaskType.PROCESS
 ---------------------------------------
-Loader: Sent message: LoaderAnswerType.LOADDONE
----------------------------------------
-__main__: Recieved message: LoaderAnswerType.LOADDONE
----------------------------------------
-__main__: Sent message: LoaderTaskType.LOAD
----------------------------------------
-Loader: Recieved message: LoaderTaskType.LOAD
----------------------------------------
-Loading 1 more images
----------------------------------------
-BlackBox-5: Recieved message: TaskType.PROCESS
----------------------------------------
-    - Loaded ../img/test/15.png
+    - Loaded 015110-3--ce3ef570-10cd-4c7a-93b1-b45284e7afdc.jpg
 ---------------------------------------
 Loader: Sent message: TaskType.PROCESS
 ---------------------------------------
@@ -74,65 +45,27 @@ __main__: Recieved message: LoaderAnswerType.LOADDONE
 ---------------------------------------
 __main__: Sent message: LoaderTaskType.LOAD
 ---------------------------------------
-BlackBox-3: Recieved message: TaskType.PROCESS
----------------------------------------
-Loader: Sent message: LoaderAnswerType.LOADDONE
----------------------------------------
 Loader: Recieved message: LoaderTaskType.LOAD
 ---------------------------------------
-Loading 1 more images
+Loading 5 more images
 ---------------------------------------
-    - Loaded ../img/test/16.png
----------------------------------------
-BlackBox-7: Recieved message: TaskType.PROCESS
+    - Loaded 015110-6--92c8f2cd-17d4-4c25-baa1-5029e6eb0102.jpg
 ---------------------------------------
 Loader: Sent message: TaskType.PROCESS
 ---------------------------------------
-BlackBox-6: Start of service
----------------------------------------
-Loader: Sent message: LoaderAnswerType.LOADDONE
----------------------------------------
-__main__: Recieved message: LoaderAnswerType.LOADDONE
----------------------------------------
-__main__: Sent message: LoaderTaskType.LOAD
----------------------------------------
-Loader: Recieved message: LoaderTaskType.LOAD
----------------------------------------
-Loading 1 more images
----------------------------------------
-    - Loaded ../img/test/17.png
+    - Loaded 019000-1--9861f91f-f67a-4e4e-a504-ed5c754069e3.jpg
 ---------------------------------------
 Loader: Sent message: TaskType.PROCESS
 ---------------------------------------
-BlackBox-6: Recieved message: TaskType.PROCESS
----------------------------------------
-__main__: Recieved message: LoaderAnswerType.LOADDONE
----------------------------------------
-BlackBox-8: Start of serviceerTaskType.LOAD
----------------------------------------
-Loader: Sent message: LoaderAnswerType.LOADDONE
----------------------------------------
-Loader: Recieved message: LoaderTaskType.LOAD
----------------------------------------
-Loading 1 more images
----------------------------------------
-    - Loaded ../img/test/18.png
+    - Loaded 019000-2--62238e07-ccae-4ceb-bfc0-174ac99e4244.jpg
 ---------------------------------------
 Loader: Sent message: TaskType.PROCESS
 ---------------------------------------
-BlackBox-8: Recieved message: TaskType.PROCESS
+    - Loaded 019000-5--b1e37874-b191-45dd-895a-ee2fac850e93.jpg
 ---------------------------------------
-Loader: Sent message: LoaderAnswerType.LOADDONE
+Loader: Sent message: TaskType.PROCESS
 ---------------------------------------
-__main__: Recieved message: LoaderAnswerType.LOADDONE
----------------------------------------
-__main__: Sent message: LoaderTaskType.LOAD
----------------------------------------
-Loader: Recieved message: LoaderTaskType.LOAD
----------------------------------------
-Loading 1 more images
----------------------------------------
-    - Loaded ../img/test/19.png
+    - Loaded 019000-6--60266a51-6284-4edd-9c30-4adfa64940dd.jpg
 ---------------------------------------
 Loader: Sent message: TaskType.PROCESS
 ---------------------------------------
@@ -140,86 +73,8 @@ Loader: Sent message: LoaderAnswerType.LOADDONE
 ---------------------------------------
 __main__: Recieved message: LoaderAnswerType.LOADDONE
 ---------------------------------------
-__main__: Sent message: LoaderTaskType.LOAD
+BlackBox-2: New data written in the test output file.
 ---------------------------------------
-Loader: Recieved message: LoaderTaskType.LOAD
+BlackBox-2: Recieved message: TaskType.PROCESS
 ---------------------------------------
-Loading 1 more images
----------------------------------------
-Loader: Sent message: LoaderAnswerType.NOMORE
----------------------------------------
-__main__: Recieved message: LoaderAnswerType.NOMORE
----------------------------------------
-__main__: Sent message: LoaderTaskType.TERMINATE
----------------------------------------
-__main__: Recieved message: LoaderAnswerType.LOADDONE
----------------------------------------
-Loader: Sent message: LoaderAnswerType.LOADDONE
----------------------------------------
-Loader: Recieved message: LoaderTaskType.TERMINATE
----------------------------------------
-Loader: Sent message: LoaderAnswerType.END
----------------------------------------
-Loader: End of service
----------------------------------------
-__main__: Recieved message: LoaderAnswerType.END
----------------------------------------
-BlackBox-6: Recieved message: TaskType.PROCESS
----------------------------------------
-__main__: Sent message: TaskType.END
----------------------------------------
-__main__: Sent message: TaskType.END
----------------------------------------
-__main__: Sent message: TaskType.END
----------------------------------------
-__main__: Sent message: TaskType.END
----------------------------------------
-__main__: Sent message: TaskType.END
----------------------------------------
-__main__: Sent message: TaskType.END
----------------------------------------
-__main__: Sent message: TaskType.END
----------------------------------------
-BlackBox-6: Recieved message: TaskType.END
----------------------------------------
-BlackBox-6: Sent message: AnswerType.BOXENDSERVICE
----------------------------------------
-BlackBox-6: End of service
----------------------------------------
-BlackBox-3: Recieved message: TaskType.END
----------------------------------------
-BlackBox-3: Sent message: AnswerType.BOXENDSERVICE
----------------------------------------
-BlackBox-3: End of service
----------------------------------------
-BlackBox-4: Recieved message: TaskType.END
----------------------------------------
-BlackBox-4: Sent message: AnswerType.BOXENDSERVICE
----------------------------------------
-BlackBox-4: End of service
----------------------------------------
-BlackBox-8: Recieved message: TaskType.END
----------------------------------------
-BlackBox-8: Sent message: AnswerType.BOXENDSERVICE
----------------------------------------
-BlackBox-8: End of service
----------------------------------------
-BlackBox-2: Recieved message: TaskType.END
----------------------------------------
-BlackBox-2: Sent message: AnswerType.BOXENDSERVICE
----------------------------------------
-BlackBox-2: End of service
----------------------------------------
-BlackBox-5: Recieved message: TaskType.END
----------------------------------------
-BlackBox-5: Sent message: AnswerType.BOXENDSERVICE
----------------------------------------
-BlackBox-5: End of service
----------------------------------------
-BlackBox-7: Recieved message: TaskType.END
----------------------------------------
-__main__: End of service
----------------------------------------
-BlackBox-7: Sent message: AnswerType.BOXENDSERVICE
----------------------------------------
-BlackBox-7: End of service
+BlackBox-2: New data written in the test output file.

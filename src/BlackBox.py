@@ -51,13 +51,11 @@ class BlackBox(multiprocessing.Process):
             - to get new tasks and to terminate its service, through taskQueue
             - to send its status, through resultQueue'''
         proc_name = self.name
-        try:
-            (numProcesses, procTalkative, bbTalkative) = ProcConfig.getRunningConfig()    
-            
+        try:    
             Herald.printStart(proc_name)
             
+            # This is the main loop
             while True:
-                
                 nextTask = Herald.getMessageFrom(proc_name, self.taskQueue)
                 
                 if nextTask.type == TaskType.END: break
@@ -65,7 +63,7 @@ class BlackBox(multiprocessing.Process):
                 elif nextTask.type == TaskType.PROCESS: 
                     if nextTask.img is None: continue # this should not happen, but i still left it as a precaution
                     
-                    self.compute(nextTask.img)
+                    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache)
                     
                     self.taskQueue.task_done()    # helps when we want to join threads at the end of the programm
                     
@@ -87,7 +85,10 @@ class BlackBox(multiprocessing.Process):
     
     
     
-    def compute(self, img):
+    def compute(self, img, imgPath:str, imgPathInCache:str=None):
+        '''Computes if there is a shoe, its type and color.
+        If there is a path in cache, use this one.'''
+        
         # processedImg = ImagePreprocessor.preprocessForShoeExtraction(img, self.name)
         
         # shoeImg = ShoeExtractor.extractShoeFromImage(
@@ -95,14 +96,14 @@ class BlackBox(multiprocessing.Process):
         #     self.name
         # )
         
+        print (imgPath, imgPathInCache)
         
-        try: 
-            (mainColor, secondaryColor) = ColorDetector.detection(
-                img,
-                self.name
-            )
-        except ValueError:
-            print('Oh no error :)') 
+        (mainColor, secondaryColor) = ColorDetector.detection(
+            img,
+            self.name
+        )
+        
+        print (mainColor.name)
         # typeOfShoe = TypeDetector.detectTypeOfShoe(
         #     ImagePreprocessor.preprocessForTypeIdentification(shoeImg, self.name), 
         #     self.name

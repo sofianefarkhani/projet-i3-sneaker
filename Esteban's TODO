@@ -1,3 +1,26 @@
-Implement the nbProcess: auto mode
-    adds more processes if loader is not nearing the end of service and we have not reloaded it in some time, and we do not exceed default number.
-    removes a process if task queue hits length 0, and there are more than one process running
+
+Implement better tasks:
+
+(Done) The loader should NOT store images in the cache if we are using a local repo. 
+(Done) The tasks should convey the path of the original image.
+Also they should convey the path of the copied image in the cache, if the repo is distant. 
+
+The loader should also load the image as a tensorflow boy.
+
+The blackbox should be the one to decide when to delete an image from the cache, if the repo is distant. 
+In case of an error the image is not deleted from the cache.
+
+Save the colors in the json file
+
+
+(Done) Trier les images par ordre alphabatique
+Stocker les resultats dans un json temporaire pour un produit
+Lorsque on passe à un autre produit, faire une moyenne de resultats
+    Then store the mean results in the true json file. 
+
+
+pour vivien: 
+charger le modele une seule fois dans le main, pas dans chaque blackbox.
+    > model = load_model('model.h5')
+    > model.load_weights('weights.h5')
+    > passer en instanciation de blackbox

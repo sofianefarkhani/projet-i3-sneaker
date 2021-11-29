@@ -13,7 +13,6 @@ from processes.Enums            import *
 from processes.LoaderMessage    import *
 
 from utilities.Herald                           import Herald
-from utilities.configUtilities.ProcConfig       import ProcConfig
 from utilities.configUtilities.LoadConfig       import LoadConfig
 
 class Connexion:
@@ -64,13 +63,8 @@ class Loader(multiprocessing.Process):
                     
                     Herald.printLoading(batchSize)
                     
-                    for i in range(batchSize):
-                        img = next(imagesGenerator)
-                        if img is None:  # if image generator yields None, this is the end of the db
-                            Herald.queueMessageIn('Loader', self.answerQueue, LoaderAnswer(LoaderAnswerType.NOMORE))
-                            break
-                        else:                  # else append the image to the tasks
-                            Herald.queueMessageIn('Loader', self.bbTaskQueue, Task(TaskType.PROCESS, img))
+                    self.loadImages(batchSize, imagesGenerator)
+                    
                     Herald.queueMessageIn('Loader', self.answerQueue, LoaderAnswer(LoaderAnswerType.LOADDONE))
                 
                 elif task.type == LoaderTaskType.TERMINATE:
@@ -83,20 +77,46 @@ class Loader(multiprocessing.Process):
         Herald.printTermination('Loader')
         
         
-        
+    def loadImages(self, batchSize, imagesGenerator):
+        for i in range(batchSize):
+            imgInfo = next(imagesGenerator)
+            
+            if imgInfo is not None:
+                imgPath = imgInfo['imgPath']
+                imgPathInCache = None
+                if hasattr(imgInfo, 'imgPathInCache'):
+                    imgPathInCache = imgInfo['imgPathInCache']
+                img = imgInfo['img']
+            else: 
+                imgPath = None
+                imgPathInCache = None
+                img = None
+                        
+            if imgInfo is None:  # if image generator yields None, this is the end of the db
+                Herald.queueMessageIn('Loader', self.answerQueue, LoaderAnswer(LoaderAnswerType.NOMORE))
+                break
+            else:                  # else append the image to the tasks
+                Herald.queueMessageIn('Loader', self.bbTaskQueue, Task(TaskType.PROCESS, imgPath, imgPathInCache, img=img))
+                    
         
     def getImagesGenerator(self):
-        localFile = LoadConfig.getLocalImageSource()
         
+        # from local directory
         if LoadConfig.getIfLocalSource(): 
+            localFile = LoadConfig.getLocalImageSource()
             files = os.listdir(localFile)
+            
+            files.sort()
+            
             for file in files:
                 Herald.signalLoad(localFile+file)
-                
-                yield cv2.imread(localFile+file, cv2.IMREAD_COLOR)
+                yield { 
+                       'imgPath': file,
+                       'img':cv2.imread(os.path.join(localFile,file), cv2.IMREAD_COLOR)
+                    }
         
+        # from distant directory
         else: 
-            # print ('Not implemented yet you dumbdumb')
             os.chmod('../img/temp', 777)
             
             import pysftp
@@ -105,9 +125,8 @@ class Loader(multiprocessing.Process):
             cnopts.hostkeys = None
             with pysftp.Connection(host=self.connexion.hostname, username=self.connexion.username, password=self.connexion.password, cnopts=cnopts) as sftp:
                 Herald.printForLoader("Connection to FTP server succesfully established !")
-                Herald.printForLoader("Loading the list of images name... Please wait. This could take up to a few minutes, depending on the number of images in the distant folder.")
+                Herald.printForLoader("Loading the list of image names... Please wait. This could take up to a few minutes, depending on the number of images in the distant folder.")
                 Herald.printForLoader("Please don't ctrl c during this time")
-                
                 
                 sftp.cwd(LoadConfig.getRemoteImgSrc())
                 
@@ -117,18 +136,19 @@ class Loader(multiprocessing.Process):
                     for c in itertools.cycle(['|', '/', '-', '\\']):
                         if done :
                             break
-                        sys.stdout.write('\rloading ' + c )
+                        sys.stdout.write('\rLoading ' + c )
                         sys.stdout.flush()
                         time.sleep(0.1)
-                    sys.stdout.write('\rDone!     ')
                 t = threading.Thread(target=animate)
                 t.start()
                 
-                listNames = sftp.listdir()          
-                
+                listNames = sftp.listdir()  
                 done = True
                 
-                Herald.printForLoader(str(len(listNames))+" image names loaded! Starting task distribution")
+                listNames.sort()
+                
+                
+                Herald.printForLoader("\n"+str(len(listNames))+" image names loaded! Starting task distribution")
                 
                 while len(listNames)>0:
                     temp = listNames.pop(0)
@@ -138,10 +158,16 @@ class Loader(multiprocessing.Process):
                     sftp.get(temp, '../img/temp/'+temp)  
                     
                     # yield image from folder
-                    yield cv2.imread('../img/temp/'+temp, cv2.IMREAD_COLOR)
+                    yield { 
+                            'imgPath': os.path.join(LoadConfig.getRemoteImgSrc(),temp),
+                            'imgPathInCache': os.path.join('../img/temp/',temp),
+                            'img': cv2.imread(os.path.join('../img/temp/',temp), cv2.IMREAD_COLOR)
+                        }
                     
                     # remove image from cache
                     os.remove('../img/temp/'+temp)
-                
+        
+        print ('oh no')
         yield None
-                
+
+
