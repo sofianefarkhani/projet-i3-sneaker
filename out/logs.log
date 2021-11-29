@@ -2,13 +2,11 @@ The wise Beaver's big dam of logs:
 ---------------------------------------
 __main__: Sent message: LoaderTaskType.LOAD
 ---------------------------------------
-Loader: Start of service
+Loader: Start of servicevice
 ---------------------------------------
 Loader: Recieved message: LoaderTaskType.LOAD
 ---------------------------------------
 Loading 5 more images
----------------------------------------
-BlackBox-2: Start of service
 ---------------------------------------
 Connection to FTP server succesfully established !
 ---------------------------------------
@@ -40,6 +38,8 @@ Loader: Sent message: TaskType.PROCESS
     - Loaded 015110-3--ce3ef570-10cd-4c7a-93b1-b45284e7afdc.jpg
 ---------------------------------------
 Loader: Sent message: TaskType.PROCESS
+---------------------------------------
+Loader: Sent message: LoaderAnswerType.LOADDONE
 ---------------------------------------
 __main__: Recieved message: LoaderAnswerType.LOADDONE
 ---------------------------------------
@@ -77,4 +77,22 @@ BlackBox-2: New data written in the test output file.
 ---------------------------------------
 BlackBox-2: Recieved message: TaskType.PROCESS
 ---------------------------------------
-BlackBox-2: New data written in the test output file.
+__main__: Recieved message: TaskType.PROCESS
+---------------------------------------
+__main__: Recieved message: TaskType.PROCESS
+---------------------------------------
+__main__: Recieved message: TaskType.PROCESS
+---------------------------------------
+__main__: Recieved message: TaskType.PROCESS
+---------------------------------------
+__main__: Recieved message: TaskType.PROCESS
+---------------------------------------
+__main__: Recieved message: TaskType.PROCESS
+---------------------------------------
+__main__: Recieved message: TaskType.PROCESS
+---------------------------------------
+__main__: Recieved message: TaskType.PROCESS
+---------------------------------------
+__main__: Sent message: TaskType.END
+---------------------------------------
+__main__: Sent message: LoaderTaskType.TERMINATE

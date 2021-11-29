@@ -83,10 +83,12 @@ class Loader(multiprocessing.Process):
             
             if imgInfo is not None:
                 imgPath = imgInfo['imgPath']
-                imgPathInCache = None
-                if hasattr(imgInfo, 'imgPathInCache'):
-                    imgPathInCache = imgInfo['imgPathInCache']
+                
+                try: imgPathInCache = imgInfo['imgPathInCache']
+                except: imgPathInCache = None
+                
                 img = imgInfo['img']
+                
             else: 
                 imgPath = None
                 imgPathInCache = None

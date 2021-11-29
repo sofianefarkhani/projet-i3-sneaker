@@ -95,7 +95,7 @@ class BlackBox(multiprocessing.Process):
         #     processedImg,
         #     self.name
         # )
-        
+        print('#####################')
         print (imgPath, imgPathInCache)
         
         (mainColor, secondaryColor) = ColorDetector.detection(
