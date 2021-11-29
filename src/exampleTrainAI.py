@@ -102,10 +102,12 @@ def trainAIV1():
     # print(prediction)
 
 # with tf.device('/cpu:0'):
-# with tf.device("/gpu:0"):
-#     trainAIV1()
-# exit()
+with tf.device("/gpu:0"):
+    trainAIV1()
+exit()
 
+
+#predict after train
 model = load_model('model.h5')
 model.load_weights('weights.h5')
 
