@@ -108,16 +108,18 @@ class BlackBox(multiprocessing.Process):
         #     self.name
         # )
         
-        # tag = Tag(0) # yeah temporary id for now we don't care too much about that
+        typeOfShoe = None #a modif
+
+        tag = Tag(0) # yeah temporary id for now we don't care too much about that
         
-        # tag.setType(typeOfShoe)
-        # tag.setMainColor(mainColor)
-        # tag.setSecondaryColor(secondaryColor)
+        tag.setType(typeOfShoe)
+        tag.setMainColor(mainColor)
+        tag.setSecondaryColor(secondaryColor)
         
-        #if self.testMode:
-        #    Writer.outputTagAsJson(tag, BBConfig.getTestOutputFile())  
-        #else:
-        #    Writer.outputTagAsJson(tag)
+        if self.testMode:
+            Writer.outputTagAsJson(tag, BBConfig.getTestOutputFile())  
+        else:
+            Writer.outputTagAsJson(tag)
             
         Herald.printWrittenData(self.name)
         

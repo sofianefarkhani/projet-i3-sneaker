@@ -24,7 +24,6 @@ class MenuController:
             vars['tagIndex'] = 0
             file_object.close()
         
- 
     def setLowType(vars):
         vars['type'] = Type.LOW
         
