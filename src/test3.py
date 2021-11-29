@@ -17,7 +17,7 @@ import tensorflow as tf
 import os 
 os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 import os
-os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"   # see issue #152
+os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
 os.environ["CUDA_VISIBLE_DEVICES"]="0"
 
 gpu_devices = tf.config.experimental.list_physical_devices('GPU')
@@ -102,9 +102,9 @@ def trainAIV1():
     # print(prediction)
 
 # with tf.device('/cpu:0'):
-with tf.device("/gpu:0"):
-    trainAIV1()
-exit()
+# with tf.device("/gpu:0"):
+#     trainAIV1()
+# exit()
 
 model = load_model('model.h5')
 model.load_weights('weights.h5')
@@ -128,6 +128,6 @@ predictions = model.predict(
 # model.predict_on_batch();
 print(predictions)
 
-with open("output.txt", "w") as txt_file:
-    for line in predictions:
-        txt_file.write(" ".join(line) + "\n")
+# with open("output.txt", "w") as txt_file:
+#     for line in predictions:
+#         txt_file.write(" ".join(line) + "\n")
