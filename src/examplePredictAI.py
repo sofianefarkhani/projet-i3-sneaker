@@ -13,8 +13,8 @@ def loadImage(path):
     return img
 
 
-model = load_model('model.h5')
-model.load_weights('weights.h5')
+model = load_model('../in/AI/DetectShoes/model.h5')
+model.load_weights('../in/AI/DetectShoes/weights.h5')
 
 img = loadImage('/mnt/424cf323-70f0-406a-ae71-29e3da370aec/Sneaker-data/test_temp/Nouveau dossier/6836-2--55e3d05d-e4c8-4105-acbf-df9d25f0a61a.jpg')
 getPredictionShoesOrNot(img, model)

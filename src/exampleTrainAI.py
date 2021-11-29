@@ -81,8 +81,8 @@ def trainAIV1():
 
     # set steps_per_epoch=3000 and validation_steps=1000 with real data
     model.fit(trainingSet, validation_data=testSet, batch_size=32, epochs=25)
-    model.save("model.h5", overwrite=True)
-    model.save_weights('weights.h5', overwrite=True)
+    model.save("../in/AI/DetectShoes/model.h5", overwrite=True)
+    model.save_weights('../in/AI/DetectShoes/weights.h5', overwrite=True)
 
     # test_datagen = ImageDataGenerator(rescale=1./255)
     # test_generator = test_datagen.flow_from_directory(
@@ -108,8 +108,8 @@ exit()
 
 
 #predict after train
-model = load_model('model.h5')
-model.load_weights('weights.h5')
+model = load_model('../in/AI/DetectShoes/model.h5')
+model.load_weights('../in/AI/DetectShoes/weights.h5')
 
 
 test_datagen = ImageDataGenerator(rescale=1./255)
