@@ -3,7 +3,7 @@ Implement better tasks:
 
 (Done) The loader should NOT store images in the cache if we are using a local repo. 
 (Done) The tasks should convey the path of the original image.
-Also they should convey the path of the copied image in the cache, if the repo is distant. 
+(Done) Also they should convey the path of the copied image in the cache, if the repo is distant. 
 
 The loader should also load the image as a tensorflow boy.
 
