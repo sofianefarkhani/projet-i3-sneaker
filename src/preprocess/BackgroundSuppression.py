@@ -29,9 +29,9 @@ class BackgroundSuppression:
             
             if contrast >= 0.99:
                 highThresh, _ = cv2.threshold(gray, 0, 255, cv2.THRESH_TOZERO + cv2.THRESH_OTSU)
-                lowThresh = 0.9*highThresh
+                lowThresh = 0.85*highThresh
             else:
-                highThresh, _ = cv2.threshold(gray, 100, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_TOZERO)
+                highThresh, _ = cv2.threshold(gray, 80, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_TOZERO)
                 lowThresh = 0*highThresh
 
             

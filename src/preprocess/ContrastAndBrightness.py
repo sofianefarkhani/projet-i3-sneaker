@@ -29,7 +29,7 @@ class ContrastAndBrightness:
 
         imageAdjust = cv2.convertScaleAbs(image, alpha=alpha * nbAlpha, beta=beta * nbBeta)
 
-        ContrastAndBrightness.showImage(imageAdjust)
+        #ContrastAndBrightness.showImage(imageAdjust)
 
         return imageAdjust
 
