@@ -1,7 +1,6 @@
 import cv2
 from skimage.exposure import is_low_contrast
 from blackBoxModules.preprocess.ContrastAndBrightness import ContrastAndBrightness
-from preprocess.ContrastAndBrightness import ContrastAndBrightness
 import numpy as np
 class ImagePreprocessor:
 
