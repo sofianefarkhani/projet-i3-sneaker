@@ -6,12 +6,12 @@ import numpy as np
 import ast
 
 from utilities.configUtilities.BBConfig import BBConfig
+from interface.ConfigLoader import ConfigLoader
+from preprocess.ContrastAndBrightness import ContrastAndBrightness
 
 class BackgroundSuppression:
 
     __BLUR = 21
-    __CANNY_THRESH_1 = 20
-    __CANNY_THRESH_2 = 20
     __MASK_DILATE_ITER = 10
     __MASK_ERODE_ITER = 10
 
@@ -25,11 +25,21 @@ class BackgroundSuppression:
         __MASK_COLOR = BBConfig.getBackground()
         imagesNoBg = []
         if image is not None:
-            
+            contrast = ContrastAndBrightness.getContrastValue(image)
             gray = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
-            edges = cv2.Canny(gray, BackgroundSuppression.__CANNY_THRESH_1, BackgroundSuppression.__CANNY_THRESH_2)
+            
+            if contrast >= 0.99:
+                highThresh, _ = cv2.threshold(gray, 0, 255, cv2.THRESH_TOZERO + cv2.THRESH_OTSU)
+                lowThresh = 0.85*highThresh
+            else:
+                highThresh, _ = cv2.threshold(gray, 80, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_TOZERO)
+                lowThresh = 0*highThresh
+
+            
+            edges = cv2.Canny(gray, lowThresh, highThresh)
             edges = cv2.dilate(edges, None)
             edges = cv2.erode(edges, None)
+
             contour_info = []
             contours, _ = cv2.findContours(edges, cv2.RETR_LIST, cv2.CHAIN_APPROX_NONE)
             for c in contours:
