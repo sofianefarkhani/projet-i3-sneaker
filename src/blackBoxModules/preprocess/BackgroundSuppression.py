@@ -6,8 +6,7 @@ import numpy as np
 import ast
 
 from utilities.configUtilities.BBConfig import BBConfig
-from interface.ConfigLoader import ConfigLoader
-from preprocess.ContrastAndBrightness import ContrastAndBrightness
+from blackBoxModules.preprocess.ContrastAndBrightness import ContrastAndBrightness
 
 class BackgroundSuppression:
 

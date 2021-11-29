@@ -114,10 +114,10 @@ class BlackBox(multiprocessing.Process):
         # tag.setMainColor(mainColor)
         # tag.setSecondaryColor(secondaryColor)
         
-        # if self.testMode:
-        #     Writer.outputTagAsJson(tag, BBConfig.getTestOutputFile())  
-        # else:
-        #     Writer.outputTagAsJson(tag)
+        #if self.testMode:
+        #    Writer.outputTagAsJson(tag, BBConfig.getTestOutputFile())  
+        #else:
+        #    Writer.outputTagAsJson(tag)
             
         Herald.printWrittenData(self.name)
         
