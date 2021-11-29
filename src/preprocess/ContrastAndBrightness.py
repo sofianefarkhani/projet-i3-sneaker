@@ -4,6 +4,16 @@ from skimage.exposure import histogram
 
 class ContrastAndBrightness:
 
+    def getContrastValue(image):
+        """
+        Calculate value of the contrast
+
+        :param image
+        :return : value of the contrast
+        """
+        maximal, minimal = ContrastAndBrightness.histogramme(image, 0.8)
+        return (maximal - minimal)/(maximal + minimal)
+
     def adjustment(image, nbAlpha = 1, nbBeta = 1):
         """
         Adjust contrast and brightness of an image

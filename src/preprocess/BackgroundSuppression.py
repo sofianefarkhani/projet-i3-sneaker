@@ -3,9 +3,10 @@
 
 import cv2
 import numpy as np
-from interface.ConfigLoader import ConfigLoader
 import ast
-from skimage import feature
+
+from interface.ConfigLoader import ConfigLoader
+from preprocess.ContrastAndBrightness import ContrastAndBrightness
 
 class BackgroundSuppression:
 
@@ -23,12 +24,21 @@ class BackgroundSuppression:
         __MASK_COLOR = ConfigLoader.getVariable('background')
         imagesNoBg = []
         if image is not None:
+            contrast = ContrastAndBrightness.getContrastValue(image)
             gray = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
-            highThresh, _ = cv2.threshold(gray, 0, 255, cv2.THRESH_TOZERO + cv2.THRESH_OTSU)
-            lowThresh = 0.6*highThresh
+            
+            if contrast >= 0.99:
+                highThresh, _ = cv2.threshold(gray, 0, 255, cv2.THRESH_TOZERO + cv2.THRESH_OTSU)
+                lowThresh = 0.9*highThresh
+            else:
+                highThresh, _ = cv2.threshold(gray, 100, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_TOZERO)
+                lowThresh = 0*highThresh
+
+            
             edges = cv2.Canny(gray, lowThresh, highThresh)
             edges = cv2.dilate(edges, None)
             edges = cv2.erode(edges, None)
+
             contour_info = []
             contours, _ = cv2.findContours(edges, cv2.RETR_LIST, cv2.CHAIN_APPROX_NONE)
             for c in contours:
