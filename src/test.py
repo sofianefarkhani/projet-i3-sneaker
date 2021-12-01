@@ -1,18 +1,24 @@
 #A file to test anything you need in the moment.
 
+from typing import Text
 from Data.Color import Color
 from Data.Tag import Tag
 from Data.Type import Type
 import json
 from json import JSONEncoder
 import jsonpickle
+from interface.ConfigLoader import ConfigLoader
 from interface.Writer import Writer
 from interface.JsonReader import JsonReader 
 from interface.Loader import Loader
 import cv2
 from preprocess.BackgroundSuppression import BackgroundSuppression
 from menuPkg.Menu import Menu
-
+import tkinter
+from tkinter import DoubleVar, Label, ttk
+import tkinter.filedialog
+import tkinter as tk
+import yaml
 #### Testing the creation of colors
 #Color.testColorCreation()
 
@@ -59,10 +65,10 @@ from menuPkg.Menu import Menu
 ##### Test loading of images
 ## images are loaded as we need them. 
 
-def showImage(img):
-    cv2.imshow("img", img)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()  
+#def showImage(img):
+#    cv2.imshow("img", img)
+#    cv2.waitKey(0)
+#    cv2.destroyAllWindows()  
 
 # images = Loader.getImages(talking=True);
 #for img in images:
@@ -82,3 +88,39 @@ def showImage(img):
 #        showImage(imgPreproc)
 
 #menu = Menu()
+
+#testing GUI
+
+with open('../config/config.yaml') as f:
+    data = yaml.safe_load(f)
+
+
+#for cle,valeur in data.items():
+ #   print( "==>"+str(cle))
+  #  for cle1,valeur1 in valeur.items():
+   #     print( "----"+str(cle1)+" : "+str(valeur1) )
+       
+
+
+
+fenetre = tk.Tk()
+
+n = tk.ttk.Notebook(fenetre) # cretion du systeme d'onglets
+n.pack()
+
+#ajout de onglets
+onglets=[]
+i_onglet=0
+for cle,valeur in data.items(): 
+    onglets.insert(i_onglet,ttk.Frame(n))
+    n.add(onglets[i_onglet],text=str(cle))
+
+    for cle1,valeur1 in valeur.items():
+        Label(onglets[i_onglet], text = str(cle1)+" : "+str(valeur1)).pack()
+
+    i_onglet = i_onglet+1
+    
+
+
+
+fenetre.mainloop()
