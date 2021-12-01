@@ -18,7 +18,7 @@ runConfig:
         messages:       True    # to see a message everytime a message is sent/recieved between two processes.
         ias:            False    # to see a message each time a Blackbox starts a task, or finishes the processing of an image.
         ias-detailed:   False    # to see every single message from inside the blackboxes
-        loader:         True     # to see the messages of the loader
+        loader:         False     # to see the messages of the loader
     
     logs: 
         file:           ../out/logs.log
@@ -41,7 +41,7 @@ output:
     testData: ../out/testData.json  # the output file where we dump stuff that does not really matter, when we test stuff
 
 loader:
-    takeFromLocalSource: False  
+    takeFromLocalSource: True  
     localImgSrc: ../img/test/
     remoteImgSrc: /resources
     batchSize: 5      # how many images should the loader load at once in the system

@@ -89,8 +89,8 @@ class BlackBox(multiprocessing.Process):
         Herald.queueMessageIn(proc_name, self.answerQueue,
                               Answer(AnswerType.BOXENDSERVICE))
         Herald.printTermination(proc_name)
-
-	def compute(self, img, imgPath:str, imgPathInCache:str=None):
+        
+    def compute(self, img, imgPath:str, imgPathInCache:str=None):
         '''Computes if there is a shoe, its type and color.
         If there is a path in cache, use this one.'''
         
@@ -101,9 +101,6 @@ class BlackBox(multiprocessing.Process):
             )
         except ValueError:
             print('Oh no error :)')
-
-        print('#####################')      
-        print (mainColor.name)
         
         # typeOfShoe = TypeDetector.detectTypeOfShoe(
         #     ImagePreprocessor.preprocessForTypeIdentification(shoeImg, self.name),
@@ -151,6 +148,11 @@ class BlackBox(multiprocessing.Process):
 
         dataShoesJson = json.dumps(dataShoes)
 
+        imgPathDiv = imgPath.split(".",1)
+        imgName = imgPathDiv[0]
+        outputFilePath = ("../out/"+imgName+".json")
+        file_object = open(outputFilePath, 'a')
+        file_object.write("\n"+dataShoesJson)
         
         Herald.printWrittenData(self.name)
 
