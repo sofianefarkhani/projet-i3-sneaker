@@ -1,24 +1,26 @@
 import cv2
+import traceback
 
-from interface.Writer import Writer
-
-from utilities.Herald import Herald
-from utilities.configUtilities.BBConfig import BBConfig
-from utilities.configUtilities.ConfigLoader import ConfigLoader
-from utilities.configUtilities.ProcConfig import ProcConfig
-
-from blackBoxModules.colorDetector.ColorDetector import ColorDetector
-from blackBoxModules.sneakerExtractor.ShoeExtractor import ShoeExtractor
-from blackBoxModules.typeDetector.TypeDetector import TypeDetector
-from blackBoxModules.preprocess.ImagePreprocessor import ImagePreprocessor
-
-from Data.Tag import Tag
+from Data.Tag                                       import Tag
 
 import multiprocessing
-from processes.Enums import *
-from processes.Task import Answer
+from processes.Enums                                import *
+from processes.Task                                 import Answer
 
-import traceback
+from keras.models                                   import load_model
+
+from interface.Writer                               import Writer
+
+from utilities.Herald                               import Herald
+from utilities.configUtilities.BBConfig             import BBConfig
+from utilities.configUtilities.ProcConfig           import ProcConfig
+from utilities.configUtilities.ConfigLoader         import ConfigLoader
+from utilities.configUtilities.ShoeDetectionConfig  import ShoeDetectionConfig as SDConfig
+
+from blackBoxModules.typeDetector.TypeDetector      import TypeDetector
+from blackBoxModules.colorDetector.ColorDetector    import ColorDetector
+from blackBoxModules.sneakerExtractor.ShoeExtractor import ShoeExtractor
+from blackBoxModules.preprocess.ImagePreprocessor   import ImagePreprocessor
 
 class BlackBox(multiprocessing.Process):
     '''The BlackBox coordinates all the image dealings and the extraction of the values.
@@ -54,6 +56,10 @@ class BlackBox(multiprocessing.Process):
         try:    
             Herald.printStart(proc_name)
             
+            # load IA models
+            modelShoeDetector = load_model(SDConfig.getModelFile())
+            modelShoeDetector.load_weights(SDConfig.getWeightsFile())
+            
             # This is the main loop
             while True:
                 nextTask = Herald.getMessageFrom(proc_name, self.taskQueue)
@@ -63,7 +69,7 @@ class BlackBox(multiprocessing.Process):
                 elif nextTask.type == TaskType.PROCESS: 
                     if nextTask.img is None: continue # this should not happen, but i still left it as a precaution
                     
-                    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache)
+                    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
                     
                     self.taskQueue.task_done()    # helps when we want to join threads at the end of the programm
                     
@@ -85,9 +91,10 @@ class BlackBox(multiprocessing.Process):
     
     
     
-    def compute(self, img, imgPath:str, imgPathInCache:str=None):
+    def compute(self, img, imgPath:str, imgPathInCache:str=None, tfImg=None, modelShoeDetector=None):
         '''Computes if there is a shoe, its type and color.
-        If there is a path in cache, use this one.'''
+        If there is a path in cache, use this one.
+        tfImg is the image loaded for the needs of tensorflow. Don't use it unless you're called Vivien.'''
         
         # processedImg = ImagePreprocessor.preprocessForShoeExtraction(img, self.name)
         
@@ -96,7 +103,8 @@ class BlackBox(multiprocessing.Process):
         #     self.name
         # )
         print('#####################')
-        print (imgPath, imgPathInCache)
+        print (tfImg)
+        print (modelShoeDetector)
         
         (mainColor, secondaryColor) = ColorDetector.detection(
             img,

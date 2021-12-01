@@ -5,13 +5,12 @@ Implement better tasks:
 (Done) The tasks should convey the path of the original image.
 (Done) Also they should convey the path of the copied image in the cache, if the repo is distant. 
 
-The loader should also load the image as a tensorflow boy.
+(Done) The loader should also load the image as a tensorflow boy.
 
-The blackbox should be the one to decide when to delete an image from the cache, if the repo is distant. 
+(Mathilde did it) Save the colors in the json file
+
+In case of not sure enough, image name is stored in a file of need help. 
 In case of an error the image is not deleted from the cache.
-
-Save the colors in the json file
-
 
 (Done) Trier les images par ordre alphabatique
 Stocker les resultats dans un json temporaire pour un produit
@@ -20,7 +19,7 @@ Lorsque on passe à un autre produit, faire une moyenne de resultats
 
 
 pour vivien: 
-charger le modele une seule fois dans le main, pas dans chaque blackbox.
+(Done) charger le modele une seule fois par blackbox
     > model = load_model('model.h5')
     > model.load_weights('weights.h5')
     > passer en instanciation de blackbox

@@ -1,21 +1,23 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-from BlackBox import BlackBox
-
-from utilities.configUtilities.ConfigLoader import ConfigLoader
-from utilities.Herald                       import Herald
-from utilities.Beaver                       import Beaver
-from utilities.configUtilities.ProcConfig   import ProcConfig
-from utilities.configUtilities.LoadConfig   import LoadConfig
-
-from interface.Loader           import Loader
-from interface.Loader           import Connexion
 
 import queue
 import multiprocessing
 from processes.Task             import *
 from processes.LoaderMessage    import *
 from processes.Enums            import *
+
+from interface.Loader           import Loader
+from interface.Loader           import Connexion
+
+from BlackBox                   import BlackBox
+
+from utilities.Herald                       import Herald
+from utilities.Beaver                       import Beaver
+from utilities.configUtilities.ProcConfig   import ProcConfig
+from utilities.configUtilities.LoadConfig   import LoadConfig
+from utilities.configUtilities.ConfigLoader import ConfigLoader
+
 
 if __name__ == '__main__':
     
@@ -31,10 +33,11 @@ if __name__ == '__main__':
     loaderTasks = multiprocessing.JoinableQueue()
     loaderResults = multiprocessing.Queue()
 
-    # start the loader    
-    c = Connexion() 
+    
     
     try:
+        # start the loader    
+        c = Connexion() 
         loader = Loader(loaderTasks, loaderResults, tasks, c)
         loader.start()
         
