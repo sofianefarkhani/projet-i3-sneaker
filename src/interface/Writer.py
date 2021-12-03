@@ -9,11 +9,12 @@ class Writer(json.JSONEncoder):
     
     The Writer takes a Tag and image upon request from the BlackBox. It writes the tag into the appropriate json file.'''
 
-    # def json_convert(self, obj): 
-    #     if isinstance(obj, Tags):
-    #         return [obj.id, obj.mainColor, obj.secondColor, obj.type]
-    #     raise ValueError("Writer take only Tags object, your object is not Tags")
-    #     return json.JSONEncoder.json_convert(self, obj)
+
+    def json_convert(self, obj): 
+        if isinstance(obj, Tag):
+            return [obj.id, obj.mainColor, obj.secondColor, obj.type]
+        raise ValueError("Writer take only Tags object, your object is not Tags")
+        return json.JSONEncoder.json_convert(self, obj)
         
     def outputTagAsJson(tag:Tag, outputFilePath:str=BBConfig.getOutputFile()):
         '''Writes the given tag under the Json format in the output file: ../out/data.json .
