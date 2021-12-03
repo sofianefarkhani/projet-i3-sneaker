@@ -1,4 +1,6 @@
 import cv2
+import json
+import pprint
 import traceback
 
 from Data.Tag                                       import Tag
@@ -22,7 +24,7 @@ from blackBoxModules.colorDetector.ColorDetector    import ColorDetector
 from blackBoxModules.sneakerExtractor.ShoeExtractor import ShoeExtractor
 from blackBoxModules.preprocess.ImagePreprocessor   import ImagePreprocessor
 
-import json
+
 
 
 class BlackBox(multiprocessing.Process):
@@ -162,6 +164,8 @@ class BlackBox(multiprocessing.Process):
 
         dataShoesJson = json.dumps(dataShoes)
 
+        Herald.printResults(dataShoes)
+        
         imgPathDiv = imgPath.split(".",1)
         imgName = imgPathDiv[0]
         outputFilePath = ("../out/"+imgName+".json")

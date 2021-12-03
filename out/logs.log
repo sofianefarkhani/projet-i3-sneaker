@@ -69,3 +69,112 @@ __main__: End of service
 BlackBox-2: Sent message: AnswerType.BOXENDSERVICE
 ---------------------------------------
 BlackBox-2: End of service
+---------------------------------------
+BlackBox-2 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 77, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 167, in compute
+    Herald.printResults(dataShoesJson)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\utilities\Herald.py", line 87, in printResults
+    pprint(Fore.YELLOW+Style.BRIGHT+str(results)+Style.RESET_ALL)
+TypeError: 'module' object is not callable
+
+---------------------------------------
+No blackboxes are running. Politely stopping the program.
+---------------------------------------
+BlackBox-2 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 77, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 167, in compute
+    Herald.printResults(dataShoesJson)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\utilities\Herald.py", line 89, in printResults
+    msg += Herald.getPrintElement(key, results[key])
+TypeError: string indices must be integers
+
+---------------------------------------
+No blackboxes are running. Politely stopping the program.
+---------------------------------------
+BlackBox-2 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 77, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 167, in compute
+    Herald.printResults(dataShoesJson)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\utilities\Herald.py", line 90, in printResults
+    msg += Herald.getPrintElement(key, results[key])
+TypeError: string indices must be integers
+
+---------------------------------------
+No blackboxes are running. Politely stopping the program.
+---------------------------------------
+BlackBox-2 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 77, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 167, in compute
+    Herald.printResults(dataShoesJson)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\utilities\Herald.py", line 91, in printResults
+    msg += Herald.getPrintElement(key, results[key])
+TypeError: string indices must be integers
+
+---------------------------------------
+No blackboxes are running. Politely stopping the program.
+---------------------------------------
+BlackBox-2 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 77, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 167, in compute
+    Herald.printResults(dataShoesJson)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\utilities\Herald.py", line 91, in printResults
+    msg += Herald.getPrintElement(key, results[key])
+TypeError: string indices must be integers
+
+---------------------------------------
+No blackboxes are running. Politely stopping the program.
+---------------------------------------
+BlackBox-2 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 77, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 167, in compute
+    Herald.printResults(dataShoes)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\utilities\Herald.py", line 90, in printResults
+    msg += Herald.getPrintElement(key, results[key], 1)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\utilities\Herald.py", line 95, in getPrintElement
+    for i in indent: indentStr += '    '
+TypeError: 'int' object is not iterable
+
+---------------------------------------
+No blackboxes are running. Politely stopping the program.
+---------------------------------------
+BlackBox-2 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 77, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 167, in compute
+    Herald.printResults(dataShoes)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\utilities\Herald.py", line 90, in printResults
+    msg += Herald.getPrintElement(key, results[key], 1)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\utilities\Herald.py", line 101, in getPrintElement
+    msg += Herald.getPrintElement(key, element[key])
+TypeError: getPrintElement() missing 1 required positional argument: 'indent'
+
+---------------------------------------
+No blackboxes are running. Politely stopping the program.
