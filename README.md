@@ -1,6 +1,6 @@
 # Projet I3 : SNEAKERS
+## Requirements
+Docker Engine
 ## Installation
-```bash
-pip install -r requirements.txt
-```
+
 ## Usage
