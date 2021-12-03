@@ -11,6 +11,9 @@ class Writer(json.JSONEncoder):
 
     def prepareTempFiles():
         dir = BBConfig.getTempOutput()
+        if dir[-1]=='/' or dir[-1]=='\\':
+            dir = dir[:-1]
+        print(dir)
         filesToRemove = os.listdir(dir)
         for f in filesToRemove:
             os.remove(dir+'/'+f)
@@ -21,7 +24,8 @@ class Writer(json.JSONEncoder):
     
     def writeDataToTempFile(procName, data:dict):
         tempDir = BBConfig.getTempOutput()
-        print(tempDir)
+        if tempDir[-1]=='/' or tempDir[-1]=='\\':
+            tempDir = tempDir[:-1]
         outputFilePath = tempDir+"/"+ procName+'.json'
         
         with open(outputFilePath, 'a') as f:
