@@ -7,6 +7,9 @@ import threading
 import time
 import sys
 
+import numpy                    as np
+import tensorflow               as tf
+
 import multiprocessing
 from processes.Task             import *
 from processes.Enums            import *
@@ -89,6 +92,8 @@ class Loader(multiprocessing.Process):
                 
                 img = imgInfo['img']
                 
+                tfImg = imgInfo['tfImg']
+                
             else: 
                 imgPath = None
                 imgPathInCache = None
@@ -98,7 +103,7 @@ class Loader(multiprocessing.Process):
                 Herald.queueMessageIn('Loader', self.answerQueue, LoaderAnswer(LoaderAnswerType.NOMORE))
                 break
             else:                  # else append the image to the tasks
-                Herald.queueMessageIn('Loader', self.bbTaskQueue, Task(TaskType.PROCESS, imgPath, imgPathInCache, img=img))
+                Herald.queueMessageIn('Loader', self.bbTaskQueue, Task(TaskType.PROCESS, imgPath=imgPath, imgPathInCache=imgPathInCache, img=img, tfImg=tfImg))
                     
         
     def getImagesGenerator(self):
@@ -114,7 +119,8 @@ class Loader(multiprocessing.Process):
                 Herald.signalLoad(localFile+file)
                 yield { 
                        'imgPath': file,
-                       'img':cv2.imread(os.path.join(localFile,file), cv2.IMREAD_COLOR)
+                       'img':cv2.imread(os.path.join(localFile,file), cv2.IMREAD_COLOR),
+                       'tfImg': self.loadTensorFlowImage(os.path.join(localFile,file))
                     }
         
         # from distant directory
@@ -163,13 +169,19 @@ class Loader(multiprocessing.Process):
                     yield { 
                             'imgPath': os.path.join(LoadConfig.getRemoteImgSrc(),temp),
                             'imgPathInCache': os.path.join('../img/temp/',temp),
-                            'img': cv2.imread(os.path.join('../img/temp/',temp), cv2.IMREAD_COLOR)
+                            'img': cv2.imread(os.path.join('../img/temp/',temp), cv2.IMREAD_COLOR),
+                            'tfImg': self.loadTensorFlowImage(os.path.join('../img/temp/',temp))
                         }
                     
                     # remove image from cache
                     os.remove('../img/temp/'+temp)
         
-        print ('oh no')
         yield None
 
-
+    def loadTensorFlowImage(self, path):
+        img = tf.keras.preprocessing.image.load_img(
+        path, color_mode="grayscale", target_size=(200, 200))
+        img = tf.keras.preprocessing.image.img_to_array(img)
+        img = img.astype('float32')/255.
+        img = np.array([img])  # Convert single image to a batch.
+        return img
