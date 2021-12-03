@@ -8,6 +8,7 @@ from processes.LoaderMessage    import *
 from processes.Enums            import *
 
 from interface.Loader           import Loader
+from interface.Writer           import Writer
 from interface.Loader           import Connexion
 
 from BlackBox                   import BlackBox
@@ -22,7 +23,10 @@ from utilities.configUtilities.ConfigLoader import ConfigLoader
 if __name__ == '__main__':
     
     Herald.printStart(__name__)
+    
+    # Prepare environment
     Beaver.reinitLogsIfNeeded()
+    Writer.prepareTempFiles()
     
     # Get basic parameters
     (numProcesses, procTalkative, bbTalkative) = ProcConfig.getRunningConfig()

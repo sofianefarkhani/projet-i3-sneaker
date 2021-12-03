@@ -30,7 +30,7 @@ runConfig:
         loader:         False
 
     gui:
-        showImages: True       # Show each image when processed (stops the Blackbox from processing other images while the image is on display!!!)
+        showImages: False       # Show each image when processed (stops the Blackbox from processing other images while the image is on display!!!)
 
     dynamicConfig: False        # Setting to True reloads the configuration from the file at each loop of the BlackBox and of the main.  
                                 # This allows you to change the config while the application is running and see the effects in live.      
@@ -39,6 +39,7 @@ runConfig:
 output:
     data: ../out/data.json          # the output for image tags
     testData: ../out/testData.json  # the output file where we dump stuff that does not really matter, when we test stuff
+    tempData: ../out/temp
 
 input:
     # to train our IAs

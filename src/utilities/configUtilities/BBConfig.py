@@ -19,3 +19,6 @@ class BBConfig:
     
     def getResultsShow():
         return ConfigLoader.getVariable('runConfig', 'talkative', 'ias')
+    
+    def getTempOutput():
+        return ConfigLoader.getVariable('output', 'tempData')

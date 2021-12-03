@@ -1,8 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
+import os
 import json
-import jsonpickle
-from Data.Tag import Tag
 from utilities.configUtilities.BBConfig import BBConfig
 from Data.TrainDataElement import TrainDataElement
 class Writer(json.JSONEncoder):
@@ -10,36 +9,25 @@ class Writer(json.JSONEncoder):
     
     The Writer takes a Tag and image upon request from the BlackBox. It writes the tag into the appropriate json file.'''
 
-    # def json_convert(self, obj): 
-    #     if isinstance(obj, Tags):
-    #         return [obj.id, obj.mainColor, obj.secondColor, obj.type]
-    #     raise ValueError("Writer take only Tags object, your object is not Tags")
-    #     return json.JSONEncoder.json_convert(self, obj)
+
+    def prepareTempFiles():
+        dir = BBConfig.getTempOutput()
+        if dir[-1]=='/' or dir[-1]=='\\':
+            dir = dir[:-1]
+        print(dir)
+        filesToRemove = os.listdir(dir)
+        for f in filesToRemove:
+            os.remove(dir+'/'+f)
+
+
+    def convertToJson(data: dict):
+        return json.dumps(data)
+    
+    def writeDataToTempFile(procName, data:dict):
+        tempDir = BBConfig.getTempOutput()
+        if tempDir[-1]=='/' or tempDir[-1]=='\\':
+            tempDir = tempDir[:-1]
+        outputFilePath = tempDir+"/"+ procName+'.json'
         
-    def outputTagAsJson(tag:Tag, outputFilePath:str=BBConfig.getOutputFile()):
-        '''Writes the given tag under the Json format in the output file: ../out/data.json .
-        
-        Checks if the tag is complete first. 
-        If it is, the json string of the given tag is appended to the file in a new line.
-        
-        This function may seem simple, but it was very painful to make. I had lots of research to do before getting smthg that actually works.
-        
-        With love, 
-        
-        Esteban'''
-        if not tag.isComplete(): 
-            print('THIS TAG IS INCOMPLETE AND WILL NOT BE REGISTERED')
-            return
-        data = jsonpickle.encode(tag)
-        file_object = open(outputFilePath, 'a')
-        file_object.write("\n"+data)
-        
-        
-    # def outputTagAsJson(tde:TrainDataElement, outputFilePath:str=ConfigLoader.getVariable('input', 'shoeTypeTrainData')):
-    #     '''Writes the given TrainDataElement under the Json format in the output file.
-        
-    #     The json string of the given object is appended to the file in a new line.'''
-        
-    #     data = jsonpickle.encode(tde)
-    #     file_object = open(outputFilePath, 'a')
-    #     file_object.write("\n"+data)
+        with open(outputFilePath, 'a') as f:
+            f.write("\n"+Writer.convertToJson(data))
