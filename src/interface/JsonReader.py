@@ -1,6 +1,6 @@
 import jsonpickle
 from Data.Tag import Tag
-
+from interface.ConfigLoader import ConfigLoader
 
 class JsonReader:
     def readOutputFile(inputFilePath:str='../out/data.json', verbalOutput=False):
@@ -13,7 +13,7 @@ class JsonReader:
         file_object = open(inputFilePath, 'r')
         lines = file_object.readlines()
         
-        tagList = [] 
+        objectList = [] 
         
         if verbalOutput: print('decoding '+str(len(lines))+" objects:")
         
@@ -21,36 +21,40 @@ class JsonReader:
             if not (line == '' or line == '\n'):
                 object = jsonpickle.decode(line)
                 if verbalOutput: print('    '+str(object.toString()))
-                tagList.append(object)
+                objectList.append(object)
             
         if verbalOutput: print('End of decoding.')
-        return tagList
+        return objectList
             
         
-    def getDataForIATypeTraining(fileForTags = '../out/testData.json', typeAsString=False):
+    def getDataForIATypeTraining(fileForTags = ConfigLoader.getVariable('input', 'shoeDetectAndExtractTrainData'), typeAsString=False):
         '''Gets you the data for training the AI that recognizes shoe types.
         
         Returns the data under the form: 
             >>    (imgs=[list of image paths],   types=[list of shoe type]).
         The image paths are strings that only tell you the name of the image file, not the path.
-        Those names are built as: imageId+"png".
+        Those names are built as follows: imageId+"png".
         The shoe types are stored as Data.Type, unless typeAsString is set to True; in which case, types are returned as 'LOW', and 'HIGH'.
         
         These arrays are "sorted" so that for any integer k, 
             imgs[k] has the a shoe of the type: types[k].
         '''
         
-        storedTags = JsonReader.readOutputFile(fileForTags)
+        storedTDE = JsonReader.readOutputFile(fileForTags)
         imgs = []
         types = []
         
-        for tag in storedTags:
+        for tde in storedTDE:
+            if not tde.isThereAShoe: continue
             if not typeAsString:
-                types.append(tag.type)
+                types.append(tde.shoeType)
             else: 
-                types.append(tag.type.name)
-            imgs.append(str(tag.databaseID)+'.png')
+                types.append(tde.shoeType.name)
+            imgs.append(tde.imageName)
         
+        # print ('######################################################################################')
+        # print (types)
+        # print ('######################################################################################')
         return (imgs, types)
             
         

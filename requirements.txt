@@ -8,3 +8,4 @@ pandas
 colorama
 pysftp
 scikit-image
+matplotlib

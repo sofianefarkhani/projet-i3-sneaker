@@ -108,41 +108,47 @@ class BlackBox(multiprocessing.Process):
         '''Computes if there is a shoe, its type and color.
         If there is a path in cache, use this one.
         tfImg is the image loaded for the needs of tensorflow. Don't use it unless you're called Vivien.'''
+        imgName  = DataFormatter.getLastFromPath(imgPath)
+        refProd  = DataFormatter.extractProdRef(imgName)
         
         # processedImg = ImagePreprocessor.preprocessForShoeExtraction(img, self.name)
         
-        # shoeImg = ShoeExtractor.extractShoeFromImage(
-        #     processedImg,
-        #     self.name
-        # )
-        
-        (mainColor, secondaryColor) = ColorDetector.detection(
-            img,
-            self.name
+        shoeProb = ShoeExtractor.isThereShoe(
+            tfImg,
+            modelShoeDetector
         )
         
-        # typeOfShoe = TypeDetector.detectTypeOfShoe(
-        #     ImagePreprocessor.preprocessForTypeIdentification(shoeImg, self.name),
-        #     self.name
-        # )
+        if shoeProb>0.5:
+            (mainColor, secondaryColor) = ColorDetector.detection(
+                img,
+                self.name
+            )
+            
+            # typeOfShoe = TypeDetector.detectTypeOfShoe(
+            #     ImagePreprocessor.preprocessForTypeIdentification(shoeImg, self.name),
+            #     self.name
+            # )
 
-        # tag = Tag(0) # yeah temporary id for now we don't care too much about that
+            # tag = Tag(0) # yeah temporary id for now we don't care too much about that
 
-        # tag.setType(typeOfShoe)
-        # tag.setMainColor(mainColor)
-        # tag.setSecondaryColor(secondaryColor)
+            # tag.setType(typeOfShoe)
+            # tag.setMainColor(mainColor)
+            # tag.setSecondaryColor(secondaryColor)
 
-        # if self.testMode:
-        #    Writer.outputTagAsJson(tag, BBConfig.getTestOutputFile())
-        # else:
-        #    Writer.outputTagAsJson(tag)
+            # if self.testMode:
+            #    Writer.outputTagAsJson(tag, BBConfig.getTestOutputFile())
+            # else:
+            #    Writer.outputTagAsJson(tag)
 
-        colorway = DataFormatter.buildColorWay(mainColor, secondaryColor)
-        imgName  = DataFormatter.getLastFromPath(imgPath)
-        refProd  = DataFormatter.extractProdRef(imgName)
-        dataShoes= DataFormatter.getFullData(refProd, imgName, "NOT IMPLEMENTED YET", colorway)
-        Herald.printResults(dataShoes)
+            colorway = DataFormatter.buildColorWay(mainColor, secondaryColor)
+            dataShoes= DataFormatter.getFullData(refProd, imgName, "NOT IMPLEMENTED YET", colorway, shoeProb)
+            Herald.printResults(dataShoes)
         
+        else: 
+            # there was no shoe
+            dataShoes = DataFormatter.getNoneData(refProd, imgName, shoeProb)
+            Herald.printResults(dataShoes)
+            
         dataShoesJson = json.dumps(dataShoes)
 
         imgPathDiv = imgPath.split("-")

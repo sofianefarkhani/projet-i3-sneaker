@@ -111,7 +111,7 @@ class Herald:
                 msg += indentStr+'    '+str(e)+',\n'
             msg+= indentStr+']'
             msg = "".join(msg.rsplit(',', 1))
-        else: msg+=element
+        else: msg+=str(element)
         return msg
         
         
