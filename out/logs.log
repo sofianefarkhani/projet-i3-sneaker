@@ -335,3 +335,39 @@ IndexError: list index out of range
 
 ---------------------------------------
 No blackboxes are running. Politely stopping the program.
+---------------------------------------
+BlackBox-2 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "D:\Python projects\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "D:\Python projects\projet-i3-sneaker\src\BlackBox.py", line 147, in compute
+    Writer.writeDataToTempFile(self.name, dataShoes)
+UnboundLocalError: local variable 'dataShoes' referenced before assignment
+
+---------------------------------------
+BlackBox-3 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "D:\Python projects\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "D:\Python projects\projet-i3-sneaker\src\BlackBox.py", line 147, in compute
+    <<<<<<< HEAD
+UnboundLocalError: local variable 'dataShoes' referenced before assignment
+
+---------------------------------------
+BlackBox-5 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "D:\Python projects\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "D:\Python projects\projet-i3-sneaker\src\BlackBox.py", line 122, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "D:\Python projects\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 320, in detection
+    ColorDetector.persistanceColor(res)
+  File "D:\Python projects\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 249, in persistanceColor
+    deuxiemeElem = str([*keys][1])
+IndexError: list index out of range
