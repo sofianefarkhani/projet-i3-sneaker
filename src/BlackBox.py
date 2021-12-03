@@ -165,7 +165,7 @@ class BlackBox(multiprocessing.Process):
         imgPathDiv = imgPath.split(".",1)
         imgName = imgPathDiv[0]
         outputFilePath = ("../out/"+imgName+".json")
-        file_object = open(outputFilePath, 'a')
+        file_object = open(outputFilePath, 'w')
         file_object.write("\n"+dataShoesJson)
         
         Herald.printWrittenData(self.name)
