@@ -1,4 +1,7 @@
+import os
 import cv2
+import json
+import pprint
 import traceback
 
 from Data.Tag                                       import Tag
@@ -22,7 +25,7 @@ from blackBoxModules.colorDetector.ColorDetector    import ColorDetector
 from blackBoxModules.sneakerExtractor.ShoeExtractor import ShoeExtractor
 from blackBoxModules.preprocess.ImagePreprocessor   import ImagePreprocessor
 
-import json
+
 
 
 class BlackBox(multiprocessing.Process):
@@ -132,36 +135,23 @@ class BlackBox(multiprocessing.Process):
         # else:
         #    Writer.outputTagAsJson(tag)
 
-        Colorway = {
-            "mainColor": [
-                {
-                    "color": mainColor.name,
-                    "rgb": mainColor.rgb
-                }
-            ]
-        }
-
-        if secondaryColor != None:
-            Colorway["secondaryColor"] = [
-                {
-                    "color": secondaryColor.name,
-                    "rgb": secondaryColor.rgb
-                }
-            ]
+        colorway = self.buildColorWay(mainColor, secondaryColor)
         
+        imgName = os.path.normpath(imgPath)
+        refProd = self.extractProdRef(imgName)
         
-
         dataShoes = {
-            "ID": "referenceProduit",
-            "lst_image": [
-                "test1jpg"
-            ],
-            "style": "none",
-            "Colorway": Colorway
+            "IDProduct": refProd,
+            "img": imgName,
+            "style": "NOT IMPLEMENTED YET",
+            "Colorway": colorway
         }
-
+        Herald.printResults(dataShoes)
+        
         dataShoesJson = json.dumps(dataShoes)
 
+        
+        
         imgPathDiv = imgPath.split(".",1)
         imgName = imgPathDiv[0]
         outputFilePath = ("../out/"+imgName+".json")
@@ -185,3 +175,27 @@ class BlackBox(multiprocessing.Process):
         '''Assigns an id to this instance of Blackbox.'''
         BlackBox.nextBBIndexAvailable += 1
         return BlackBox.nextBBIndexAvailable-1
+
+    def buildColorWay(self, mainColor, secondaryColor):
+        colorway = {
+            "mainColor": {
+                "color": mainColor.name,
+                "rgb": mainColor.rgb
+            }
+        }
+
+        if secondaryColor != None:
+            colorway["secondaryColor"] = {
+                "color": secondaryColor.name,
+                "rgb": secondaryColor.rgb
+            }
+        return colorway
+    
+    
+    def extractProdRef(self, imgName:str):
+        tempRef = None
+        if '-' in imgName:
+            tempRef = imgName.split('-')[0]
+        if '_' in tempRef:
+            tempRef = tempRef.split('_')[0]
+        return tempRef

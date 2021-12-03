@@ -37,10 +37,11 @@ Multiple options are available, and they all accept a boolean.
     To see the messages of the processes starting/ending
     
 - messages: True    
-    To see a message everytime a message is sent/recieved between two processes.
+    To see a print everytime a message is sent/recieved between two processes.
 
 - ias: False    
     To see a message when a blackbox finishes dealing with an image.
+    Shows the results of the image dealings. 
 
 - ias-detailed: False    
     To see every single message from inside the blackboxes, IA per IA.

@@ -16,3 +16,6 @@ class BBConfig:
     
     def getBackground():
         return ConfigLoader.getVariable('background')
+    
+    def getResultsShow():
+        return ConfigLoader.getVariable('runConfig', 'talkative', 'ias')

@@ -12,6 +12,7 @@ from processes.Task             import *
 from processes.LoaderMessage    import *
 from processes.Enums            import *
 import queue
+from pprint import pprint
 
 
 
@@ -81,7 +82,39 @@ class Herald:
             print('%s: New data written in the test output file.' % (procName))
         if ConfigLoader.getVariable('runConfig', 'logs', 'ias')==True:
             Beaver.log('%s: New data written in the test output file.' % (procName)) 
+            
+    def printResults(results:dict, indent:int=1, returned = False):
+        msg = "{\n"
+        for key in results:
+            msg += Herald.getPrintElement(key, results[key], indent)+',\n'
+        
+        msg = "".join(msg.rsplit(',', 1))
+        
+        if returned == False:
+            print(Fore.YELLOW+Style.BRIGHT+msg+"}"+Style.RESET_ALL)
+        else:
+            indentStr = ''
+            for i in range(indent-1): indentStr += '    '
+            return msg+indentStr+"}"
+        
     
+    def getPrintElement(key:str, element, indent:int):
+        indentStr = ''
+        for i in range(indent): indentStr += '    '
+        msg = indentStr+key+": "
+        
+        if type(element)==dict: 
+            msg += Herald.printResults(element, indent+1, True)
+        elif type(element)==list:
+            msg+= '[\n'
+            for e in element:
+                msg += indentStr+'    '+str(e)+',\n'
+            msg+= indentStr+']'
+            msg = "".join(msg.rsplit(',', 1))
+        else: msg+=element
+        return msg
+        
+        
     # RECIEVING MESSAGES
     def getMessageFrom(procName, queue):
         '''Returns the next available message in the given queue, and prints/logs it if necessary.'''
@@ -92,7 +125,6 @@ class Herald:
             Beaver.log('%s: Recieved message: %s' % (procName, str(message.type))) 
         return message
     
-    
     # QUEUING MESSAGES  
     def queueMessageIn(procName, queue, msg):
         '''Places the given message in the given queue, and prints/logs the action if necessary.'''
@@ -102,8 +134,6 @@ class Herald:
         if ConfigLoader.getVariable('runConfig', 'logs', 'messages'):
             Beaver.log('%s: Sent message: %s' % (procName, str(msg.type))) 
         
-    
-    
     # IA DETAILS
     def printShoeExtractor(procName):
         if ProcConfig.iaShouldTalkInDetail(): print("%s: Extracting shoe from the given image" % procName)
