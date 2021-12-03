@@ -32,6 +32,30 @@ echo "
 create() {
     echo -e "Creation of the containers:\n"
 
+    # Test docker image exist
+    if [[ "$(docker images -q sneakers 2> /dev/null)" == "" ]];then
+        docker build --tag sneakers .
+    fi
+
+    # Number of containers
+    nbContainers=1
+
+    # Setting min and max
+    min=1
+    max=0
+
+    # Get max value of id
+    idmax=`docker ps -a --format '{{.Names}}' | awk -F "-" -v user="$USER" '{print $3}' | sort -r | head -1`
+
+    # Redefine min and max
+    min=$(($idmax + 1))
+    max=$(($idmax + $nbContainers))
+
+    for i in $(seq $min $max);do
+        docker compose up
+    done
+    infos
+
 }
 
 # Drop all containers
@@ -85,6 +109,6 @@ case "$1" in
         help;
         ;;
     *)
-        echo -n "Error : your choice is not valid."
+        echo -e "Error : your choice is not valid.\n";
         ;;
 esac
