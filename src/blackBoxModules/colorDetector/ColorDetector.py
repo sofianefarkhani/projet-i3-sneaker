@@ -245,10 +245,13 @@ class ColorDetector:
                         listKeySuppr.append(key)
             else:
                 keys = dict.keys()
-                premierElem = str([*keys][0])
-                deuxiemeElem = str([*keys][1])
-                if (dict[premierElem] != dict[deuxiemeElem]):
-                    dict.pop(min(dict, key=dict.get))
+
+                if(len(keys) == 2):
+                    premierElem = str([*keys][0])
+                    deuxiemeElem = str([*keys][1])
+
+                    if (dict[premierElem] != dict[deuxiemeElem]):
+                        dict.pop(min(dict, key=dict.get))
 
             if(len(listKeySuppr) != 0):
                 dict.pop(key)
