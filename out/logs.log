@@ -1,1 +1,71 @@
 The wise Beaver's big dam of logs: 
+---------------------------------------
+__main__: Sent message: LoaderTaskType.LOAD
+---------------------------------------
+BlackBox-2: Start of service
+---------------------------------------
+Loader: Start of service
+---------------------------------------
+Loader: Recieved message: LoaderTaskType.LOAD
+---------------------------------------
+Loading 5 more images
+---------------------------------------
+    - Loaded ../img/test/1.jpg
+---------------------------------------
+Loader: Sent message: TaskType.PROCESS
+---------------------------------------
+    - Loaded ../img/test/2.jpg
+---------------------------------------
+BlackBox-2: Recieved message: TaskType.PROCESS
+---------------------------------------
+Loader: Sent message: TaskType.PROCESS
+---------------------------------------
+    - Loaded ../img/test/3.jpg
+---------------------------------------
+Loader: Sent message: TaskType.PROCESS
+---------------------------------------
+    - Loaded ../img/test/4.jpg
+---------------------------------------
+Loader: Sent message: TaskType.PROCESS
+---------------------------------------
+Loader: Sent message: LoaderAnswerType.NOMORE
+---------------------------------------
+__main__: Recieved message: LoaderAnswerType.NOMORE
+---------------------------------------
+Loader: Sent message: LoaderAnswerType.LOADDONE
+---------------------------------------
+__main__: Sent message: LoaderTaskType.TERMINATE
+---------------------------------------
+Loader: Recieved message: LoaderTaskType.TERMINATE
+---------------------------------------
+__main__: Recieved message: LoaderAnswerType.LOADDONE
+---------------------------------------
+Loader: Sent message: LoaderAnswerType.END
+---------------------------------------
+Loader: End of service
+---------------------------------------
+__main__: Recieved message: LoaderAnswerType.END
+---------------------------------------
+BlackBox-2: New data written in the test output file.
+---------------------------------------
+BlackBox-2: Recieved message: TaskType.PROCESS
+---------------------------------------
+BlackBox-2: New data written in the test output file.
+---------------------------------------
+BlackBox-2: Recieved message: TaskType.PROCESS
+---------------------------------------
+BlackBox-2: New data written in the test output file.
+---------------------------------------
+BlackBox-2: Recieved message: TaskType.PROCESS
+---------------------------------------
+__main__: Sent message: TaskType.END
+---------------------------------------
+BlackBox-2: New data written in the test output file.
+---------------------------------------
+BlackBox-2: Recieved message: TaskType.END
+---------------------------------------
+__main__: End of service
+---------------------------------------
+BlackBox-2: Sent message: AnswerType.BOXENDSERVICE
+---------------------------------------
+BlackBox-2: End of service
