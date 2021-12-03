@@ -110,6 +110,8 @@ class BlackBox(multiprocessing.Process):
         tfImg is the image loaded for the needs of tensorflow. Don't use it unless you're called Vivien.'''
         imgName  = DataFormatter.getLastFromPath(imgPath)
         refProd  = DataFormatter.extractProdRef(imgName)
+
+        img = ImagePreprocessor.resize(img)
         
         # processedImg = ImagePreprocessor.preprocessForShoeExtraction(img, self.name)
         
