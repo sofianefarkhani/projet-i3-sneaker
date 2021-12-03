@@ -1,8 +1,7 @@
 version: '3.9'
-
 services:
   sneakers-app:
     build: .
     image: sneakers
     volumes:
-      - "./img:/usr/img"
+      - "${PATH_IMG}:/usr/projet-i3-sneaker/img/test/"
