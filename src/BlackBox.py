@@ -113,8 +113,6 @@ class BlackBox(multiprocessing.Process):
 
         img = ImagePreprocessor.resize(img)
         
-        # processedImg = ImagePreprocessor.preprocessForShoeExtraction(img, self.name)
-        
         shoeProb = ShoeExtractor.isThereShoe(
             tfImg,
             modelShoeDetector
