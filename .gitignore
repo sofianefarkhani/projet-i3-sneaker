@@ -1,7 +1,9 @@
 __pycache__/
 .DS_Store
 testData.json
+out/*
 .vs
 *.log
 *.log
 out/logs.log
+img/*
