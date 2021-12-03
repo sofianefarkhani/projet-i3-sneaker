@@ -59,6 +59,41 @@ def showImage(imagePath):
     cv2.imshow("test", im)
     cv2.waitKey()
 
+def getRandomImageNotInTrainData(numberOfImage, pathTrainData, pathAllImage = None, pathFileAllImage = None):
+    import random
+    import hashlib
+
+    lstAllImage = []
+    if pathAllImage is not None:
+        f = open(pathFileAllImage, "r")
+        for line in f:
+            lstAllImage.append(line.replace("\n", ""))
+    else:
+        lstAllImage.extend(listerFilesInFolder(pathAllImage))
+    (lst_name_shoes, lst_name_other) = getNameImageFromTrainData(pathTrainData)
+    lstAllImageUseInTrainData = []
+    lstAllImageUseInTrainData.extend(lst_name_shoes)
+    lstAllImageUseInTrainData.extend(lst_name_other)
+
+    lstChoice = []
+    lstHashOfChoice = []
+    for i in range(numberOfImage):
+        isOk = False
+        while not isOk:
+            choice = random.choice(lstAllImage)
+            if choice not in lstChoice:
+                with open(pathAllImage+choice, "rb") as f:
+                    bytes = f.read()
+                    hash = hashlib.sha256(bytes).hexdigest()
+                    if hash not in lstHashOfChoice:
+                        lstHashOfChoice.append(hash)
+                        lstChoice.append(choice)
+                        isOk = True
+
+                    f.close()
+    
+    return lstChoice
+
 
 
 
@@ -82,3 +117,7 @@ def showImage(imagePath):
 
 # pathSource = "/mnt/424cf323-70f0-406a-ae71-29e3da370aec/Sneaker-data/test_temp/Nouveau dossier/test/test1/"
 # showImage(pathSource + listerFilesInFolder(pathSource)[0])
+
+lstImage = getRandomImageNotInTrainData(10, "../in/trainData.json", "/run/user/1000/gvfs/sftp:host=access886997315.webspace-data.io,user=u106097170-projetia/resources", "/home/vedoc/Bureau/lst_nom.txt")
+
+print(lstImage)
