@@ -196,6 +196,8 @@ class BlackBox(multiprocessing.Process):
         tempRef = None
         if '-' in imgName:
             tempRef = imgName.split('-')[0]
+        if tempRef is None:
+            tempRef = imgName
         if '_' in tempRef:
             tempRef = tempRef.split('_')[0]
         return tempRef
