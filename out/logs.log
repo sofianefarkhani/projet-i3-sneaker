@@ -315,3 +315,33 @@ Traceback (most recent call last):
   File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 249, in persistanceColor
     deuxiemeElem = str([*keys][1])
 IndexError: list index out of range
+
+---------------------------------------
+BlackBox-2 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 122, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 320, in detection
+    ColorDetector.persistanceColor(res)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 249, in persistanceColor
+    deuxiemeElem = str([*keys][1])
+IndexError: list index out of range
+
+---------------------------------------
+BlackBox-2 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 81, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 123, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 320, in detection
+    ColorDetector.persistanceColor(res)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 249, in persistanceColor
+    deuxiemeElem = str([*keys][1])
+IndexError: list index out of range
