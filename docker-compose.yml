@@ -4,3 +4,5 @@ services:
   sneakers-app:
     build: .
     image: sneakers
+    volumes:
+      - "./img:/usr/img"
