@@ -14,3 +14,6 @@ class ImagePreprocessor:
         image = ContrastAndBrightness.adjustment(image)
 
         return image
+
+    def resize(img):
+        return cv2.resize(img, (600,600))
