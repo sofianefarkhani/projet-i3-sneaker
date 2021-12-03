@@ -1,6 +1,6 @@
 
 from utilities.Herald import Herald
-
+from utilities.configUtilities.ProcConfig import ProcConfig
 
 class ShoeExtractor:
     
@@ -11,5 +11,5 @@ class ShoeExtractor:
         
         If prediction near 0: There is NO shoe.
         """
-        prediction = model.predict( img, verbose=1 )
+        prediction = model.predict( img, verbose=(1 if ProcConfig.iaShouldTalkInDetail() else 0) )
         return prediction[0][0]
