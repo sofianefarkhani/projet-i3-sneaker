@@ -1,4 +1,3 @@
-from keras.backend import mean
 import numpy as np
 import tensorflow as tf
 from predictAI.getPredictionAI import getPredictionShoesOrNot
@@ -18,19 +17,17 @@ model = load_model('../in/AI/DetectShoes/model.h5')
 model.load_weights('../in/AI/DetectShoes/weights.h5')
 
 path = '/home/vedoc/Bureau/projet-i3-sneaker/img/train/trainingTestImages_hdd/'
-lstImg = ['DC3432_001-1--830a7406-9152-41e1-9e4a-d3a96b13edb8.png',
-          'DC3432_001-2--90db9fb0-1771-4b1f-af1a-2c0cfad260fc.png',
-          'DC3432_001-3--c239e5f3-3865-4fad-b6f6-cf7948dcb34b.png',
-          'DC3432_001-4--84d49666-cf3a-4b44-a0bd-e8bbe6cfda45.png',
-          'DC3432_007-2--7faec874-c3ee-4c15-88fe-dc83b5b04ec4.png',
-          'DC3432_007-3--af14b088-8cd9-472e-be8d-cd544ae56aef.png',
-          'DC3432_008-1--fa62240b-9ff8-4ed5-bb97-cbc6cad303c3.png',
-          'DC3432_008-3--716c4f02-57d0-43ef-a704-a639e834c89d.png',
-          'DC3432_008-4--de9ed675-9170-429e-aca1-10b63df7849d.png',
-          'DC3432_125-1--7dca0653-d22b-4a62-bc24-1c4dbec690ae.png',
-          'DC3432_125-3--7455f321-7da7-422f-afec-ed1b89ebe58c.png',
-          'DC3432_188-1--45db97fc-7488-4307-9f05-c90cbe54d1fd.png',
-          'DC3432_188-2--6b9bc6e5-3e17-4914-b80a-2e4ae244d922.png']
+lstImg = ['CZ8281_005-2--26d0a1ca-591c-4f50-8459-388c868e8266.png',
+          'CZ8281_005-3--dbf6e79d-30d0-4941-9231-8bf28aa125c0.png',
+          'CZ8281_005-4--445592a0-ca45-4cac-a8c5-4350db2470a0.png',
+          'CZ8281_010-3--db011cde-4f18-4cb2-b1a6-0fecce0efc51.png',
+          'CZ8281_011-2--5628292c-9566-4e77-8efa-e04759dd4eac.png',
+          'CZ8281_011-3--fb54830a-11f8-4c87-8222-bd70c8fe141f.png',
+          'CZ8281_100-1--16067ee3-3bf9-4b75-b740-60a77c222961.png',
+          'CZ8281_100-4--a63fdb82-c237-44c7-b7cd-b226081b90ae.png',
+          'CZ8281_606-1--47c521fe-f0ad-4cb2-a15d-e3246361a1ed.png',
+          'CZ8281_606-3--d1352aed-df91-4c7c-a8b8-f62f7bc29c53.png',
+          'CZ8281_606-4--9f6d4318-c776-4609-8ecc-2576d293b374.png']
 
 lstPrediction = []
 
@@ -39,8 +36,8 @@ for img in lstImg:
     lstPrediction.append(getPredictionShoesOrNot(img, model)[0][0])
 
 print(lstPrediction)
-# print("Moyenne: " + str(mean(lstPrediction)))
-print("Moyenne v2: " + str(np.mean(lstPrediction)))
+# print("Moyenne v2: " + str(np.mean(lstPrediction)))
 
 # semble être plus pertinant, à tester sur un groupe d'image dont les probas sont vraiment différentes (genre 0.3; 0.7; 0.9)
 print("Médiane: " + str(np.median(lstPrediction)))
+# https://support.minitab.com/fr-fr/minitab/18/help-and-how-to/statistics/basic-statistics/how-to/store-descriptive-statistics/interpret-the-statistics/interpret-the-statistics/
