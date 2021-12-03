@@ -141,12 +141,12 @@ class BlackBox(multiprocessing.Process):
             #    Writer.outputTagAsJson(tag)
 
             colorway = DataFormatter.buildColorWay(mainColor, secondaryColor)
-            dataShoes= DataFormatter.getFullData(refProd, imgName, "NOT IMPLEMENTED YET", colorway)
+            dataShoes= DataFormatter.getFullData(refProd, imgName, "NOT IMPLEMENTED YET", colorway, shoeProb)
             Herald.printResults(dataShoes)
         
         else: 
             # there was no shoe
-            dataShoes = DataFormatter.getNoneData(refProd, imgName)
+            dataShoes = DataFormatter.getNoneData(refProd, imgName, shoeProb)
             Herald.printResults(dataShoes)
             
         dataShoesJson = json.dumps(dataShoes)

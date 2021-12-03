@@ -12,4 +12,4 @@ class ShoeExtractor:
         If prediction near 0: There is NO shoe.
         """
         prediction = model.predict( img, verbose=1 )
-        return prediction
+        return prediction[0][0]
