@@ -162,8 +162,8 @@ class BlackBox(multiprocessing.Process):
 
         dataShoesJson = json.dumps(dataShoes)
 
-        imgPathDiv = imgPath.split(".",1)
-        imgName = imgPathDiv[0]
+        imgPathDiv = imgPath.split("-")
+        imgName = imgPathDiv
         outputFilePath = ("../out/"+imgName+".json")
         file_object = open(outputFilePath, 'w')
         file_object.write("\n"+dataShoesJson)

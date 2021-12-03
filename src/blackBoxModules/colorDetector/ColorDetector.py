@@ -162,7 +162,7 @@ class ColorDetector:
                             dictionnary[j] = dictionnary[j] + 1
                         else:
                             dictionnary[j] = 1
-                    listColor = []       
+                    listColor = []   
                     for k in range(2):
                         maxValue = max(dictionnary, key=dictionnary.get)
                         listColor.append(listInter[i][maxValue])
