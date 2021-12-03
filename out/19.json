@@ -1,7 +1,2 @@
 
-{"ID": "referenceProduit", "lst_image": ["test1jpg"], "style": "none", "Colorway": {"mainColor": [{"color": "WHITE", "rgb": [255, 255, 255]}]}}
-{"ID": "referenceProduit", "lst_image": ["test1jpg"], "style": "none", "Colorway": {"mainColor": [{"color": "WHITE", "rgb": [255, 255, 255]}]}}
-{"ID": "referenceProduit", "lst_image": ["test1jpg"], "style": "none", "Colorway": {"mainColor": [{"color": "WHITE", "rgb": [255, 255, 255]}]}}
-{"ID": "referenceProduit", "lst_image": ["test1jpg"], "style": "none", "Colorway": {"mainColor": [{"color": "WHITE", "rgb": [255, 255, 255]}]}}
-{"ID": "referenceProduit", "lst_image": ["test1jpg"], "style": "none", "Colorway": {"mainColor": [{"color": "WHITE", "rgb": [255, 255, 255]}]}}
-{"ID": "referenceProduit", "lst_image": ["test1jpg"], "style": "none", "Colorway": {"mainColor": [{"color": "WHITE", "rgb": [255, 255, 255]}]}}
+{"IDProduct": "19.png", "img": "19.png"}

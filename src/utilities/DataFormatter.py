@@ -44,3 +44,9 @@ class DataFormatter:
             "style": typeOfShoe,
             "Colorway": colorway
         }
+    
+    def getNoneData(refProd:str, imgName:str):
+        return {
+            "IDProduct": refProd,
+            "img": imgName
+        }
