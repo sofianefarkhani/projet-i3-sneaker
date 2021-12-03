@@ -4,6 +4,7 @@ import json
 import jsonpickle
 from Data.Tag import Tag
 from utilities.configUtilities.BBConfig import BBConfig
+from Data.TrainDataElement import TrainDataElement
 class Writer(json.JSONEncoder):
     '''The Writer writes JSON. 
     
@@ -32,3 +33,13 @@ class Writer(json.JSONEncoder):
         data = jsonpickle.encode(tag)
         file_object = open(outputFilePath, 'a')
         file_object.write("\n"+data)
+        
+        
+    # def outputTagAsJson(tde:TrainDataElement, outputFilePath:str=ConfigLoader.getVariable('input', 'shoeTypeTrainData')):
+    #     '''Writes the given TrainDataElement under the Json format in the output file.
+        
+    #     The json string of the given object is appended to the file in a new line.'''
+        
+    #     data = jsonpickle.encode(tde)
+    #     file_object = open(outputFilePath, 'a')
+    #     file_object.write("\n"+data)

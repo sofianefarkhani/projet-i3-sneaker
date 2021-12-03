@@ -5,3 +5,4 @@ testData.json
 *.log
 *.log
 out/logs.log
+img/train/
