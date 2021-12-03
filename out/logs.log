@@ -178,3 +178,160 @@ TypeError: getPrintElement() missing 1 required positional argument: 'indent'
 
 ---------------------------------------
 No blackboxes are running. Politely stopping the program.
+---------------------------------------
+BlackBox-2 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 146, in compute
+    Writer.writeDataToTempFile(self.name, dataShoes)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\interface\Writer.py", line 16, in writeDataToTempFile
+    outputFilePath = (os.join(tempDir, procName+'.json'))
+AttributeError: module 'os' has no attribute 'join'
+
+---------------------------------------
+BlackBox-2 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 146, in compute
+    Writer.writeDataToTempFile(self.name, dataShoes)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\interface\Writer.py", line 18, in writeDataToTempFile
+    with open(outputFilePath, 'a') as f:
+FileNotFoundError: [Errno 2] No such file or directory: '../out/temp\\BlackBox-2.json'
+
+---------------------------------------
+BlackBox-2 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 146, in compute
+    Writer.writeDataToTempFile(self.name, dataShoes)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\interface\Writer.py", line 19, in writeDataToTempFile
+    with open(outputFilePath, 'a') as f:
+FileNotFoundError: [Errno 2] No such file or directory: '../out/temp\\BlackBox-2.json'
+
+---------------------------------------
+BlackBox-4 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 146, in compute
+    Writer.writeDataToTempFile(self.name, dataShoes)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\interface\Writer.py", line 19, in writeDataToTempFile
+    with open(outputFilePath, 'a') as f:
+FileNotFoundError: [Errno 2] No such file or directory: '../out/temp/BlackBox-4.json'
+
+---------------------------------------
+BlackBox-2 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 146, in compute
+    Writer.writeDataToTempFile(self.name, dataShoes)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\interface\Writer.py", line 19, in writeDataToTempFile
+    with open(outputFilePath, 'a') as f:
+FileNotFoundError: [Errno 2] No such file or directory: '../out/temp/BlackBox-2.json'
+
+---------------------------------------
+BlackBox-3 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 146, in compute
+    Writer.writeDataToTempFile(self.name, dataShoes)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\interface\Writer.py", line 19, in writeDataToTempFile
+    with open(outputFilePath, 'a') as f:
+FileNotFoundError: [Errno 2] No such file or directory: '../out/temp/BlackBox-3.json'
+
+---------------------------------------
+No blackboxes are running. Politely stopping the program.
+---------------------------------------
+BlackBox-2 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 119, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 320, in detection
+    ColorDetector.persistanceColor(res)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 249, in persistanceColor
+    deuxiemeElem = str([*keys][1])
+IndexError: list index out of range
+
+---------------------------------------
+BlackBox-4 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 119, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 320, in detection
+    ColorDetector.persistanceColor(res)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 249, in persistanceColor
+    deuxiemeElem = str([*keys][1])
+IndexError: list index out of range
+
+---------------------------------------
+BlackBox-4 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 119, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 320, in detection
+    ColorDetector.persistanceColor(res)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 249, in persistanceColor
+    deuxiemeElem = str([*keys][1])
+IndexError: list index out of range
+
+---------------------------------------
+BlackBox-2 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 119, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 320, in detection
+    ColorDetector.persistanceColor(res)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 249, in persistanceColor
+    deuxiemeElem = str([*keys][1])
+IndexError: list index out of range
+
+---------------------------------------
+BlackBox-3 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 119, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 320, in detection
+    ColorDetector.persistanceColor(res)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 249, in persistanceColor
+    deuxiemeElem = str([*keys][1])
+IndexError: list index out of range
+
+---------------------------------------
+No blackboxes are running. Politely stopping the program.

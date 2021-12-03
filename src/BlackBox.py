@@ -143,13 +143,7 @@ class BlackBox(multiprocessing.Process):
         dataShoes= DataFormatter.getFullData(refProd, imgName, "NOT IMPLEMENTED YET", colorway)
         Herald.printResults(dataShoes)
         
-        dataShoesJson = json.dumps(dataShoes)
-
-        imgPathDiv = imgPath.split(".",1)
-        imgName = imgPathDiv[0]
-        outputFilePath = ("../out/"+imgName+".json")
-        file_object = open(outputFilePath, 'w')
-        file_object.write("\n"+dataShoesJson)
+        Writer.writeDataToTempFile(self.name, dataShoes)
         
         Herald.printWrittenData(self.name)
 
