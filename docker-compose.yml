@@ -1,6 +1,6 @@
 version: '3.9'
 services:
-  sneakers-app:
+  sneakers:
     build: .
     image: sneakers
     volumes:
