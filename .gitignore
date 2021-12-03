@@ -4,3 +4,4 @@ testData.json
 .vs
 *.log
 *.log
+out/logs.log

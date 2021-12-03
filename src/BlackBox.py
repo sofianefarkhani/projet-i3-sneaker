@@ -102,16 +102,12 @@ class BlackBox(multiprocessing.Process):
         #     processedImg,
         #     self.name
         # )
-        print('#####################')
-        print (tfImg)
-        print (modelShoeDetector)
         
         (mainColor, secondaryColor) = ColorDetector.detection(
             img,
             self.name
         )
         
-        print (mainColor.name)
         # typeOfShoe = TypeDetector.detectTypeOfShoe(
         #     ImagePreprocessor.preprocessForTypeIdentification(shoeImg, self.name), 
         #     self.name

@@ -1,25 +1,3 @@
 
-Implement better tasks:
-
-(Done) The loader should NOT store images in the cache if we are using a local repo. 
-(Done) The tasks should convey the path of the original image.
-(Done) Also they should convey the path of the copied image in the cache, if the repo is distant. 
-
-(Done) The loader should also load the image as a tensorflow boy.
-
-(Mathilde did it) Save the colors in the json file
-
 In case of not sure enough, image name is stored in a file of need help. 
 In case of an error the image is not deleted from the cache.
-
-(Done) Trier les images par ordre alphabatique
-Stocker les resultats dans un json temporaire pour un produit
-Lorsque on passe à un autre produit, faire une moyenne de resultats
-    Then store the mean results in the true json file. 
-
-
-pour vivien: 
-(Done) charger le modele une seule fois par blackbox
-    > model = load_model('model.h5')
-    > model.load_weights('weights.h5')
-    > passer en instanciation de blackbox
