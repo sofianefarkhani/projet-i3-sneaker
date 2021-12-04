@@ -19,7 +19,7 @@ For delete all containers generate by this script I just use argument --drop.
 ### Reboot container
 If you wish reboot all containers, you use argument --start.
 ```bash
-./deploy --start
+./deploy.sh --start
 ```
 ### Informations on container
 For collect informations of all containers you use --infos.
