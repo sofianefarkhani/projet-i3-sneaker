@@ -22,7 +22,7 @@ echo "
     Options :
         * --create  : creation of the container
         * --drop    : delete all containers create by this script
-        * --run   : reboot all containers
+        * --start   : reboot all containers
         * --infos   : informations of the containers
         * --help    : documentation
 "
@@ -67,9 +67,9 @@ drop() {
 }
 
 # Reboot containers
-run() {
-    echo -e "Run containers\n"
-    docker start $(docker ps -a | grep "sneakers" | awk '{print $1}')
+start() {
+    echo -e "Reboot containers\n"
+    docker run $(docker ps -a | grep "sneakers" | awk '{print $1}')
     echo -n ""
 
 }
@@ -99,8 +99,8 @@ case "$1" in
     "--drop")
         drop;
         ;;
-    "--run")
-        run;
+    "--start")
+        start;
         ;;
     "--infos")
         infos;
