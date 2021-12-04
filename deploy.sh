@@ -52,7 +52,7 @@ create() {
     max=$(($idmax + $nbContainers))
 
     for i in $(seq $min $max);do
-        docker compose up
+        docker compose up -d
     done
     infos
 
