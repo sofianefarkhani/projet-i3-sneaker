@@ -3,7 +3,7 @@
 Docker Engine
 ## Installation
 For installing, we recommande to use script deploy.sh. 
-### Creation container
+### Create container
 For generate one container you write command bellow :
 ```bash
 ./deploy.sh --create
