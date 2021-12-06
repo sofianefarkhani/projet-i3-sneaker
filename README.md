@@ -1,9 +1,10 @@
 # Projet I3 : SNEAKERS
 ## Requirements
 ### With Docker
-Docker Engine
+* Docker Engine
 ### Without Docker
-Python 3.8, pip
+* Python (>= 3.8)
+* pip
 ## Installation
 For installing, we recommande to use script deploy.sh. 
 ### Create container
