@@ -1,4 +1,13 @@
+# Docs
 README.md
+# Git
 .gitignore
-*/__pycache*
+# Container management
+deploy.sh
+.env
+# Resources
+*/__pycache__
 out/*.json
+out/*.log
+img/*/*.jpg
+img/*/*.png
