@@ -9,27 +9,38 @@ class DataFusion :
         jsonObjectList = []
         pathFile = BBConfig.getTempOutput()
         outPutFile = ("../out/data.json")
+        if(os.path.exists(outPutFile)):
+            os.remove(outPutFile)
         for fileName in os.listdir(pathFile):
             DataFusion.getObjectFromFile(pathFile+"/"+fileName,jsonObjectList)
         DataFusion.getSortedListe(jsonObjectList)
         tempList = []
         tempProduct = None
-        while(len(jsonObjectList)>0):
+        while(len(jsonObjectList) != 0):
             tempObject = jsonObjectList.pop(0)
+
+            # if this is a new product
             if(tempObject["IDProduct"] != tempProduct):
                 dataToAdd = DataFusion.fusionProduct(tempList.copy())
                 tempList = []
                 tempProduct = tempObject["IDProduct"]
                 if(dataToAdd != None):
-                    fileData = open(outPutFile, "a")
-                    newLineToWrite = json.dumps(dataToAdd) + "\n"
-                    fileData.write(newLineToWrite)
-                    fileData.close()
-            else:
-                tempList.append(tempObject)
+                    DataFusion.writeToFile(outPutFile, dataToAdd)
+                    
+            tempList.append(tempObject)
+
+        dataToAdd = DataFusion.fusionProduct(tempList.copy())
+        if(dataToAdd != None):
+            DataFusion.writeToFile(outPutFile, dataToAdd)
 
         shutil.rmtree(pathFile,ignore_errors=True)
         os.mkdir("../out/temp")
+
+    def writeToFile(outPutFile, dataToAdd):
+        fileData = open(outPutFile, "a")
+        newLineToWrite = json.dumps(dataToAdd) + "\n"
+        fileData.write(newLineToWrite)
+        fileData.close()
 
     def decodeJson(string:str):
         return json.loads(string)
