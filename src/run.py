@@ -17,6 +17,7 @@ from utilities.Beaver                       import Beaver
 from utilities.configUtilities.ProcConfig   import ProcConfig
 from utilities.configUtilities.LoadConfig   import LoadConfig
 from utilities.configUtilities.ConfigLoader import ConfigLoader
+from utilities.DataFusion                   import DataFusion
 
 
 if __name__ == '__main__':
@@ -110,6 +111,8 @@ if __name__ == '__main__':
         tasks.join()
         loaderTasks.join()
         
+        DataFusion.fusionJson()
+
         Herald.printTermination(__name__)
 
 
