@@ -48,3 +48,24 @@ For collect informations of all containers you use `--infos`.
 ./deploy.sh --infos
 ```
 ## Usage
+Result of all treatment write in `data.json`.
+```json
+{
+    "id": {
+        "lstImg": [
+            "id-1.jpg",
+            "id-2.jpg"
+        ],
+        "style": "high",
+        "mainColor": {
+            "name": "Black",
+            "rgb": [0, 0, 0]
+        },
+        "secondaryColor": {
+            "name": "White",
+            "rgb": [255, 255, 255]
+        },
+        "probaShoes": 0.94
+    }
+}
+```
