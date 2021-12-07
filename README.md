@@ -5,8 +5,9 @@
 ### Without Docker
 * Python (>= 3.8)
 * pip
-## Configuration (if you use Docker)
-### IP Forward for containers (Linux kernel)
+## Configuration 
+### Docker
+#### IP Forward for containers (Linux kernel)
 1. Configure the Linux kernel to allow IP forward
 ```bash
 sysctl net.ipv4.conf.all.forwarding=1
@@ -15,7 +16,7 @@ sysctl net.ipv4.conf.all.forwarding=1
 ```bash
 sudo iptables -P FORWARD ACCEPT
 ```
-### Set path for volumes
+#### Set path for volumes
 Volumes of the containers use env file for define path to access images and output files (json).
 Variable for set path to images is `PATH_IMG` : 
 ```
@@ -25,6 +26,8 @@ Variable for set path to locate directory to store json files is `PATH_OUT` :
 ```
 PATH_OUT=/path/to/out/directory
 ```
+### Application
+[Configuration app documentation](config/config-doc.md)
 ## Installation
 For installing, we recommande to use script deploy.sh. 
 ### Create container
