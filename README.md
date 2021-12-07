@@ -6,6 +6,15 @@
 * Python (>= 3.8)
 * pip
 ## Configuration
+### IP Forward for containers (Linux kernel)
+1. Configure the Linux kernel to allow IP forward
+```bash
+sysctl net.ipv4.conf.all.forwarding=1
+```
+2. Change the policy for the ```iptables``` ```FORWARD``` policy from ```DROP``` to ```ACCEPT```
+```bash
+sudo iptables -P FORWARD ACCEPT
+```
 ## Installation
 For installing, we recommande to use script deploy.sh. 
 ### Create container
