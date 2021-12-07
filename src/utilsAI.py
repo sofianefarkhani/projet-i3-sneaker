@@ -1,5 +1,7 @@
 from os import path
 
+from predictAI.getPredictionAI import getPredictionShoesOrNot
+
 
 def getStringToAddToTrainData(nameOfFile, isAShoes, needBreakLine=True):
     return '{"py/object": "Data.TrainDataElement.TrainDataElement", "imageName": "'+nameOfFile+'", "isThereAShoe": true, "shoeType": {"py/reduce": [{"py/type": "Data.Type.Type"}, {"py/tuple": ['+str(isAShoes)+']}]}}' + ("\n" if needBreakLine else "")
@@ -77,6 +79,11 @@ def getRandomImageNotInTrainData(numberOfImage, pathTrainData, pathAllImage = No
 
     lstChoice = []
     lstHashOfChoice = []
+    for img in lstAllImageUseInTrainData:
+        with open(pathAllImage+img, "rb") as f:
+            bytes = f.read()
+            hash = hashlib.sha256(bytes).hexdigest()
+            lstHashOfChoice.append(hash)
     for i in range(numberOfImage):
         isOk = False
         while not isOk:
@@ -93,6 +100,26 @@ def getRandomImageNotInTrainData(numberOfImage, pathTrainData, pathAllImage = No
                     f.close()
     
     return lstChoice
+
+def getPrediction(imagePath):
+    import numpy as np
+    import tensorflow as tf
+    from predictAI.getPredictionAI import getPredictionShoesOrNot
+    from keras.models import load_model
+    def loadImage(path):
+        img = tf.keras.preprocessing.image.load_img(
+            path, color_mode="grayscale", target_size=(200, 200))
+        img = tf.keras.preprocessing.image.img_to_array(img)
+        img = img.astype('float32')/255.
+        img = np.array([img])  # Convert single image to a batch.
+        return img
+
+
+    model = load_model('../in/AI/DetectShoes/model.h5')
+    model.load_weights('../in/AI/DetectShoes/weights.h5')
+
+    img = loadImage(imagePath)
+    return getPredictionShoesOrNot(img, model)[0][0]
 
 
 
@@ -118,6 +145,13 @@ def getRandomImageNotInTrainData(numberOfImage, pathTrainData, pathAllImage = No
 # pathSource = "/mnt/424cf323-70f0-406a-ae71-29e3da370aec/Sneaker-data/test_temp/Nouveau dossier/test/test1/"
 # showImage(pathSource + listerFilesInFolder(pathSource)[0])
 
-lstImage = getRandomImageNotInTrainData(10, "../in/trainData.json", "/run/user/1000/gvfs/sftp:host=access886997315.webspace-data.io,user=u106097170-projetia/resources", "/home/vedoc/Bureau/lst_nom.txt")
-
-print(lstImage)
+lstImage = getRandomImageNotInTrainData(30, "../in/trainDataV3.json", "D:/Images/resources/", "C:/Users/moonc/Desktop/lst_nom.txt")
+path = "D:/Images/resources/"
+for x in lstImage:
+    print(x + " -> ", end="")
+    predict = getPrediction(path + x)
+    print(("shoe" if predict> 0.5 else "other"), end="")
+    proba = predict-0.5 if predict > 0.5 else 0.5-predict
+    proba*=2
+    print("  proba=" + str(proba))
+    showImage(path + x)

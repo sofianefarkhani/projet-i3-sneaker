@@ -4,6 +4,6 @@ def getPredictionShoesOrNot(img, model):
     
     # make the prediction
     prediction = model.predict(
-        img, verbose=1)
+        img, verbose=0)
 
     return prediction

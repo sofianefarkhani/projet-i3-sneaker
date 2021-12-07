@@ -12,9 +12,9 @@ output:
 
 input:
     # to train our IAs
-    trainingImagesFolder: ../img/train/trainingTestImages   # the home folder for all images to train our ia
-    shoeDetectAndExtractTrainData: ../in/trainData.json     # the data to train the IA that detects the presence of sneakers 
-    shoeTypeTrainData: ../in/trainData.json                 # the data to train the IA that detects the type of sneaker
+    trainingImagesFolder: D:\Images\resources   # the home folder for all images to train our ia
+    shoeDetectAndExtractTrainData: ../in/trainDataV3.json     # the data to train the IA that detects the presence of sneakers 
+    shoeTypeTrainData: ../in/trainDataV3.json                 # the data to train the IA that detects the type of sneaker
     nomore: ../img/nomore.png                               # the displayed image to inform there are no more images when labelling by hand
 
 loader:

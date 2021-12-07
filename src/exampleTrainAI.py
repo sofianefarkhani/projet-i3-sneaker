@@ -80,7 +80,7 @@ def trainAIV1():
         target_size=(200, 200), ratio=0.8)
 
     # set steps_per_epoch=3000 and validation_steps=1000 with real data
-    model.fit(trainingSet, validation_data=testSet, batch_size=32, epochs=25)
+    model.fit(trainingSet, validation_data=testSet, batch_size=32, epochs=4)
     model.save("../in/AI/DetectShoes/model.h5", overwrite=True)
     model.save_weights('../in/AI/DetectShoes/weights.h5', overwrite=True)
 
