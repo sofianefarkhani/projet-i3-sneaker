@@ -23,12 +23,6 @@ for name in lst_name:
         f.close()
 
 
-print(len(lst_name))
-print(len(lst_hash))
-
-# for i in range(len(lst_name)):
-#     print(str(i)+ "  "+ lst_name[i] + "  ->  " + lst_hash[i])
-
 indexDone = -1
 while indexDone < len(lst_name)-1:
     indexDone+=1
@@ -46,16 +40,6 @@ while indexDone < len(lst_name)-1:
 
 lst_name_to_delete.sort()
 
-print("Après:")
-# for name in lst_name_to_delete:
-#     print("del: " + name)
-print(len(lst_name))
-print(len(lst_hash))
-
-# for i in range(len(lst_name)):
-#     print(str(i)+ "  "+ lst_name[i] + "  ->  " + lst_hash[i])
-
-
 newFileString = ""
 
 f = open("../in/trainData.json", "r")
@@ -65,7 +49,6 @@ for line in f:
         newFileString+=line
     
 f.close()
-# print(newFileString)
 
 f = open("../in/trainDataV2.json", "w")
 f.write(newFileString)

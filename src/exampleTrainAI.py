@@ -128,7 +128,7 @@ predictions = model.predict(
 # print(model.get_config())
 # print(model.get_weights())
 # model.predict_on_batch();
-print(predictions)
+# print(predictions)
 
 # with open("output.txt", "w") as txt_file:
 #     for line in predictions:

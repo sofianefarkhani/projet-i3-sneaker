@@ -15,15 +15,10 @@ class JsonReader:
         
         objectList = [] 
         
-        if verbalOutput: print('decoding '+str(len(lines))+" objects:")
-        
         for line in lines:
             if not (line == '' or line == '\n'):
                 object = jsonpickle.decode(line)
-                if verbalOutput: print('    '+str(object.toString()))
                 objectList.append(object)
-            
-        if verbalOutput: print('End of decoding.')
         return objectList
             
         
@@ -52,9 +47,6 @@ class JsonReader:
                 types.append(tde.shoeType.name)
             imgs.append(tde.imageName)
         
-        # print ('######################################################################################')
-        # print (types)
-        # print ('######################################################################################')
         return (imgs, types)
             
         

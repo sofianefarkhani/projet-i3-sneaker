@@ -14,7 +14,7 @@ class Writer(json.JSONEncoder):
         dir = BBConfig.getTempOutput()
         if dir[-1]=='/' or dir[-1]=='\\':
             dir = dir[:-1]
-        print(dir)
+            
         filesToRemove = os.listdir(dir)
         for f in filesToRemove:
             os.remove(dir+'/'+f)
