@@ -22,3 +22,6 @@ class BBConfig:
     
     def getTempOutput():
         return ConfigLoader.getVariable('output', 'tempData')
+    
+    def getTFVerboseLvl():
+        return str(ConfigLoader.getVariable('runConfig', 'talkative', 'tensorflow'))

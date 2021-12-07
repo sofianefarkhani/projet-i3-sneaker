@@ -508,3 +508,57 @@ Traceback (most recent call last):
   File "D:\Python projects\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 253, in persistanceColor
     if (dict[premierElem] != dict[deuxiemeElem]):
 UnboundLocalError: local variable 'premierElem' referenced before assignment
+
+---------------------------------------
+BlackBox-2 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 84, in run
+    if ProcConfig.shouldReloadConfig():
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\utilities\configUtilities\ProcConfig.py", line 36, in shouldReloadConfig
+    def shouldReloadConfig(): return ConfigLoader.getVariable('runConfig', 'dynamicConfig')
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\utilities\configUtilities\ConfigLoader.py", line 22, in getVariable
+    raise ValueError('No such value in the config file: '+str(varPath)+"\n(failed at: "+str(varPath[i]))
+ValueError: No such value in the config file: ('runConfig', 'dynamicConfig')
+(failed at: dynamicConfig
+
+---------------------------------------
+BlackBox-3 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 84, in run
+    if ProcConfig.shouldReloadConfig():
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\utilities\configUtilities\ProcConfig.py", line 36, in shouldReloadConfig
+    def shouldReloadConfig(): return ConfigLoader.getVariable('runConfig', 'dynamicConfig')
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\utilities\configUtilities\ConfigLoader.py", line 22, in getVariable
+    raise ValueError('No such value in the config file: '+str(varPath)+"\n(failed at: "+str(varPath[i]))
+ValueError: No such value in the config file: ('runConfig', 'dynamicConfig')
+(failed at: dynamicConfig
+
+---------------------------------------
+A dev broke the basic skeletton of the BlackBox.
+---------------------------------------
+BlackBox-4 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 82, in run
+    self.taskQueue.task_done()    # helps when we want to join threads at the end of the programm
+  File "C:\Users\Esteban\AppData\Local\Programs\Python\Python39\lib\multiprocessing\queues.py", line 325, in task_done
+    raise ValueError('task_done() called too many times')
+ValueError: task_done() called too many times
+
+---------------------------------------
+A dev broke the basic skeletton of the BlackBox.
+---------------------------------------
+BlackBox-5 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 82, in run
+    self.taskQueue.task_done()    # helps when we want to join threads at the end of the programm
+  File "C:\Users\Esteban\AppData\Local\Programs\Python\Python39\lib\multiprocessing\queues.py", line 325, in task_done
+    raise ValueError('task_done() called too many times')
+ValueError: task_done() called too many times

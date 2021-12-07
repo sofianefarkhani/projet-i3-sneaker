@@ -14,12 +14,6 @@ This section contains general use variables, that are used within the applicatio
 Here are the rules to modify these variables: 
 
 
-> stopsAtEnd: True
-
-Accepts a boolean (True or False).
-Tells the application what to do when it has dealt with all of the images in the database. 
-Setting to true will stop the application completely. Setting to false will keep the application on the lookout for more images. 
-
 > nbProcess: default     
 
 Accepts an integer (strictly positive) or one of the values: 'default', 'auto'.
@@ -30,8 +24,9 @@ Sets the number of processes to the given parameter.
     
 > talkative:
 
+Every option accepts a boolean. 
 Activates messages in the terminal. Useful in debug. 
-Multiple options are available, and they all accept a boolean. 
+Multiple options are available:
     
 - processes: True    
     To see the messages of the processes starting/ending
@@ -49,9 +44,14 @@ Multiple options are available, and they all accept a boolean.
 - loader: False     
     To see when the loader loads its images. 
 
+- tensorflow: '4'
+    This must be an integer: 0, 1, 2, 3, or 4.
+    Refer to tensorflow's 'TF_CPP_MIN_LOG_LEVEL' environment variable for more information.   
+
 > logs
 
-The same as talkative, but for printing in the logs instead.
+The same as talkative, but for printing in the logs file instead.
+There is no logging for the tensorflow debuging messages. 
 
 > gui:
 
@@ -61,15 +61,6 @@ To activate/deactivate graphics components.
     Accepts a boolean.      
     Shows each image when processed by a blackbox. Displaying will stop the Blackbox from processing other images while the image is on display. You can stop the display by closing the window for display, or pressing any key. 
     
-> dynamicConfig: False        
-
-Accepts a boolean.
-Setting to True reloads the configuration from the config file at each loop of the BlackBox and of the main.  
-This allows you to change the config while the application is running and see the effects in live.      
-/!\ Loading values from a file frequently has an impact on the running time of the app (not much, but still). 
-
-/!\ If you want to set it to True, you NEED TO SET IT BEFORE RUNNING THE APPLICATION. 
-
 
 ### **The output section**
 
@@ -85,6 +76,29 @@ This is the output for the application. In this Json file are written the result
 Accepts a Json file path.
 An other output file where we dump stuff that does not really matter.
 
+> tempData: ../out/temp
+
+Accepts a directory path. 
+A directory where images are stored as a cache file when imported from a distant repository. 
+
+
+### **The input section**
+
+> trainingImagesFolder: ../img/train/trainingTestImages
+
+Accepts a directory path. 
+The home folder for all images used to train our ia. 
+
+> shoeDetectAndExtractTrainData: ../in/trainData.json     
+
+Accepts a json file. 
+The data to train the IA that detects the presence of sneakers .
+
+> shoeTypeTrainData: ../in/trainData.json
+
+Accepts a json file. 
+The data to train the IA that detects the type of sneaker.
+
 
 ### **The loader section**
 
@@ -93,7 +107,7 @@ Determines how the Loader, that loads images for the application to process, wil
 > takeFromLocalSource: True
 
 Accepts a boolean. 
-Tells the loader to fetch the images from a local directory, set in the next variable. 
+Tells the loader to fetch the images from a local directory (when True), or from an FTP server (when False).  
       
 > localImgSrc: ../img/test/
 
@@ -124,3 +138,34 @@ When we reach this number of loaded images or less, we try to load more.
 ### **The background section**
 
 Variable that are there. Do NOT touch them. Please. You'll break everything. 
+
+
+### **The color_detection section**
+
+Variables governing the IA for detecting the color of the shoe. These have been tuned already, so changing them should not be necessary. 
+
+> attemps: 10
+
+Accepts a strictly positive integer. 
+Max iteration for the kmeans function.
+
+> margin: 20
+
+Accepts a strictly positive integer.
+The margin for pixel detection when calculating the ratios of colors present. 
+
+> seuil: 0.25
+
+Accepts a float in the interval \[0,1].
+The threshold below which the preprocessing module will not try to contrast the images more. Contrasting images can be necessary for some images where the shoe has the same color as the background, in order for it to be detected.   
+
+
+### **The shoeDetection section**
+
+> modelFilePath: ../in/AI/DetectShoes/model.h5
+
+Accepts a .h5 file, representing the (tensorflow) model for the IA that detects shoes. 
+
+> weightsFilePath: ../in/AI/DetectShoes/weights.h5
+
+Accepts a .h5 file, representing the (tensorflow) weights for the IA that detects shoes. 

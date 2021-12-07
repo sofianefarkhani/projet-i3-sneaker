@@ -32,7 +32,3 @@ class ProcConfig:
     def iaShouldTalkInDetail(): return ConfigLoader.getVariable('runConfig', 'talkative', 'ias-detailed')
     def messagesShouldBeSpoken(): return ConfigLoader.getVariable('runConfig', 'talkative', 'messages')
     
-    
-    def shouldReloadConfig(): return ConfigLoader.getVariable('runConfig', 'dynamicConfig')
-    
-    def stopsWhenNoMoreImages(): return ConfigLoader.getVariable('runConfig', 'stopsAtEnd')

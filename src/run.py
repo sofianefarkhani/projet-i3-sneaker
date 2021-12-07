@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
-import queue
 import multiprocessing
 from processes.Task             import *
 from processes.LoaderMessage    import *
@@ -94,16 +93,13 @@ if __name__ == '__main__':
                 answer = Herald.getMessageFrom(__name__, loaderResults)
                 
                 if answer.type == LoaderAnswerType.NOMORE:                      # if he says there are no more images to load
-                    if ProcConfig.stopsWhenNoMoreImages():                       # if the run config is set to stop
-                        Herald.queueMessageIn(__name__, loaderTasks, LoaderTask(LoaderTaskType.TERMINATE))
-                        loaderRunning = False                                         # break main loop
+                    Herald.queueMessageIn(__name__, loaderTasks, LoaderTask(LoaderTaskType.TERMINATE))
+                    loaderRunning = False                                         # break main loop
                 elif answer.type == LoaderAnswerType.LOADDONE:                  # if he says he finished loading images: 
                     loaderIsLoading = False                                         # unlock the possibility of loading more images
                 elif answer.type == LoaderAnswerType.END:
                     loaderRunning = False   
                 
-            if ProcConfig.shouldReloadConfig():
-                ConfigLoader.loadVars()
         
         
         # BRUTALLY MURDER each blackbox when Loader ends its service 

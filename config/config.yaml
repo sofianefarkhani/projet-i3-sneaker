@@ -5,9 +5,6 @@
 
 
 runConfig:
-
-    stopsAtEnd: True  # When all the images in the database are dealt with, should we stop? 
-
     nbProcess: 4      # -> 'default' calculates for the number of processors you have.
                             #       - some may be idling from time to time.
                             # -> 'auto' will auto adjusts the number of processes in accordance with the number of pending tasks
@@ -18,7 +15,8 @@ runConfig:
         messages:       False    
         ias:            True    
         ias-detailed:   False    
-        loader:         False    
+        loader:         False   
+        tensorflow:     4 
     
     logs: 
         file:           ../out/logs.log
@@ -32,10 +30,6 @@ runConfig:
     gui:
         showImages: False       # Show each image when processed (stops the Blackbox from processing other images while the image is on display!!!)
 
-    dynamicConfig: False        # Setting to True reloads the configuration from the file at each loop of the BlackBox and of the main.  
-                                # This allows you to change the config while the application is running and see the effects in live.      
-                                # /!\ Loading values from a file frequently has an impact on the running time of the app (not much, but still). 
-                                # /!\ If you want to set it to True, you NEED TO SET IT BEFORE RUNNING THE APPLICATION.
 output:
     data: ../out/data.json          # the output for image tags
     testData: ../out/testData.json  # the output file where we dump stuff that does not really matter, when we test stuff
@@ -45,8 +39,7 @@ input:
     # to train our IAs
     trainingImagesFolder: ../img/train/trainingTestImages   # the home folder for all images to train our ia
     shoeDetectAndExtractTrainData: ../in/trainData.json     # the data to train the IA that detects the presence of sneakers 
-    shoeTypeTrainData: ../in/trainData.json                 # the data to train the IA that detects the type of sneaker
-    nomore: ../img/nomore.png                               # the displayed image to inform there are no more images when labelling by hand
+    shoeTypeTrainData: ../in/trainData.json                                 # the displayed image to inform there are no more images when labelling by hand
 
 loader:
     takeFromLocalSource: True  

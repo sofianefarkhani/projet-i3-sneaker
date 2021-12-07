@@ -1,5 +1,4 @@
 
-from utilities.Herald import Herald
 from utilities.configUtilities.ProcConfig import ProcConfig
 
 class ShoeExtractor:

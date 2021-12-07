@@ -1,16 +1,10 @@
 import os
 import cv2
-import json
-import pprint
 import traceback
-
-from Data.Tag                                       import Tag
 
 import multiprocessing
 from processes.Enums                                import *
 from processes.Task                                 import Answer
-
-from keras.models                                   import load_model
 
 from interface.Writer                               import Writer
 from utilities.DataFormatter import DataFormatter
@@ -18,8 +12,6 @@ from utilities.DataFormatter import DataFormatter
 from utilities.Herald                               import Herald
 from utilities.DataFormatter                        import DataFormatter
 from utilities.configUtilities.BBConfig             import BBConfig
-from utilities.configUtilities.ProcConfig           import ProcConfig
-from utilities.configUtilities.ConfigLoader         import ConfigLoader
 from utilities.configUtilities.ShoeDetectionConfig  import ShoeDetectionConfig as SDConfig
 
 from blackBoxModules.typeDetector.TypeDetector      import TypeDetector
@@ -27,7 +19,8 @@ from blackBoxModules.colorDetector.ColorDetector    import ColorDetector
 from blackBoxModules.sneakerExtractor.ShoeExtractor import ShoeExtractor
 from blackBoxModules.preprocess.ImagePreprocessor   import ImagePreprocessor
 
-
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = BBConfig.getTFVerboseLvl()
+from keras.models                                   import load_model
 
 
 class BlackBox(multiprocessing.Process):
@@ -64,7 +57,7 @@ class BlackBox(multiprocessing.Process):
         try:    
             Herald.printStart(proc_name)
             
-            # load IA models
+            # load IA models and shut TF up
             modelShoeDetector = load_model(SDConfig.getModelFile())
             modelShoeDetector.load_weights(SDConfig.getWeightsFile())
             
@@ -81,17 +74,13 @@ class BlackBox(multiprocessing.Process):
                     
                     self.taskQueue.task_done()    # helps when we want to join threads at the end of the programm
                     
-                    if ProcConfig.shouldReloadConfig():
-                        ConfigLoader.loadVars()
-
             self.taskQueue.task_done()
 
         except Exception as e:
             try:
                 self.taskQueue.task_done()
             except:
-                Herald.printError(
-                    'A dev broke the basic skeletton of the BlackBox.')
+                Herald.printError( 'A dev broke the basic skeletton of the BlackBox.' )
 
             Herald.printError(
                 proc_name+' encountered an error, and stopped its execution. See the error below: \n')
