@@ -142,7 +142,7 @@ class BlackBox(multiprocessing.Process):
         
         Herald.printWrittenData(self.name)
 
-        self.showImage(img)
+        #self.showImage(img)
 
     def showImage(self, img):
         '''Shows an image if the config allows it. 

@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  sneakers:
+    build: .
+    image: sneakers
+    volumes:
+      - ${PATH_IMG}:/usr/projet-i3-sneaker/img/test/
+      - ${PATH_OUT}:/usr/projet-i3-sneaker/out/
+    networks:
+      - backend
+networks:
+  backend:
+    name: sneakers_back
+    external: true
+    driver: bridge
+

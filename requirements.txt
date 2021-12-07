@@ -1,6 +1,4 @@
-opencv-python
-tensorflow
-keras
+opencv-python-headless
 jsonpickle
 sciPy
 PyYAML
