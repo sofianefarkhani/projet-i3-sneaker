@@ -5,7 +5,7 @@
 ### Without Docker
 * Python (>= 3.8)
 * pip
-## Configuration
+## Configuration (if you use Docker)
 ### IP Forward for containers (Linux kernel)
 1. Configure the Linux kernel to allow IP forward
 ```bash
@@ -28,22 +28,22 @@ PATH_OUT=/path/to/out/directory
 ## Installation
 For installing, we recommande to use script deploy.sh. 
 ### Create container
-For generate one container you write command bellow :
+For generate one container you write command bellow (`--create`) :
 ```bash
 ./deploy.sh --create
 ```
 ### Delete container
-For delete all containers generate by this script I just use argument --drop.
+For delete all containers generate by this script I just use argument `--drop`.
 ```bash
 ./deploy.sh --drop
 ```
 ### Reboot container
-If you wish reboot all containers, you use argument --start.
+If you wish reboot all containers, you use argument `--start`.
 ```bash
 ./deploy.sh --start
 ```
 ### Informations on container
-For collect informations of all containers you use --infos.
+For collect informations of all containers you use `--infos`.
 ```bash
 ./deploy.sh --infos
 ```
