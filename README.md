@@ -11,9 +11,19 @@
 ```bash
 sysctl net.ipv4.conf.all.forwarding=1
 ```
-2. Change the policy for the ```iptables``` ```FORWARD``` policy from ```DROP``` to ```ACCEPT```
+2. Change the policy for the `iptables` `FORWARD` policy from `DROP` to `ACCEPT`
 ```bash
 sudo iptables -P FORWARD ACCEPT
+```
+### Set path for volumes
+Volumes of the containers use env file for define path to access images and output files (json).
+Variable for set path to images is `PATH_IMG` : 
+```
+PATH_IMG=/path/to/images
+```
+Variable for set path to locate directory to store json files is `PATH_OUT` :
+```
+PATH_OUT=/path/to/out/directory
 ```
 ## Installation
 For installing, we recommande to use script deploy.sh. 
