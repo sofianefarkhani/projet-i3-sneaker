@@ -123,7 +123,8 @@ class BlackBox(multiprocessing.Process):
         if shoeProb>0.5:
             (mainColor, secondaryColor) = ColorDetector.detection(
                 img,
-                self.name
+                self.name,
+                imgName
             )
             
             # typeOfShoe = TypeDetector.detectTypeOfShoe(

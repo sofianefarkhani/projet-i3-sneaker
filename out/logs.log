@@ -508,3 +508,745 @@ Traceback (most recent call last):
   File "D:\Python projects\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 253, in persistanceColor
     if (dict[premierElem] != dict[deuxiemeElem]):
 UnboundLocalError: local variable 'premierElem' referenced before assignment
+
+---------------------------------------
+BlackBox-2 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 327, in detection
+    listFinal = ColorDetector.extractColor(list)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 168, in extractColor
+    for f in len(len(listInter[i])):
+TypeError: object of type 'int' has no len()
+
+---------------------------------------
+BlackBox-3 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 327, in detection
+    listFinal = ColorDetector.extractColor(list)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 168, in extractColor
+    for f in len(len(listInter[i])):
+TypeError: object of type 'int' has no len()
+
+---------------------------------------
+BlackBox-4 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 327, in detection
+    listFinal = ColorDetector.extractColor(list)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 168, in extractColor
+    for f in len(len(listInter[i])):
+TypeError: object of type 'int' has no len()
+
+---------------------------------------
+BlackBox-5 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 327, in detection
+    listFinal = ColorDetector.extractColor(list)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 168, in extractColor
+    for f in len(len(listInter[i])):
+TypeError: object of type 'int' has no len()
+
+---------------------------------------
+No blackboxes are running. Politely stopping the program.
+---------------------------------------
+BlackBox-3 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 327, in detection
+    listFinal = ColorDetector.extractColor(list)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 168, in extractColor
+    for f in len(listInter[i]):
+TypeError: 'int' object is not iterable
+
+---------------------------------------
+BlackBox-5 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 327, in detection
+    listFinal = ColorDetector.extractColor(list)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 168, in extractColor
+    for f in len(listInter[i]):
+TypeError: 'int' object is not iterable
+
+---------------------------------------
+BlackBox-4 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 327, in detection
+    listFinal = ColorDetector.extractColor(list)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 168, in extractColor
+    for f in len(listInter[i]):
+TypeError: 'int' object is not iterable
+
+---------------------------------------
+BlackBox-2 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 327, in detection
+    listFinal = ColorDetector.extractColor(list)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 168, in extractColor
+    for f in len(listInter[i]):
+TypeError: 'int' object is not iterable
+
+---------------------------------------
+No blackboxes are running. Politely stopping the program.
+---------------------------------------
+BlackBox-5 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 326, in detection
+    listFinal = ColorDetector.extractColor(list)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 175, in extractColor
+    listColor.append(listInter[i][maxValue])
+IndexError: list index out of range
+
+---------------------------------------
+BlackBox-4 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 326, in detection
+    listFinal = ColorDetector.extractColor(list)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 175, in extractColor
+    listColor.append(listInter[i][maxValue])
+IndexError: list index out of range
+
+---------------------------------------
+BlackBox-2 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 326, in detection
+    listFinal = ColorDetector.extractColor(list)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 175, in extractColor
+    listColor.append(listInter[i][maxValue])
+IndexError: list index out of range
+
+---------------------------------------
+BlackBox-3 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 326, in detection
+    listFinal = ColorDetector.extractColor(list)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 175, in extractColor
+    listColor.append(listInter[i][maxValue])
+IndexError: list index out of range
+
+---------------------------------------
+No blackboxes are running. Politely stopping the program.
+---------------------------------------
+BlackBox-2 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 326, in detection
+    listFinal = ColorDetector.extractColor(list)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 168, in extractColor
+    print("************************************* contenu de la liste: ", listInter[i].name)
+AttributeError: 'list' object has no attribute 'name'
+
+---------------------------------------
+BlackBox-3 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 326, in detection
+    listFinal = ColorDetector.extractColor(list)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 168, in extractColor
+    print("************************************* contenu de la liste: ", listInter[i].name)
+AttributeError: 'list' object has no attribute 'name'
+
+---------------------------------------
+BlackBox-4 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 326, in detection
+    listFinal = ColorDetector.extractColor(list)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 168, in extractColor
+    print("************************************* contenu de la liste: ", listInter[i].name)
+AttributeError: 'list' object has no attribute 'name'
+
+---------------------------------------
+BlackBox-5 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 326, in detection
+    listFinal = ColorDetector.extractColor(list)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 168, in extractColor
+    print("************************************* contenu de la liste: ", listInter[i].name)
+AttributeError: 'list' object has no attribute 'name'
+
+---------------------------------------
+No blackboxes are running. Politely stopping the program.
+---------------------------------------
+BlackBox-3 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 327, in detection
+    listFinal = ColorDetector.extractColor(list)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 168, in extractColor
+    for z in len(listInter[i]):
+TypeError: 'int' object is not iterable
+
+---------------------------------------
+BlackBox-4 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 327, in detection
+    listFinal = ColorDetector.extractColor(list)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 168, in extractColor
+    for z in len(listInter[i]):
+TypeError: 'int' object is not iterable
+
+---------------------------------------
+BlackBox-2 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 327, in detection
+    listFinal = ColorDetector.extractColor(list)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 168, in extractColor
+    for z in len(listInter[i]):
+TypeError: 'int' object is not iterable
+
+---------------------------------------
+BlackBox-5 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 327, in detection
+    listFinal = ColorDetector.extractColor(list)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 168, in extractColor
+    for z in len(listInter[i]):
+TypeError: 'int' object is not iterable
+
+---------------------------------------
+No blackboxes are running. Politely stopping the program.
+---------------------------------------
+BlackBox-2 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 324, in detection
+    listFinal = ColorDetector.extractColor(list)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 171, in extractColor
+    listColor.append(listInter[i][maxValue])
+IndexError: list index out of range
+
+---------------------------------------
+BlackBox-4 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 324, in detection
+    listFinal = ColorDetector.extractColor(list)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 171, in extractColor
+    listColor.append(listInter[i][maxValue])
+IndexError: list index out of range
+
+---------------------------------------
+BlackBox-5 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 324, in detection
+    listFinal = ColorDetector.extractColor(list)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 171, in extractColor
+    listColor.append(listInter[i][maxValue])
+IndexError: list index out of range
+
+---------------------------------------
+BlackBox-3 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 324, in detection
+    listFinal = ColorDetector.extractColor(list)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 171, in extractColor
+    listColor.append(listInter[i][maxValue])
+IndexError: list index out of range
+
+---------------------------------------
+No blackboxes are running. Politely stopping the program.
+---------------------------------------
+BlackBox-4 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 324, in detection
+    listFinal = ColorDetector.extractColor(list)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 170, in extractColor
+    if(len(listInter[i][maxValue]) == 2):
+TypeError: object of type 'Color' has no len()
+
+---------------------------------------
+BlackBox-3 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+BlackBox-5 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 324, in detection
+    listFinal = ColorDetector.extractColor(list)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 170, in extractColor
+    if(len(listInter[i][maxValue]) == 2):
+TypeError: object of type 'Color' has no len()
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 324, in detection
+    listFinal = ColorDetector.extractColor(list)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 170, in extractColor
+    if(len(listInter[i][maxValue]) == 2):
+TypeError: object of type 'Color' has no len()
+
+---------------------------------------
+BlackBox-2 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 324, in detection
+    listFinal = ColorDetector.extractColor(list)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 170, in extractColor
+    if(len(listInter[i][maxValue]) == 2):
+TypeError: object of type 'Color' has no len()
+
+---------------------------------------
+No blackboxes are running. Politely stopping the program.
+---------------------------------------
+BlackBox-4 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 329, in detection
+    listRatio = ColorDetector.getRatio(listFinal,image)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 219, in getRatio
+    ratioColor1 = ratioColor1 + listRatioImage[i][0]
+IndexError: list index out of range
+
+---------------------------------------
+BlackBox-5 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 329, in detection
+    listRatio = ColorDetector.getRatio(listFinal,image)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 219, in getRatio
+    ratioColor1 = ratioColor1 + listRatioImage[i][0]
+IndexError: list index out of range
+
+---------------------------------------
+BlackBox-3 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 329, in detection
+    listRatio = ColorDetector.getRatio(listFinal,image)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 219, in getRatio
+    ratioColor1 = ratioColor1 + listRatioImage[i][0]
+IndexError: list index out of range
+
+---------------------------------------
+BlackBox-2 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 329, in detection
+    listRatio = ColorDetector.getRatio(listFinal,image)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 219, in getRatio
+    ratioColor1 = ratioColor1 + listRatioImage[i][0]
+IndexError: list index out of range
+
+---------------------------------------
+No blackboxes are running. Politely stopping the program.
+---------------------------------------
+BlackBox-4 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 328, in detection
+    listFinal = ColorDetector.extractColor(list)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 175, in extractColor
+    listColor.append(listInter[i][maxValue])
+IndexError: list index out of range
+
+---------------------------------------
+BlackBox-5 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 328, in detection
+    listFinal = ColorDetector.extractColor(list)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 175, in extractColor
+    listColor.append(listInter[i][maxValue])
+IndexError: list index out of range
+
+---------------------------------------
+BlackBox-3 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 328, in detection
+    listFinal = ColorDetector.extractColor(list)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 175, in extractColor
+    listColor.append(listInter[i][maxValue])
+IndexError: list index out of range
+
+---------------------------------------
+BlackBox-2 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 328, in detection
+    listFinal = ColorDetector.extractColor(list)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 175, in extractColor
+    listColor.append(listInter[i][maxValue])
+IndexError: list index out of range
+
+---------------------------------------
+No blackboxes are running. Politely stopping the program.
+---------------------------------------
+BlackBox-3 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 328, in detection
+    listFinal = ColorDetector.extractColor(list)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 175, in extractColor
+    listColor.append(listInter[i][maxValue])
+IndexError: list index out of range
+
+---------------------------------------
+BlackBox-5 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 328, in detection
+    listFinal = ColorDetector.extractColor(list)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 175, in extractColor
+    listColor.append(listInter[i][maxValue])
+IndexError: list index out of range
+
+---------------------------------------
+BlackBox-4 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 328, in detection
+    listFinal = ColorDetector.extractColor(list)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 175, in extractColor
+    listColor.append(listInter[i][maxValue])
+IndexError: list index out of range
+
+---------------------------------------
+BlackBox-3 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 329, in detection
+    listFinal = ColorDetector.extractColor(list, imgName)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 176, in extractColor
+    listColor.append(listInter[i][maxValue])
+IndexError: list index out of range
+
+---------------------------------------
+BlackBox-5 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 329, in detection
+    listFinal = ColorDetector.extractColor(list, imgName)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 176, in extractColor
+    listColor.append(listInter[i][maxValue])
+IndexError: list index out of range
+
+---------------------------------------
+BlackBox-4 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 329, in detection
+    listFinal = ColorDetector.extractColor(list, imgName)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 176, in extractColor
+    listColor.append(listInter[i][maxValue])
+IndexError: list index out of range
+
+---------------------------------------
+BlackBox-2 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 329, in detection
+    listFinal = ColorDetector.extractColor(list, imgName)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 176, in extractColor
+    listColor.append(listInter[i][maxValue])
+IndexError: list index out of range
+
+---------------------------------------
+No blackboxes are running. Politely stopping the program.
+---------------------------------------
+BlackBox-2 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 329, in detection
+    listFinal = ColorDetector.extractColor(list, imgName)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 176, in extractColor
+    listColor.append(listInter[i][maxValue])
+IndexError: list index out of range
+
+---------------------------------------
+BlackBox-4 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 329, in detection
+    listFinal = ColorDetector.extractColor(list, imgName)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 176, in extractColor
+    listColor.append(listInter[i][maxValue])
+IndexError: list index out of range
+
+---------------------------------------
+BlackBox-3 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 329, in detection
+    listFinal = ColorDetector.extractColor(list, imgName)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 176, in extractColor
+    listColor.append(listInter[i][maxValue])
+IndexError: list index out of range
+
+---------------------------------------
+BlackBox-5 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 329, in detection
+    listFinal = ColorDetector.extractColor(list, imgName)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 176, in extractColor
+    listColor.append(listInter[i][maxValue])
+IndexError: list index out of range
+
+---------------------------------------
+No blackboxes are running. Politely stopping the program.
+---------------------------------------
+BlackBox-3 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 80, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\BlackBox.py", line 124, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 329, in detection
+    listFinal = ColorDetector.extractColor(list, imgName)
+  File "C:\Users\moonc\Desktop\Projet Sneaker\Code\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 176, in extractColor
+    listColor.append(listInter[i][maxValue])
+IndexError: list index out of range

@@ -141,7 +141,7 @@ class ColorDetector:
             listFinal.append(listInterm)
         return listFinal
 
-    def extractColor(list):
+    def extractColor(list, imgName):
         """
         Function extract primary and secondary color for each image
 
@@ -149,31 +149,33 @@ class ColorDetector:
 
         :return : list contains primary and secondary color for each image
         """
+        
+        print("###################################  Taille de la liste: ", len(list))
+        print("###################################  Liste des couleurs: ", list)
+        print("---------------------------------- Nom de l'image:", imgName)
+
         colors = []
-        for item in list:
-            while(list != []):
-                listInter = []
-                for i in range(ColorDetector.nbrBackground):
-                    listInter.append(list.pop(0))
-                dictionnary = {}
-                for i in range(len(listInter)):
-                    for j in range(len(listInter[i])):
-                        if(j in dictionnary):
-                            dictionnary[j] = dictionnary[j] + 1
-                        else:
-                            dictionnary[j] = 1
-                    listColor = []       
+        #for item in list:
+        while(list != []):
+            listInter = []
+            for i in range(ColorDetector.nbrBackground):
+                listInter.append(list.pop(0))
+            dictionnary = {}
+            for i in range(len(listInter)):
+                for j in range(len(listInter[i])):
+                    if(j in dictionnary):
+                        dictionnary[j] = dictionnary[j] + 1
+                    else:
+                        dictionnary[j] = 1
+                listColor = []       
+                for k in range(2):
+                    maxValue = max(dictionnary, key=dictionnary.get)
 
-                    #print("######################################## taille de la liste : ", len(listInter[i]))   
-
-                    for k in range(2):
-                        maxValue = max(dictionnary, key=dictionnary.get)
-
-                        #print("************************** contenu de la liste : ", listInter[i][maxValue])
-
-                        listColor.append(listInter[i][maxValue])
-                        dictionnary.pop(maxValue)
-                colors.append(listColor)
+                    #print("************************** contenu de la liste : ", listInter[i][maxValue])
+                    #if(len(listInter[i]) == 2):
+                    listColor.append(listInter[i][maxValue])
+                    dictionnary.pop(maxValue)
+            colors.append(listColor)
         return colors
 
     def getRatio(list, image):
@@ -308,7 +310,7 @@ class ColorDetector:
     
     
 
-    def detection(image, procname):
+    def detection(image, procname, imgName):
         """
         Function grouping together all the treatments
 
@@ -322,7 +324,13 @@ class ColorDetector:
         
         list = ColorDetector.getDominantColors(image)
         list = ColorDetector.deleteBackground(list)
-        listFinal = ColorDetector.extractColor(list)
+
+
+        listFinal = ColorDetector.extractColor(list, imgName)
+
+        #print("########################################## Taille de la liste ", len(listFinal))
+        #print("****************************************** contenu de la liste ", listFinal)
+
         listRatio = ColorDetector.getRatio(listFinal,image)
         res = ColorDetector.associateRatioColor(listFinal, listRatio)
         
