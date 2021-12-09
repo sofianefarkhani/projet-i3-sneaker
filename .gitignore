@@ -11,3 +11,4 @@ img/*
 *.jpg
 *.jpg
 *.jpg
+.env
