@@ -2,6 +2,7 @@ import os
 from utilities.configUtilities.BBConfig import BBConfig
 import json
 import shutil
+from statistics import median
 
 class DataFusion :
 
@@ -62,7 +63,13 @@ class DataFusion :
             listImg = []
             sumProbProb = 0
             dictColorsMain = {}
+            listColorRedMain = []
+            listColorGreenMain = []
+            listColorBlueMain = []
             dictColorsSecondary = {}
+            listColorRedSecondary = []
+            listColorGreenSecondary = []
+            listColorBlueSecondary = []
             finalList = []
             finalDict = {}
             interDict = {}
@@ -83,6 +90,10 @@ class DataFusion :
                         else:
                             dictColorsMain[dict["Colorway"]["mainColor"]["color"]] = 1
 
+                    listColorRedMain.append(dict["Colorway"]["mainColor"]["rgb"][0])
+                    listColorGreenMain.append(dict["Colorway"]["mainColor"]["rgb"][1])
+                    listColorBlueMain.append(dict["Colorway"]["mainColor"]["rgb"][2])
+
                     if(len(dict["Colorway"]) > 1):
                         if(len(dictColorsSecondary) == 0):
                             dictColorsSecondary[dict["Colorway"]["secondaryColor"]["color"]] = 1
@@ -92,19 +103,46 @@ class DataFusion :
                             else:
                                 dictColorsSecondary[dict["Colorway"]["secondaryColor"]["color"]] = 1
 
+                        listColorRedSecondary.append(dict["Colorway"]["secondaryColor"]["rgb"][0])
+                        listColorGreenSecondary.append(dict["Colorway"]["secondaryColor"]["rgb"][1])
+                        listColorBlueSecondary.append(dict["Colorway"]["secondaryColor"]["rgb"][2])
+
             shoeProb = sumProbProb/len(list)
-            mainColor = max(dictColorsMain, key=dictColorsMain.get)
+
+            if(len(dictColorsMain) != 0):
+                mainColor = max(dictColorsMain, key=dictColorsMain.get)
+                listColorRedMain.sort()
+                RGBRedMain = median(listColorRedMain)
+                listColorGreenMain.sort()
+                RGBGreenMain = median(listColorGreenMain)
+                listColorBlueMain.sort()
+                RGBBlueMain = median(listColorBlueMain)
+                RGBMain = [RGBRedMain,RGBGreenMain,RGBBlueMain]
+            else:
+                mainColor = None
+
             if(len(dictColorsSecondary) != 0):
                 secondaryColor = max(dictColorsSecondary, key=dictColorsSecondary.get)
+                listColorRedMain.sort()
+                RGBRedSecondary = median(listColorRedSecondary)
+                listColorGreenSecondary.sort()
+                RGBGreenSecondary = median(listColorGreenSecondary)
+                listColorBlueSecondary.sort()
+                RGBBlueSecondary = median(listColorBlueSecondary)
+                RGBSecondary = [RGBRedSecondary,RGBGreenSecondary,RGBBlueSecondary]
             else:
                 secondaryColor = None
 
             interDict["lstImg"]=listImg
             interDict["style"]=style
-            interDict["mainColor"]=mainColor
+            #interDict["mainColor"]["name"]=mainColor
+            #interDict["mainColor"]["rgb"]=[RGBRedMain,RGBGreenMain,RGBBlueMain]
+            if(mainColor != None):
+                interDict["mainColor"]={"name":mainColor,"rgb":RGBMain}
             if(secondaryColor != None):
                 if(secondaryColor != mainColor):
                     interDict["secondaryColor"]=secondaryColor
+                    interDict["secondaryColor"]={"name":secondaryColor,"rgb":RGBSecondary}
             interDict["probaShoes"]=shoeProb
             
             finalDict[IDProduct] = interDict
