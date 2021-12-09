@@ -10,8 +10,8 @@ class DataFusion :
         jsonObjectList = []
         pathFile = BBConfig.getTempOutput()
         outPutFile = ("../out/data.json")
-        #if(os.path.exists(outPutFile)):
-        #    os.remove(outPutFile)
+        if(os.path.exists(outPutFile)):
+            os.remove(outPutFile)
         for fileName in os.listdir(pathFile):
             DataFusion.getObjectFromFile(pathFile+"/"+fileName,jsonObjectList)
         DataFusion.getSortedListe(jsonObjectList)
@@ -34,8 +34,8 @@ class DataFusion :
         if(dataToAdd != None):
             DataFusion.writeToFile(outPutFile, dataToAdd)
 
-        #shutil.rmtree(pathFile,ignore_errors=True)
-        #os.mkdir("../out/temp")
+        shutil.rmtree(pathFile,ignore_errors=True)
+        os.mkdir("../out/temp")
 
     def writeToFile(outPutFile, dataToAdd):
         fileData = open(outPutFile, "a")
