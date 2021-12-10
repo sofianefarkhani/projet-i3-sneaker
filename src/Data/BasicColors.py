@@ -83,6 +83,7 @@ class ColorEnum(Enum):
 
         : return : object color
         """
+        
         maxDivergence = 1
         for color in ColorEnum: #search for the basic color closest to the given rgb code. 
             rc = color.value[0]

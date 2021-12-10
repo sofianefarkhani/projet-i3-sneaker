@@ -65,9 +65,9 @@ class BackgroundSuppression:
             mask_stack  = mask_stack.astype('float32') / 255.0          # Use float matrices, 
             image         = image.astype('float32') / 255.0                 #  for easy blending
 
-
+            
             for key in __MASK_COLOR:
-                masked = (mask_stack * image) + ((1-mask_stack) * ast.literal_eval(__MASK_COLOR[key]))
+                masked = (mask_stack * image) + ((1-mask_stack) * __MASK_COLOR[key])
                 imagesNoBg.append((masked * 255).astype('uint8'))
         # Blend
         return imagesNoBg

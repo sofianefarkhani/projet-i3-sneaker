@@ -86,7 +86,11 @@ class ConfigChecker:
     
         background = {
             'any': {
-                'type': [str],
+                'type': [list],
+                'size': 3,
+                # 'contentType': [float],
+                # 'contentMin' : 0,
+                # 'contentMax' : 1
             }
         }
     
@@ -222,8 +226,9 @@ class ConfigChecker:
         size = specifications['size']
         if len(varValue)!=size:
             msg = 'Invalid size given to the '+str(varType)+' parameter: \n'+ConfigChecker.getPathAsException(varPath)
-            msg += '    Expected: '+str(size)
-            msg += '\n    Given   : '+str(len(varValue))
+            msg += '    Expected     : '+str(size)
+            msg += '\n    Given        : '+str(len(varValue))
+            msg += '\n    With Value   : '+str(varValue)
             raise ConfigRequirementException(msg)
     
     def possibleValuesSentence(tabAsStr:str):

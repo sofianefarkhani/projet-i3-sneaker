@@ -48,9 +48,9 @@ loader:
     reloadNumber: 4   # When we reach this number of loaded images or less, we try to load more.
 
 background:
-    g: (0.0,1.0,0.0)
-    r: (0.0,0.0,1.0)
-    b: (1.0,0.0,0.0)
+    g: [0.0,1.0,0.0]
+    r: [0.0,0.0,1.0]
+    b: [1.0,0.0,0.0]
 
 color_detection:
     attempts: 10    # Max iteration for kmeans function

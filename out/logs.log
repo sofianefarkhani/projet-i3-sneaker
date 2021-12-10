@@ -562,3 +562,218 @@ Traceback (most recent call last):
   File "C:\Users\Esteban\AppData\Local\Programs\Python\Python39\lib\multiprocessing\queues.py", line 325, in task_done
     raise ValueError('task_done() called too many times')
 ValueError: task_done() called too many times
+
+---------------------------------------
+BlackBox-2 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 74, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 113, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 317, in detection
+    list = ColorDetector.getDominantColors(image)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 110, in getDominantColors
+    colors,counts = ColorDetector.detectColorsOf(imgPreproc)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 33, in detectColorsOf
+    _, labels, palette = cv2.kmeans(pixels, n_colors, None, criteria, ConfigLoader.getVariable('color_detection','attempts'), flags)
+NameError: name 'ConfigLoader' is not defined
+
+---------------------------------------
+BlackBox-2 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 74, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 113, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 317, in detection
+    list = ColorDetector.getDominantColors(image)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 108, in getDominantColors
+    imagesNoBg = BackgroundSuppression.replaceBackground(image)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\blackBoxModules\preprocess\BackgroundSuppression.py", line 70, in replaceBackground
+    masked = (mask_stack * image) + ((1-mask_stack) * ast.literal_eval(__MASK_COLOR[key]))
+  File "C:\Users\Esteban\AppData\Local\Programs\Python\Python39\lib\ast.py", line 105, in literal_eval
+    return _convert(node_or_string)
+  File "C:\Users\Esteban\AppData\Local\Programs\Python\Python39\lib\ast.py", line 104, in _convert
+    return _convert_signed_num(node)
+  File "C:\Users\Esteban\AppData\Local\Programs\Python\Python39\lib\ast.py", line 78, in _convert_signed_num
+    return _convert_num(node)
+  File "C:\Users\Esteban\AppData\Local\Programs\Python\Python39\lib\ast.py", line 69, in _convert_num
+    _raise_malformed_node(node)
+  File "C:\Users\Esteban\AppData\Local\Programs\Python\Python39\lib\ast.py", line 66, in _raise_malformed_node
+    raise ValueError(f'malformed node or string: {node!r}')
+ValueError: malformed node or string: [0.0, 1.0, 0.0]
+
+---------------------------------------
+BlackBox-2 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 74, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 113, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 317, in detection
+    list = ColorDetector.getDominantColors(image)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 108, in getDominantColors
+    imagesNoBg = BackgroundSuppression.replaceBackground(image)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\blackBoxModules\preprocess\BackgroundSuppression.py", line 70, in replaceBackground
+    masked = (mask_stack * image) + ((1-mask_stack) * ast.literal_eval(__MASK_COLOR[key]))
+  File "C:\Users\Esteban\AppData\Local\Programs\Python\Python39\lib\ast.py", line 105, in literal_eval
+    return _convert(node_or_string)
+  File "C:\Users\Esteban\AppData\Local\Programs\Python\Python39\lib\ast.py", line 104, in _convert
+    return _convert_signed_num(node)
+  File "C:\Users\Esteban\AppData\Local\Programs\Python\Python39\lib\ast.py", line 78, in _convert_signed_num
+    return _convert_num(node)
+  File "C:\Users\Esteban\AppData\Local\Programs\Python\Python39\lib\ast.py", line 69, in _convert_num
+    _raise_malformed_node(node)
+  File "C:\Users\Esteban\AppData\Local\Programs\Python\Python39\lib\ast.py", line 66, in _raise_malformed_node
+    raise ValueError(f'malformed node or string: {node!r}')
+ValueError: malformed node or string: [0.0, 1.0, 0.0]
+
+---------------------------------------
+BlackBox-2 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 74, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 113, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 317, in detection
+    list = ColorDetector.getDominantColors(image)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 108, in getDominantColors
+    imagesNoBg = BackgroundSuppression.replaceBackground(image)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\blackBoxModules\preprocess\BackgroundSuppression.py", line 70, in replaceBackground
+    masked = (mask_stack * image) + ((1-mask_stack) * ast.literal_eval(__MASK_COLOR[key]))
+  File "C:\Users\Esteban\AppData\Local\Programs\Python\Python39\lib\ast.py", line 105, in literal_eval
+    return _convert(node_or_string)
+  File "C:\Users\Esteban\AppData\Local\Programs\Python\Python39\lib\ast.py", line 104, in _convert
+    return _convert_signed_num(node)
+  File "C:\Users\Esteban\AppData\Local\Programs\Python\Python39\lib\ast.py", line 78, in _convert_signed_num
+    return _convert_num(node)
+  File "C:\Users\Esteban\AppData\Local\Programs\Python\Python39\lib\ast.py", line 69, in _convert_num
+    _raise_malformed_node(node)
+  File "C:\Users\Esteban\AppData\Local\Programs\Python\Python39\lib\ast.py", line 66, in _raise_malformed_node
+    raise ValueError(f'malformed node or string: {node!r}')
+ValueError: malformed node or string: [0.0, 1.0, 0.0]
+
+---------------------------------------
+BlackBox-2 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 74, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 113, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 318, in detection
+    list = ColorDetector.deleteBackground(list)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 125, in deleteBackground
+    listColorBg = ColorDetector.getBackgroundColors('color')
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 296, in getBackgroundColors
+    newColor = Color(rgb=[(elem * 255) for elem in listColor])
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\Data\Color.py", line 40, in __init__
+    decidedC = ColorEnum.getClosestColorByRGB(rgb[0],rgb[1], rgb[2])
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\Data\BasicColors.py", line 92, in getClosestColorByRGB
+    difRc = abs(rc-r)/255.0
+TypeError: unsupported operand type(s) for -: 'int' and 'str'
+
+---------------------------------------
+BlackBox-2 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 74, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 113, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 317, in detection
+    list = ColorDetector.getDominantColors(image)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 108, in getDominantColors
+    imagesNoBg = BackgroundSuppression.replaceBackground(image)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\blackBoxModules\preprocess\BackgroundSuppression.py", line 71, in replaceBackground
+    masked = (mask_stack * image) + ((1-mask_stack) * ast.literal_eval(__MASK_COLOR[key]))
+  File "C:\Users\Esteban\AppData\Local\Programs\Python\Python39\lib\ast.py", line 105, in literal_eval
+    return _convert(node_or_string)
+  File "C:\Users\Esteban\AppData\Local\Programs\Python\Python39\lib\ast.py", line 104, in _convert
+    return _convert_signed_num(node)
+  File "C:\Users\Esteban\AppData\Local\Programs\Python\Python39\lib\ast.py", line 78, in _convert_signed_num
+    return _convert_num(node)
+  File "C:\Users\Esteban\AppData\Local\Programs\Python\Python39\lib\ast.py", line 69, in _convert_num
+    _raise_malformed_node(node)
+  File "C:\Users\Esteban\AppData\Local\Programs\Python\Python39\lib\ast.py", line 66, in _raise_malformed_node
+    raise ValueError(f'malformed node or string: {node!r}')
+ValueError: malformed node or string: [0.0, 1.0, 0.0]
+
+---------------------------------------
+BlackBox-2 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 74, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 113, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 317, in detection
+    list = ColorDetector.getDominantColors(image)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 108, in getDominantColors
+    imagesNoBg = BackgroundSuppression.replaceBackground(image)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\blackBoxModules\preprocess\BackgroundSuppression.py", line 72, in replaceBackground
+    masked = (mask_stack * image) + ((1-mask_stack) * ast.literal_eval(__MASK_COLOR[key]))
+  File "C:\Users\Esteban\AppData\Local\Programs\Python\Python39\lib\ast.py", line 105, in literal_eval
+    return _convert(node_or_string)
+  File "C:\Users\Esteban\AppData\Local\Programs\Python\Python39\lib\ast.py", line 104, in _convert
+    return _convert_signed_num(node)
+  File "C:\Users\Esteban\AppData\Local\Programs\Python\Python39\lib\ast.py", line 78, in _convert_signed_num
+    return _convert_num(node)
+  File "C:\Users\Esteban\AppData\Local\Programs\Python\Python39\lib\ast.py", line 69, in _convert_num
+    _raise_malformed_node(node)
+  File "C:\Users\Esteban\AppData\Local\Programs\Python\Python39\lib\ast.py", line 66, in _raise_malformed_node
+    raise ValueError(f'malformed node or string: {node!r}')
+ValueError: malformed node or string: [0.0, 1.0, 0.0]
+
+---------------------------------------
+BlackBox-2 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 74, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 113, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 318, in detection
+    list = ColorDetector.deleteBackground(list)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 125, in deleteBackground
+    listColorBg = ColorDetector.getBackgroundColors('color')
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 296, in getBackgroundColors
+    newColor = Color(rgb=[(elem * 255) for elem in listColor])
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\Data\Color.py", line 40, in __init__
+    decidedC = ColorEnum.getClosestColorByRGB(rgb[0],rgb[1], rgb[2])
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\Data\BasicColors.py", line 92, in getClosestColorByRGB
+    difRc = abs(rc-r)/255.0
+TypeError: unsupported operand type(s) for -: 'int' and 'str'
+
+---------------------------------------
+BlackBox-2 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 74, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 113, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 319, in detection
+    list = ColorDetector.deleteBackground(list)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 125, in deleteBackground
+    listColorBg = ColorDetector.getBackgroundColors('color')
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 297, in getBackgroundColors
+    newColor = Color(rgb=[(elem * 255) for elem in listColor])
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\Data\Color.py", line 40, in __init__
+    decidedC = ColorEnum.getClosestColorByRGB(rgb[0],rgb[1], rgb[2])
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\Data\BasicColors.py", line 93, in getClosestColorByRGB
+    difRc = abs(rc-r)/255.0
+TypeError: unsupported operand type(s) for -: 'int' and 'str'
