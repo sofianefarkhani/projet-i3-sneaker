@@ -31,12 +31,6 @@ def getDataseTrainingIA(target_size=(64, 64), ratio=0.8):
     dataFrameTraining = pandas.DataFrame(data=dataFrameTraining)
     dataFrameTest = pandas.DataFrame(data=dataFrameTest)
 
-    import os
-    # print("##############################  "+str(os.getcwd())) 
-    
-    # print ('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
-    # print (dataFrameTraining)
-    # print(ConfigLoader.getVariable('input', 'trainingImagesFolder'))
     
     trainingSet = train_datagen.flow_from_dataframe(
         dataframe=dataFrameTraining,
@@ -93,9 +87,55 @@ def shuffleDataSet(dataset, ratio):
     dataFrameTraining = {'id': idTraining, 'label': labelTraining}
     dataFrameTest = {'id': idTest, 'label': labelTest}
 
-    # print (dataFrameTraining['id'])
-    # print (dataFrameTraining['label'])
-    # print (dataFrameTest['id'])
-    # print (dataFrameTest['label'])
-
     return (dataFrameTraining, dataFrameTest)
+
+def getDataseTrainingIAFromJson(target_size=(64, 64), ratio=0.8, pathJson=None):
+    # Fitting the CNN to the images
+    train_datagen = ImageDataGenerator(
+        rescale=1. / 255,
+        shear_range=0.2,
+        zoom_range=0.2,
+        horizontal_flip=True
+    )
+
+    test_datagen = ImageDataGenerator(
+        rescale=1. / 255,
+        shear_range=0.2,
+        zoom_range=0.2,
+        horizontal_flip=True)
+
+    import json
+    f = open(pathJson)
+    dataset = json.load(f)
+    f.close()
+
+    print(dataset)
+
+    # Need randomize the dataset order before separate it in two part
+    (dataFrameTraining, dataFrameTest) = shuffleDataSet(dataset, ratio)
+
+    dataFrameTraining = pandas.DataFrame(data=dataFrameTraining)
+    dataFrameTest = pandas.DataFrame(data=dataFrameTest)
+
+    
+    trainingSet = train_datagen.flow_from_dataframe(
+        dataframe=dataFrameTraining,
+        directory="/mnt/424cf323-70f0-406a-ae71-29e3da370aec/allDataWithoutDoublon",
+        x_col="id",
+        y_col="label",
+        target_size=target_size,
+        batch_size=32,
+        color_mode="grayscale",
+        class_mode='categorical')
+
+    testSet = test_datagen.flow_from_dataframe(
+        dataframe=dataFrameTest,
+        directory="/mnt/424cf323-70f0-406a-ae71-29e3da370aec/allDataWithoutDoublon",
+        x_col="id",
+        y_col="label",
+        target_size=target_size,
+        batch_size=32,
+        color_mode="grayscale",
+        class_mode='categorical')
+
+    return (trainingSet, testSet)
