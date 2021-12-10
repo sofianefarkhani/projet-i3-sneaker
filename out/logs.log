@@ -777,3 +777,18 @@ Traceback (most recent call last):
   File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\Data\BasicColors.py", line 93, in getClosestColorByRGB
     difRc = abs(rc-r)/255.0
 TypeError: unsupported operand type(s) for -: 'int' and 'str'
+
+---------------------------------------
+BlackBox-2 encountered an error, and stopped its execution. See the error below: 
+
+---------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 74, in run
+    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\BlackBox.py", line 113, in compute
+    (mainColor, secondaryColor) = ColorDetector.detection(
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 319, in detection
+    listFinal = ColorDetector.extractColor(list)
+  File "C:\Users\Esteban\Documents\GitHub\projet-i3-sneaker\src\blackBoxModules\colorDetector\ColorDetector.py", line 168, in extractColor
+    listColor.append(listInter[i][maxValue])
+IndexError: list index out of range

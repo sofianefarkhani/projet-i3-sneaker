@@ -11,10 +11,13 @@ class ConfigChecker:
     # there is the struct of the config file, then each var has attributes:
     
     # type: the list of types it can take;
-    # min:  the min value (included) (if int)
-    # max:  the max value (included) (if int)
-    # str:  needs to be one of those (if str)
+    # min : the min value (included) (if int or float)
+    # max : the max value (included) (if int or float)
+    # str : needs to be one of those (if str)
     # size: the length of the provided list (if list or tuple)
+    # contentType: the expected type of content (if list or tuple)
+    # contentMin : The minimum value of the content (included) (if list or tuple, and content is an int or float)
+    # contentMax : The maximum value of the content (included) (if list or tuple, and content is an int or float)
     
     # If we do not find the value in the place where it should be, search for an 'any' value, and use that instead.
     # Once the value is found, we check its type, and if there are any other parameters (min, max...) we check thoses.
@@ -88,9 +91,9 @@ class ConfigChecker:
             'any': {
                 'type': [list],
                 'size': 3,
-                # 'contentType': [float],
-                # 'contentMin' : 0,
-                # 'contentMax' : 1
+                'contentType': [float],
+                'contentMin' : 0,
+                'contentMax' : 1
             }
         }
     
@@ -160,7 +163,7 @@ class ConfigChecker:
         if 'type' in specifications: # Checking the variable type
             ConfigChecker.checkType(varType, varValue, varPath, specifications)
         
-        if varType == int:
+        if varType==int or varType==float:
             if 'min' in specifications:
                 ConfigChecker.checkMin(varType, varValue, varPath, specifications)
             if 'max' in specifications:
@@ -173,6 +176,12 @@ class ConfigChecker:
         if varType == list or varType == tuple:
             if 'size' in specifications:
                 ConfigChecker.checkSize(varType, varValue, varPath, specifications)
+            if 'contentType' in specifications:
+                ConfigChecker.checkContentType(varType, varValue, varPath, specifications)
+            if 'contentMin' in specifications:
+                ConfigChecker.checkContentMin(varType, varValue, varPath, specifications)
+            if 'contentMax' in specifications:
+                ConfigChecker.checkContentMax(varType, varValue, varPath, specifications)
         
     def getPathAsException(varPath) :
         msg=''
@@ -208,6 +217,53 @@ class ConfigChecker:
             msg += '\n    Given type   : '+str(varType)
             msg += '\n    With value   : '+str(varValue)
             raise ConfigRequirementException(msg)
+    
+    def checkContentType(varType, varValue, varPath, specifications):
+        i=0
+        for var in varValue:
+            isGud = False
+            for t in specifications['contentType']:
+                if type(var) == t: 
+                    isGud = True
+                    break
+            if isGud == False:
+                msg = 'Invalid value given to the '+('list' if varType==list else 'tuple')+': \n'+ConfigChecker.getPathAsException(varPath)
+                msg += '    '+('List' if varType==list else 'Tuple')+' given: '+str(varValue)
+                msg += '\n    Expected content type:'+ ConfigChecker.possibleValuesSentence(str(specifications['contentType']))
+                msg += '\n    Given type    : '+str(type(var))
+                msg += '\n    At index      : '+str(i)
+                msg += '\n    With value    : '+str(var)
+                raise ConfigRequirementException(msg)
+            
+            i+=1
+    
+    def checkContentMin(varType, varValue, varPath, specifications):
+        i=0
+        min = specifications['contentMin']
+        for var in varValue:
+            if type(var)==int or type(var)==float:  
+                if var<min:
+                    msg = 'Invalid value given to the '+('list' if varType==list else 'tuple')+': \n'+ConfigChecker.getPathAsException(varPath)
+                    msg += '    '+('List' if varType==list else 'Tuple')+' given: '+str(varValue)
+                    msg += '\n    Expected content minimum value: '+ ConfigChecker.possibleValuesSentence(str(specifications['contentMin']))
+                    msg += '\n    Given value    : '+str(var)
+                    msg += '\n    At index      : '+str(i)
+                    raise ConfigRequirementException(msg)
+            i+=1
+    
+    def checkContentMax(varType, varValue, varPath, specifications):
+        i=0
+        max = specifications['contentMax']
+        for var in varValue:
+            if type(var)==int or type(var)==float:  
+                if var>max:
+                    msg = 'Invalid value given to the '+('list' if varType==list else 'tuple')+': \n'+ConfigChecker.getPathAsException(varPath)
+                    msg += '    '+('List' if varType==list else 'Tuple')+' given: '+str(varValue)
+                    msg += '\n    Expected content maximum value: '+ ConfigChecker.possibleValuesSentence(str(specifications['contentMax']))
+                    msg += '\n    Given value    : '+str(var)
+                    msg += '\n    At index      : '+str(i)
+                    raise ConfigRequirementException(msg)
+            i+=1
     
     def checkStrValue(varType, varValue, varPath, specifications):
         '''Checks if the given value is one of the str in the specifications.'''
