@@ -16,10 +16,9 @@ Here are the rules to modify these variables:
 
 > nbProcess: default     
 
-Accepts an integer (strictly positive) or one of the values: 'default', 'auto'.
+Accepts an integer (strictly positive) or one of the values: 'default'.
 Sets the number of processes to the given parameter.
 - 'default' calculates for the number of processors you have (One per processor)
-- 'auto' will auto adjusts the number of processes in accordance with the number of pending tasks
 -  any strictly positive integer: sets the number of processes to this number.
     
 > talkative:

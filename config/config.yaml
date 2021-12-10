@@ -5,16 +5,15 @@
 
 
 runConfig:
-    nbProcess: 4      # -> 'default' calculates for the number of processors you have.
+    nbProcess: 1      # -> 'default' calculates for the number of processors you have.
                             #       - some may be idling from time to time.
-                            # -> 'auto' will auto adjusts the number of processes in accordance with the number of pending tasks
                             # -> any strictly positive number: sets the number of processes to this number.
     
     talkative:              # all these options are for console messages with print()
         processes:      True    
         messages:       False    
         ias:            True    
-        ias-detailed:   False    
+        ias-detailed:   False  
         loader:         False   
         tensorflow:     4 
     

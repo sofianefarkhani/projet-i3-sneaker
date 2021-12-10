@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-
 import multiprocessing
 from processes.Task             import *
 from processes.LoaderMessage    import *
@@ -14,10 +13,9 @@ from BlackBox                   import BlackBox
 
 from utilities.Herald                       import Herald
 from utilities.Beaver                       import Beaver
+from utilities.configUtilities.ConfigRequirementException import ConfigRequirementException
 from utilities.configUtilities.ProcConfig   import ProcConfig
 from utilities.configUtilities.LoadConfig   import LoadConfig
-from utilities.configUtilities.ConfigLoader import ConfigLoader
-
 
 if __name__ == '__main__':
     
