@@ -29,7 +29,10 @@ PATH_OUT=/path/to/out/directory
 ### Application
 [Configuration app documentation](config/config-doc.md)
 ## Installation
-For installing, we recommande to use script deploy.sh. 
+### Linux/MacOs
+For installing, we recommande to use script `deploy.sh`. 
+### Windows
+For installing, we recommande to use script `deploy.ps1`.
 ### Create container
 For generate one container you write command bellow (`--create`) :
 ```bash
