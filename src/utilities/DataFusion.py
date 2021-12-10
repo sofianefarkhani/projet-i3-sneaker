@@ -133,17 +133,16 @@ class DataFusion :
             else:
                 secondaryColor = None
 
+            colorDict = {}
+            interDict["idProduct"]=IDProduct
             interDict["lstImg"]=listImg
             interDict["style"]=style
-            #interDict["mainColor"]["name"]=mainColor
-            #interDict["mainColor"]["rgb"]=[RGBRedMain,RGBGreenMain,RGBBlueMain]
             if(mainColor != None):
-                interDict["mainColor"]={"name":mainColor,"rgb":RGBMain}
+                interDict["Colorway"]=[]
+                interDict["Colorway"].append({"mainColor":{"name":mainColor,"rgb":RGBMain}})
             if(secondaryColor != None):
                 if(secondaryColor != mainColor):
-                    interDict["secondaryColor"]=secondaryColor
-                    interDict["secondaryColor"]={"name":secondaryColor,"rgb":RGBSecondary}
+                    interDict["Colorway"].append({"secondaryColor":{"name":secondaryColor,"rgb":RGBSecondary}})
             interDict["probaShoes"]=shoeProb
             
-            finalDict[IDProduct] = interDict
-            return finalDict
+            return interDict
