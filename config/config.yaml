@@ -3,9 +3,8 @@
 #       ConfigLoader.getVariable('loader', 'batchSize')    (for exemple)
 #   The data is loaded whole in the ConfigLoader, and then reloaded on demand.
 
-
 runConfig:
-    nbProcess: 1      # -> 'default' calculates for the number of processors you have.
+    nbProcess: 6      # -> 'default' calculates for the number of processors you have.
                             #       - some may be idling from time to time.
                             # -> any strictly positive number: sets the number of processes to this number.
     

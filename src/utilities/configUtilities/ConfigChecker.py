@@ -1,6 +1,6 @@
 
 from utilities.configUtilities.ConfigRequirementException import ConfigRequirementException
-
+from colorama import Style, Fore
 class ConfigChecker:
 
     # To modify the configuration settings, modify the getVarData() function. And READ the paragraph below.
@@ -23,7 +23,10 @@ class ConfigChecker:
     # Once the value is found, we check its type, and if there are any other parameters (min, max...) we check thoses.
     # In case there is a problem, we throw an exception. We did good. 
     
+    #### BUILDING THE REQUIREMENTS FOR THE CONFIG
+    
     def getVarData():
+        """Builds and returns the dictionnary of requirements for the variables in config.yaml."""
         runConfig = {
             'nbProcess': {
                 'type': [int, str],
@@ -129,8 +132,14 @@ class ConfigChecker:
             'shoeDetection' : shoeDetection
         }
     
+    
+    
+    #### THE FUNCTION TO CALL
+    
     def checkAllVars(allVars:dict, allVarsData:dict = None, varPath:list = None):
-        """Checks all vars in allVars, by type and given value, recursively."""
+        """Checks all vars in allVars, by type and given value, recursively.
+        
+        Do not give any other parameter, these are used for the recursivity in the function."""
         
         if allVarsData is None: allVarsData = ConfigChecker.getVarData()
         if varPath is None    : varPath = []
@@ -152,8 +161,12 @@ class ConfigChecker:
                 ConfigChecker.checkVar(varValue, allVarsData['any'], varPathCopy)
             
             else: # there is no clause: show warning
-                print('There is no clause for '+str(var)+', ConfigChecker cannot verify its validity')
-        
+                print(Style.BRIGHT + Fore.RED+'WARNING: There is no requirement clause for :\n'+ConfigChecker.getPathAsException(varPathCopy)+'ConfigChecker cannot verify its validity!'+Style.RESET_ALL)
+    
+    
+    
+    #### THE FUNCTION THAT DECIDES WHICH TESTS TO EXECUTE ON A VARIABLE
+     
     def checkVar(varValue, specifications: dict, varPath):
         """Checks if a single variable respects the given specifications. Throws an exception in case the variable does not."""
         
@@ -182,12 +195,10 @@ class ConfigChecker:
                 ConfigChecker.checkContentMin(varType, varValue, varPath, specifications)
             if 'contentMax' in specifications:
                 ConfigChecker.checkContentMax(varType, varValue, varPath, specifications)
+       
+    
         
-    def getPathAsException(varPath) :
-        msg=''
-        for i in range(len(varPath)):
-            msg += (((i+1)*'    '))[:-1] + '-> ' + varPath[i]+'\n'
-        return msg
+    #### TESTING ONE VARIABLE FROM THE REQUIREMENTS
         
     def checkMin(varType, varValue, varPath, specifications):
         min = specifications['min']
@@ -286,6 +297,16 @@ class ConfigChecker:
             msg += '\n    Given        : '+str(len(varValue))
             msg += '\n    With Value   : '+str(varValue)
             raise ConfigRequirementException(msg)
+    
+    
+    
+    #### BUILDING STRINGS FOR EXCEPTION MESSAGES
+    
+    def getPathAsException(varPath) :
+        msg=''
+        for i in range(len(varPath)):
+            msg += (((i+1)*'    '))[:-1] + '-> ' + varPath[i]+'\n'
+        return msg
     
     def possibleValuesSentence(tabAsStr:str):
         return tabAsStr.replace('[', '').replace(']', '').replace(', ', ' or ')
