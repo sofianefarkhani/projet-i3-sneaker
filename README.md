@@ -54,21 +54,35 @@ For collect informations of all containers you use `--infos`.
 Result of all treatment write in `data.json`.
 ```json
 {
-    "id": {
-        "lstImg": [
-            "id-1.jpg",
-            "id-2.jpg"
-        ],
-        "style": "high",
-        "mainColor": {
-            "name": "Black",
-            "rgb": [0, 0, 0]
+    "idProduct": "BQ5448",
+    "lstImg": [
+        "BQ5448_001-3--30666212-defe-4130-b4c1-5e86c70becf8.png",
+        "BQ5448_001-1--e7758f70-7776-4020-9102-21a1f5d7cb00.png",
+        "BQ5448_001-2--7916f055-4b3e-45dc-a839-08c8caab2d3e.png"
+    ],
+    "style": "LOW",
+    "Colorway": [
+        {
+            "mainColor": {
+                "name": "ANTHRACITE",
+                "rgb": [
+                    48,
+                    48,
+                    48
+                ]
+            }
         },
-        "secondaryColor": {
-            "name": "White",
-            "rgb": [255, 255, 255]
-        },
-        "probaShoes": 0.94
-    }
+        {
+            "secondaryColor": {
+                "name": "LICORICE",
+                "rgb": [
+                    37.5,
+                    33.0,
+                    33.0
+                ]
+            }
+        }
+    ],
+    "probaShoes": 0.995
 }
 ```
