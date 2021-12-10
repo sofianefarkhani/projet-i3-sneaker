@@ -3,6 +3,7 @@ from utilities.configUtilities.BBConfig import BBConfig
 import json
 import shutil
 from statistics import median
+import numpy as np
 
 class DataFusion :
 
@@ -143,6 +144,6 @@ class DataFusion :
             if(secondaryColor != None):
                 if(secondaryColor != mainColor):
                     interDict["Colorway"].append({"secondaryColor":{"name":secondaryColor,"rgb":RGBSecondary}})
-            interDict["probaShoes"]=shoeProb
+            interDict["probaShoes"]=np.round(shoeProb, 3)
             
             return interDict
