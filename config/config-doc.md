@@ -121,6 +121,9 @@ Tells the loader where to find its images on the FTP server.
 Accepts a directory path.
 Tells the loader where to fetch images when in local source mode. 
 
+> remoteCoIds
+
+The ids for when you want to connect to a distant folder. Setting them to null will make the program ask for them (to the user) when establishing the connection. 
 
 > batchSize: 4      
 

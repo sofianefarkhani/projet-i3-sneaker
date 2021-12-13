@@ -1,6 +1,7 @@
 
 from utilities.configUtilities.ConfigRequirementException import ConfigRequirementException
 from colorama import Style, Fore
+
 class ConfigChecker:
 
     # To modify the configuration settings, modify the getVarData() function. And READ the paragraph below.
@@ -10,14 +11,15 @@ class ConfigChecker:
     # Basically it contains everything we need to check for the vars
     # there is the struct of the config file, then each var has attributes:
     
-    # type: the list of types it can take;
-    # min : the min value (included) (if int or float)
-    # max : the max value (included) (if int or float)
-    # str : needs to be one of those (if str)
-    # size: the length of the provided list (if list or tuple)
-    # contentType: the expected type of content (if list or tuple)
-    # contentMin : The minimum value of the content (included) (if list or tuple, and content is an int or float)
-    # contentMax : The maximum value of the content (included) (if list or tuple, and content is an int or float)
+        # type: the list of types it can take;
+        # min : the min value (included) (if int or float)
+        # max : the max value (included) (if int or float)
+        # str : needs to be one of those (if str)
+        # ext : needs to end with this extension (if str)
+        # size: the length of the provided list (if list or tuple)
+        # contentType: the expected type of content (if list or tuple)
+        # contentMin : The minimum value of the content (included) (if list or tuple, and content is an int or float)
+        # contentMax : The maximum value of the content (included) (if list or tuple, and content is an int or float)
     
     # If we do not find the value in the place where it should be, search for an 'any' value, and use that instead.
     # Once the value is found, we check its type, and if there are any other parameters (min, max...) we check thoses.
@@ -59,14 +61,22 @@ class ConfigChecker:
         }
         
         output = {
-            'any': {
+            'tempData':{
                 'type': [str]
+            },
+            'any': {
+                'type': [str],
+                'ext' : '.json'
             }
         }
     
         input = {
-            'any': {
+            'trainingImagesFolder': {
                 'type': [str]
+            },
+            'any': {
+                'type': [str],
+                'ext' : '.json'
             }
         }
     
@@ -87,6 +97,11 @@ class ConfigChecker:
             'reloadNumber': {
                 'type': [int],
                 'min' : 0
+            },
+            'remoteCoIds': {
+                'any': {
+                    'type':[str, None]
+                }
             }
         }
     
@@ -118,7 +133,8 @@ class ConfigChecker:
     
         shoeDetection = {
             'any': {
-                'type': [str]
+                'type': [str],
+                'ext' : '.h5' 
             }
         }
     
@@ -162,7 +178,8 @@ class ConfigChecker:
             
             else: # there is no clause: show warning
                 print(Style.BRIGHT + Fore.RED+'WARNING: There is no requirement clause for :\n'+ConfigChecker.getPathAsException(varPathCopy)+'ConfigChecker cannot verify its validity!'+Style.RESET_ALL)
-    
+
+        
     
     
     #### THE FUNCTION THAT DECIDES WHICH TESTS TO EXECUTE ON A VARIABLE
@@ -185,6 +202,8 @@ class ConfigChecker:
         if varType == str:
             if 'str' in specifications:
                 ConfigChecker.checkStrValue(varType, varValue, varPath, specifications)
+            if 'ext' in specifications:
+                ConfigChecker.checkExtension(varType, varValue, varPath, specifications)
                 
         if varType == list or varType == tuple:
             if 'size' in specifications:
@@ -217,17 +236,16 @@ class ConfigChecker:
             raise ConfigRequirementException(msg)
         
     def checkType(varType, varValue, varPath, specifications):
-        isGud = False
         for t in specifications['type']:
             if varType == t: 
-                isGud = True
-                break
-        if isGud == False:
-            msg = 'Invalid type given to the parameter: \n'+ConfigChecker.getPathAsException(varPath)
-            msg += '    Expected type: '+ ConfigChecker.possibleValuesSentence(str(specifications['type']))
-            msg += '\n    Given type   : '+str(varType)
-            msg += '\n    With value   : '+str(varValue)
-            raise ConfigRequirementException(msg)
+                return
+            if t is None and varValue is None:
+                return 
+        msg = 'Invalid type given to the parameter: \n'+ConfigChecker.getPathAsException(varPath)
+        msg += '    Expected type: '+ ConfigChecker.possibleValuesSentence(str(specifications['type']))
+        msg += '\n    Given type   : '+str(varType)
+        msg += '\n    With value   : '+str(varValue)
+        raise ConfigRequirementException(msg)
     
     def checkContentType(varType, varValue, varPath, specifications):
         i=0
@@ -298,8 +316,14 @@ class ConfigChecker:
             msg += '\n    With Value   : '+str(varValue)
             raise ConfigRequirementException(msg)
     
-    
-    
+    def checkExtension(varType, varValue:str, varPath, specifications):
+        ext = specifications['ext']
+        if varValue.endswith(ext)==False:
+            msg =  'Invalid file given to the file parameter: \n'+ConfigChecker.getPathAsException(varPath)
+            msg += '    Expected extension: '+ ext
+            msg += '\n    Given value       : '+varValue
+            raise ConfigRequirementException(msg)
+
     #### BUILDING STRINGS FOR EXCEPTION MESSAGES
     
     def getPathAsException(varPath) :

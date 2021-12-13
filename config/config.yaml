@@ -40,9 +40,13 @@ input:
     shoeTypeTrainData: ../in/trainData.json                                 # the displayed image to inform there are no more images when labelling by hand
 
 loader:
-    takeFromLocalSource: True  
+    takeFromLocalSource: False  
     localImgSrc: ../img/test/
     remoteImgSrc: /resources
+    remoteCoIds : 
+        host: ~
+        user: ~
+        pswd: ~
     batchSize: 5      # how many images should the loader load at once in the system
     reloadNumber: 4   # When we reach this number of loaded images or less, we try to load more.
 
