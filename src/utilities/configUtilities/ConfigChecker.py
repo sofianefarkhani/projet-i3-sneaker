@@ -145,7 +145,7 @@ class ConfigChecker:
             'loader' : loader,
             'background' : background,
             'color_detection' : color_detection,
-            'shoeDetection' : shoeDetection
+            'neuronNetworks' : shoeDetection
         }
     
     

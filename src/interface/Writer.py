@@ -14,7 +14,6 @@ class Writer(json.JSONEncoder):
         dir = BBConfig.getTempOutput()
         if dir[-1]=='/' or dir[-1]=='\\':
             dir = dir[:-1]
-        print(dir)
 
         if not os.path.exists(dir):
             os.mkdir(dir,mode=0o777)

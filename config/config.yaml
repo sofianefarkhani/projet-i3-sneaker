@@ -18,7 +18,7 @@ runConfig:
     
     logs: 
         file:           ../out/logs.log
-        removePrevious: False
+        removePrevious: True
         processes:      False  
         messages:       False   
         ias:            False   
@@ -26,7 +26,7 @@ runConfig:
         loader:         False
 
     gui:
-        showImages: False       # Show each image when processed (stops the Blackbox from processing other images while the image is on display!!!)
+        showImages: False      # Show each image when processed (stops the Blackbox from processing other images while the image is on display!!!)
 
 output:
     data: ../out/data.json          # the output for image tags
@@ -60,6 +60,9 @@ color_detection:
     margin: 20      # Margin for pixel detection when calculating the ratio
     seuil: 0.25    
     
-shoeDetection:
-    modelFilePath: ../in/AI/DetectShoes/model.h5
-    weightsFilePath: ../in/AI/DetectShoes/weights.h5
+neuronNetworks:
+    shoeDetectModelFilePath: ../in/AI/DetectShoes/model.h5
+    shoeDetectWeightsFilePath: ../in/AI/DetectShoes/weights.h5
+    typeDetectModelFilePath: ../in/AI/DetectType/model.h5
+    typeDetectWeightsFilePath: ../in/AI/DetectType/weights.h5
+
