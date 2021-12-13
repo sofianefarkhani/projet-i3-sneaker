@@ -40,7 +40,7 @@ input:
     shoeTypeTrainData: ../in/trainData.json                                 # the displayed image to inform there are no more images when labelling by hand
 
 loader:
-    takeFromLocalSource: False  
+    takeFromLocalSource: True  
     localImgSrc: ../img/test/
     remoteImgSrc: /resources
     remoteCoIds : 
