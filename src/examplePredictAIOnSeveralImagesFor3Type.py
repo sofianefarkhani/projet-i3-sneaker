@@ -21,19 +21,10 @@ import json
 f = open("/home/vedoc/Bureau/projet-i3-sneaker/data3class.json")
 dataset = json.load(f)
 f.close()
-print(dataset)
 lstImg = dataset['id']
-
-# lstImg = lstImg[:5]
 
 lstPrediction = []
 nbImg = 0
-# for img in lstImg:
-#     nbImg+=1
-#     img = loadImage(path + img)
-#     lstPrediction.append(getPredictionShoesOrNot(img, model)[0][0])
-#     if nbImg%500 == 0:
-#         print(nbImg)
 
 lstImgData = []
 for img in lstImg:
@@ -44,21 +35,6 @@ nbImg = 0
 for img in lstImgData:
     nbImg+=1
     prediction = getPredictionShoesOrNot(img, model)
-    # lstPrediction.append([0][0])
-    # if nbImg%500 == 0:
     print("predict img: " + lstImg[nbImg-1] + "   ->   ", end="")
     print(prediction)
 
-# print(lstPrediction)
-# print("Moyenne v2: " + str(np.mean(lstPrediction)))
-
-# nb = 0
-# for x in lstPrediction:
-#     if x > 0.5:
-#         nb+=1
-
-# print("nb = " + str(nb) + "  / " + str(len(lstPrediction)))
-
-# # semble être plus pertinant, à tester sur un groupe d'image dont les probas sont vraiment différentes (genre 0.3; 0.7; 0.9)
-# # print("Médiane: " + str(np.median(lstPrediction)))
-# # https://support.minitab.com/fr-fr/minitab/18/help-and-how-to/statistics/basic-statistics/how-to/store-descriptive-statistics/interpret-the-statistics/interpret-the-statistics/

@@ -89,28 +89,6 @@ exit()
 
 
 #predict after train
-model = load_model('../in/AI/DetectShoes/model.h5')
-model.load_weights('../in/AI/DetectShoes/weights.h5')
+model = load_model('../in/AI/DetectType/model.h5')
+model.load_weights('../in/AI/DetectType/weights.h5')
 
-
-test_datagen = ImageDataGenerator(rescale=1./255)
-test_generator = test_datagen.flow_from_directory(
-    "/mnt/424cf323-70f0-406a-ae71-29e3da370aec/Sneaker-data/test_temp/",
-    target_size=(200, 200),
-    batch_size=1,
-    color_mode="grayscale",
-    class_mode=None,
-    shuffle=False)
-
-# make the prediction
-predictions = model.predict(
-    test_generator, verbose=1)
-
-# print(model.get_config())
-# print(model.get_weights())
-# model.predict_on_batch();
-print(predictions)
-
-# with open("output.txt", "w") as txt_file:
-#     for line in predictions:
-#         txt_file.write(" ".join(line) + "\n")
