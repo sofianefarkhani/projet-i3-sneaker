@@ -53,11 +53,11 @@ class ColorDetector:
 
                 arr = np.array(listColorDominants)
                 if(np.uint8(colorDominant) not in arr):
-                    listColorDominants.append(np.uint8(colorDominant))
-                    listCounts.append(np.uint8(count))
+                    listColorDominants.append(colorDominant)
+                    listCounts.append(count)
             
         #return of the list of dominant color and the list of the counts of pixel for each colors
-        return listColorDominants,listCounts
+        return np.uint8(listColorDominants), np.uint8(listCounts)
 
     def getNewList(list, dominant):
         """
@@ -111,7 +111,8 @@ class ColorDetector:
         
         imagesNoBg = BackgroundSuppression.replaceBackground(image)
         for imgPreproc in imagesNoBg:
-            colors,counts = ColorDetector.detectColorsOf(imgPreproc)
+
+            coors,counts = ColorDetector.detectColorsOf(imgPreproc)
             listColorDominants.append(colors)
             listCounts.append(counts)
         
@@ -173,7 +174,7 @@ class ColorDetector:
                         dictionnary[j] = 1
                 listColor = []
                 print("************************** taille de la liste intermédiaire : ", len(listInter))  
-                if(len(listInter) != 0 and dictionnary != 0):
+                if(len(listInter) != 0 and len(dictionnary) != 0):
                     for k in range(2):
                         print("################################ Dictionnaire: ", dictionnary)
                         maxValue = max(dictionnary, key=dictionnary.get)
@@ -184,7 +185,7 @@ class ColorDetector:
                         listColor.append(listInter[i][maxValue])
                         dictionnary.pop(maxValue)
                 else:
-                    listColor.append(None)
+                    listColor.append([])
             colors.append(listColor)
         return colors
 
@@ -339,21 +340,30 @@ class ColorDetector:
         listFinal = ColorDetector.extractColor(list, imgName)
 
         #print("########################################## Taille de la liste ", len(listFinal))
-        #print("****************************************** contenu de la listeFinal ", listFinal)
+        print("****************************************** contenu de la listeFinal ", listFinal)
+        print("****************************************** taille de la listeFinal ", len(listFinal[0][0]))
 
-        listRatio = ColorDetector.getRatio(listFinal,image)
-        res = ColorDetector.associateRatioColor(listFinal, listRatio)
+        if(len(listFinal) >= 1 and len(listFinal[0][0]) != 0):
+            listRatio = ColorDetector.getRatio(listFinal,image)
+            res = ColorDetector.associateRatioColor(listFinal, listRatio)
         
-        ColorDetector.persistanceColor(res)
-        
-        keyList = res[0].keys()
-        mainColor = Color(str([*keyList][0]))
-        secondaryColor = None
-        if len(keyList)>1:
-            secondaryColor = Color(str([*keyList][1]))
-        
+            ColorDetector.persistanceColor(res)
+            
+            keyList = res[0].keys()
+            mainColor = Color(str([*keyList][0]))
+            secondaryColor = None
+            if len(keyList)>1:
+                secondaryColor = Color(str([*keyList][1]))
+        else:
+            mainColor = None
+            secondaryColor = None  
 
         #print(" ============ main color: ", mainColor.name)
         #print(" ============ second color: ", secondaryColor.name)
 
         return (mainColor, secondaryColor)
+
+    def showImage(img):
+        cv2.imshow("img", img)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
