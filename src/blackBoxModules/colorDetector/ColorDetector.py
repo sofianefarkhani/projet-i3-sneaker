@@ -39,23 +39,25 @@ class ColorDetector:
 
         #for each background, we take the dominants colors and the numbers of pixels for each dominants colors
         for i in range(ColorDetector.nbrBackground):
+            while(len(listColorDominants) != 3):
             
-            count = 0
+                count = 0
 
-            #Get the dominants color
-            dominant = palette[np.argmax(counts)]
-            #Delete the counts for the dominant color and put it in another variable
-            counts,count = ColorDetector.getCounts(counts)
+                #Get the dominants color
+                dominant = palette[np.argmax(counts)]
+                #Delete the counts for the dominant color and put it in another variable
+                counts,count = ColorDetector.getCounts(counts)
 
-            #Get the new palette without the dominant and put the dominant in another variable
-            palette, colorDominant = ColorDetector.getNewList(palette, dominant)
-            
-            if(listColorDominants not in colorDominant):
-                listColorDominants.append(colorDominant)
-                listCounts.append(count)
+                #Get the new palette without the dominant and put the dominant in another variable
+                palette, colorDominant = ColorDetector.getNewList(palette, dominant)
+
+                arr = np.array(listColorDominants)
+                if(np.uint8(colorDominant) not in arr):
+                    listColorDominants.append(np.uint8(colorDominant))
+                    listCounts.append(np.uint8(count))
             
         #return of the list of dominant color and the list of the counts of pixel for each colors
-        return np.uint8(listColorDominants),np.uint8(listCounts)
+        return listColorDominants,listCounts
 
     def getNewList(list, dominant):
         """
@@ -337,7 +339,7 @@ class ColorDetector:
         listFinal = ColorDetector.extractColor(list, imgName)
 
         #print("########################################## Taille de la liste ", len(listFinal))
-        print("****************************************** contenu de la listeFinal ", listFinal)
+        #print("****************************************** contenu de la listeFinal ", listFinal)
 
         listRatio = ColorDetector.getRatio(listFinal,image)
         res = ColorDetector.associateRatioColor(listFinal, listRatio)
@@ -351,7 +353,7 @@ class ColorDetector:
             secondaryColor = Color(str([*keyList][1]))
         
 
-        print(" ============ main color: ", mainColor)
-        print(" ============ second color: ", secondaryColor)
+        #print(" ============ main color: ", mainColor.name)
+        #print(" ============ second color: ", secondaryColor.name)
 
         return (mainColor, secondaryColor)
