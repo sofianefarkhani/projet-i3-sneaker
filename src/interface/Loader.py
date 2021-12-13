@@ -19,12 +19,25 @@ from utilities.Herald                           import Herald
 from utilities.configUtilities.LoadConfig       import LoadConfig
 
 class Connexion:
-    def __init__(self) -> None:
+    def __init__(self):
         self.local=LoadConfig.getIfLocalSource()
         if self.local == False: 
-            self.hostname=input('Host > ')
-            self.username=input('User > ')
-            self.password=input('Pswd > ')
+            self.hostname=Connexion.getHost()
+            self.username=Connexion.getUser()
+            self.password=Connexion.getPswd()
+    
+    def getHost():
+        if (host:=LoadConfig.getHost() is None):
+            return input('Host > ')
+        return host
+    def getUser():
+        if (user:=LoadConfig.getUser() is None):
+            return input('User > ')
+        return user
+    def getPswd():
+        if (pswd:=LoadConfig.getPswd() is None):
+            return input('Pswd > ')
+        return pswd
 
 class Loader(multiprocessing.Process):
     '''A class that runs in a separate process, and spends its time loading images when requested.

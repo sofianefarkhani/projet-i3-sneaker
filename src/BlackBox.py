@@ -12,6 +12,7 @@ from utilities.DataFormatter import DataFormatter
 from utilities.Herald                               import Herald
 from utilities.DataFormatter                        import DataFormatter
 from utilities.configUtilities.BBConfig             import BBConfig
+from utilities.configUtilities.ConfigRequirementException import ConfigRequirementException
 from utilities.configUtilities.ShoeDetectionConfig  import ShoeDetectionConfig as SDConfig
 
 from blackBoxModules.typeDetector.TypeDetector      import TypeDetector
@@ -75,7 +76,8 @@ class BlackBox(multiprocessing.Process):
                     self.taskQueue.task_done()    # helps when we want to join threads at the end of the programm
                     
             self.taskQueue.task_done()
-
+        
+        
         except Exception as e:
             try:
                 self.taskQueue.task_done()

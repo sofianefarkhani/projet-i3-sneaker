@@ -19,6 +19,7 @@ class Writer(json.JSONEncoder):
         if not os.path.exists(dir):
             os.mkdir(dir,mode=0o777)
         
+            
         filesToRemove = os.listdir(dir)
         for f in filesToRemove:
             os.remove(dir+'/'+f)

@@ -35,9 +35,9 @@ for img in lstImg:
     img = loadImage(path + img)
     lstPrediction.append(getPredictionShoesOrNot(img, model)[0][0])
 
-print(lstPrediction)
+# print(lstPrediction)
 # print("Moyenne v2: " + str(np.mean(lstPrediction)))
 
 # semble être plus pertinant, à tester sur un groupe d'image dont les probas sont vraiment différentes (genre 0.3; 0.7; 0.9)
-print("Médiane: " + str(np.median(lstPrediction)))
+# print("Médiane: " + str(np.median(lstPrediction)))
 # https://support.minitab.com/fr-fr/minitab/18/help-and-how-to/statistics/basic-statistics/how-to/store-descriptive-statistics/interpret-the-statistics/interpret-the-statistics/

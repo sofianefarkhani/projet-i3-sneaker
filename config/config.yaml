@@ -3,18 +3,16 @@
 #       ConfigLoader.getVariable('loader', 'batchSize')    (for exemple)
 #   The data is loaded whole in the ConfigLoader, and then reloaded on demand.
 
-
 runConfig:
-    nbProcess: 4      # -> 'default' calculates for the number of processors you have.
+    nbProcess: 6      # -> 'default' calculates for the number of processors you have.
                             #       - some may be idling from time to time.
-                            # -> 'auto' will auto adjusts the number of processes in accordance with the number of pending tasks
                             # -> any strictly positive number: sets the number of processes to this number.
     
     talkative:              # all these options are for console messages with print()
         processes:      True    
         messages:       False    
         ias:            True    
-        ias-detailed:   False    
+        ias-detailed:   False  
         loader:         False   
         tensorflow:     4 
     
@@ -45,13 +43,17 @@ loader:
     takeFromLocalSource: True  
     localImgSrc: ../img/test/
     remoteImgSrc: /resources
+    remoteCoIds : 
+        host: ~
+        user: ~
+        pswd: ~
     batchSize: 5      # how many images should the loader load at once in the system
     reloadNumber: 4   # When we reach this number of loaded images or less, we try to load more.
 
 background:
-    g: (0.0,1.0,0.0)
-    r: (0.0,0.0,1.0)
-    b: (1.0,0.0,0.0)
+    g: [0.0, 1.0, 0.0]
+    r: [0.0, 0.0, 1.0]
+    b: [1.0, 0.0, 0.0]
 
 color_detection:
     attempts: 10    # Max iteration for kmeans function

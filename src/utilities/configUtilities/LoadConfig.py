@@ -22,4 +22,12 @@ class LoadConfig:
         return ConfigLoader.getVariable('loader', 'reloadNumber')
        
 
-    
+    def getHost():
+        return ConfigLoader.getVariable('loader', 'remoteCoIds', 'host')
+        
+    def getUser():
+        return ConfigLoader.getVariable('loader', 'remoteCoIds', 'user')
+        
+    def getPswd():
+        return ConfigLoader.getVariable('loader', 'remoteCoIds', 'pswd')
+        
