@@ -112,7 +112,7 @@ class ColorDetector:
         imagesNoBg = BackgroundSuppression.replaceBackground(image)
         for imgPreproc in imagesNoBg:
 
-            coors,counts = ColorDetector.detectColorsOf(imgPreproc)
+            colors,counts = ColorDetector.detectColorsOf(imgPreproc)
             listColorDominants.append(colors)
             listCounts.append(counts)
         
@@ -156,8 +156,9 @@ class ColorDetector:
         :return : list contains primary and secondary color for each image
         """
         
-        print("###################################  Taille de la liste: ", len(list))
-        print("################################### Nom de l'image:", imgName)
+        #print("###################################  Taille de la liste: ", len(list))
+        #print("################################### LIST : ",list)
+        #print("################################### Nom de l'image:", imgName)
 
         colors = []
         #for item in list:
@@ -173,14 +174,17 @@ class ColorDetector:
                     else:
                         dictionnary[j] = 1
                 listColor = []
-                print("************************** taille de la liste intermédiaire : ", len(listInter))  
+                #print("************************** list inter : ",listInter)
+                #print("************************** taille de la liste intermédiaire : ", len(listInter))  
+                #print("************************** taille dict : ",len(dictionnary))
+                #print("************************** dict : ", dictionnary)
                 if(len(listInter) != 0 and len(dictionnary) != 0):
                     for k in range(2):
-                        print("################################ Dictionnaire: ", dictionnary)
+                        #print("################################ Dictionnaire: ", dictionnary)
                         maxValue = max(dictionnary, key=dictionnary.get)
 
-                        print("************************** Valeur de maxValue: ", maxValue)
-                        print("************************** liste des couleurs : ", listInter[i][maxValue].name)
+                        #print("************************** Valeur de maxValue: ", maxValue)
+                        #print("************************** liste des couleurs : ", listInter[i][maxValue].name)
 
                         listColor.append(listInter[i][maxValue])
                         dictionnary.pop(maxValue)
@@ -340,10 +344,10 @@ class ColorDetector:
         listFinal = ColorDetector.extractColor(list, imgName)
 
         #print("########################################## Taille de la liste ", len(listFinal))
-        print("****************************************** contenu de la listeFinal ", listFinal)
-        print("****************************************** taille de la listeFinal ", len(listFinal[0][0]))
+        #print("****************************************** contenu de la listeFinal ", listFinal)
+        #print("****************************************** taille de la listeFinal ", len(listFinal[0]))
 
-        if(len(listFinal) >= 1 and len(listFinal[0][0]) != 0):
+        if(len(listFinal) >= 1 and len(listFinal[0]) != 0):
             listRatio = ColorDetector.getRatio(listFinal,image)
             res = ColorDetector.associateRatioColor(listFinal, listRatio)
         
