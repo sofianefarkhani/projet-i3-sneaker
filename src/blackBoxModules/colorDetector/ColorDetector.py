@@ -52,7 +52,8 @@ class ColorDetector:
                 palette, colorDominant = ColorDetector.getNewList(palette, dominant)
 
                 arr = np.array(listColorDominants)
-                if(np.uint8(colorDominant) not in arr):
+                print(np.uint8(colorDominant))
+                if(Color(rgb=np.uint8(colorDominant)[0]).name not in [Color(rgb=np.uint8(color)[0]).name for color in arr]):
                     listColorDominants.append(colorDominant)
                     listCounts.append(count)
             
@@ -144,7 +145,14 @@ class ColorDetector:
                         if(temp < ColorDetector.nbrBackground):
                             listInterm.append(newColor)
                             listInterm2.append(newColor.name)
+                            
+            if(len(listInterm)>2):
+                listInterm.pop(-1)
+                listInterm2.pop(-1)
+
             listFinal.append(listInterm)
+            print("taille de la liste apres la suppression du fond ! normalement 2 : ", len(listInterm))
+            print("liste des couleurs dans la liste : ", listInterm2)
         return listFinal
 
     def extractColor(list, imgName):
@@ -158,7 +166,7 @@ class ColorDetector:
         
         #print("###################################  Taille de la liste: ", len(list))
         #print("################################### LIST : ",list)
-        #print("################################### Nom de l'image:", imgName)
+        print("------- Extract color: Nom de l'image:", imgName)
 
         colors = []
         #for item in list:
@@ -174,23 +182,27 @@ class ColorDetector:
                     else:
                         dictionnary[j] = 1
                 listColor = []
-                #print("************************** list inter : ",listInter)
-                #print("************************** taille de la liste intermédiaire : ", len(listInter))  
-                #print("************************** taille dict : ",len(dictionnary))
-                #print("************************** dict : ", dictionnary)
+                
+                print("------- Extract color: listInter ", listInter)
+                print("------- Extract color: taille listInter ", listInter)
+                print("------- Extract color: dictionnary ", dictionnary)
+                print("------- Extract color: taille dictionnary ", len(dictionnary))
+
                 if(len(listInter) != 0 and len(dictionnary) != 0):
                     for k in range(2):
-                        #print("################################ Dictionnaire: ", dictionnary)
                         maxValue = max(dictionnary, key=dictionnary.get)
 
-                        #print("************************** Valeur de maxValue: ", maxValue)
-                        #print("************************** liste des couleurs : ", listInter[i][maxValue].name)
+                        print("-------> Extract color: maxvalue ", maxValue)
+                        print("-------> Extract color: liste des couleurs ", listInter[i][maxValue].name)
 
                         listColor.append(listInter[i][maxValue])
                         dictionnary.pop(maxValue)
                 else:
                     listColor.append([])
             colors.append(listColor)
+
+            print("-------> Extract color: liste couleurs finales ", colors)
+
         return colors
 
     def getRatio(list, image):
@@ -338,10 +350,17 @@ class ColorDetector:
         Herald.printColorDetection(procname)
         
         list = ColorDetector.getDominantColors(image)
+        print("****************************** sortie getDominantColors ", list)
+        print("****************************** taille ", len(list))
+
         list = ColorDetector.deleteBackground(list)
+        print("****************************** sortie deleteBackground ", list)
+        print("****************************** taille ", len(list))
 
 
         listFinal = ColorDetector.extractColor(list, imgName)
+        print("****************************** sortie extractColor ", listFinal)
+        print("****************************** taille ", len(listFinal))
 
         #print("########################################## Taille de la liste ", len(listFinal))
         #print("****************************************** contenu de la listeFinal ", listFinal)
