@@ -4,6 +4,7 @@ import os
 import json
 from utilities.configUtilities.BBConfig import BBConfig
 from Data.TrainDataElement import TrainDataElement
+from utilities.configUtilities.LoadConfig import LoadConfig
 class Writer(json.JSONEncoder):
     '''The Writer writes JSON. 
     
@@ -35,3 +36,9 @@ class Writer(json.JSONEncoder):
         
         with open(outputFilePath, 'a') as f:
             f.write("\n"+Writer.convertToJson(data))
+
+
+    def registerProductAsDone(prodName):
+        '''Writes the product number in a fun little file. Products found in this file will not be dealt with again.'''
+        with open(LoadConfig.getProdDoneFile(), 'a') as f:
+            f.write(','+prodName)

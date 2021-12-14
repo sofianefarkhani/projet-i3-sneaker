@@ -4,7 +4,7 @@
 #   The data is loaded whole in the ConfigLoader, and then reloaded on demand.
 
 runConfig:
-    nbProcess: 6      # -> 'default' calculates for the number of processors you have.
+    nbProcess: 8      # -> 'default' calculates for the number of processors you have.
                             #       - some may be idling from time to time.
                             # -> any strictly positive number: sets the number of processes to this number.
     
@@ -47,8 +47,9 @@ loader:
         host: ~
         user: ~
         pswd: ~
-    batchSize: 5      # how many images should the loader load at once in the system
-    reloadNumber: 4   # When we reach this number of loaded images or less, we try to load more.
+    batchSize: 15      # how many images should the loader load at once in the system
+    reloadNumber: 10   # When we reach this number of loaded images or less, we try to load more.
+    doneFile: ../in/done.txt
 
 background:
     g: [0.0, 1.0, 0.0]

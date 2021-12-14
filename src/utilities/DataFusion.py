@@ -4,6 +4,7 @@ import json
 import shutil
 from statistics import median
 import numpy as np
+from interface.Writer import Writer 
 
 class DataFusion :
 
@@ -24,17 +25,24 @@ class DataFusion :
             # if this is a new product
             if(tempObject["IDProduct"] != tempProduct):
                 dataToAdd = DataFusion.fusionProduct(tempList.copy())
+                
+                if tempProduct is not None:
+                    Writer.registerProductAsDone(tempProduct)
+                
                 tempList = []
                 tempProduct = tempObject["IDProduct"]
-                if(dataToAdd != None):
+                if(dataToAdd != None): 
                     DataFusion.writeToFile(outPutFile, dataToAdd)
                     
             tempList.append(tempObject)
 
-        dataToAdd = DataFusion.fusionProduct(tempList.copy())
-        if(dataToAdd != None):
+        
+        if tempProduct is not None: Writer.registerProductAsDone(tempProduct)
+        if((dataToAdd:=DataFusion.fusionProduct(tempList.copy())) is not None):
             DataFusion.writeToFile(outPutFile, dataToAdd)
 
+        
+        
         shutil.rmtree(pathFile,ignore_errors=True)
         os.mkdir("../out/temp")
 
@@ -57,9 +65,10 @@ class DataFusion :
     def getSortedListe(list):
         list.sort(key=lambda x : x["IDProduct"])
     
-    def fusionProduct(list):
-        if(len(list) != 0):
-            IDProduct = list[0]["IDProduct"]
+    def fusionProduct(imgDataList):
+        '''Gets the data for ONE product, according to the informations from the images recorded in the parameter list.'''
+        if(len(imgDataList) != 0):
+            IDProduct = imgDataList[0]["IDProduct"]
             style = "NOT IMPLEMENTED YET"
             listImg = []
             sumProbProb = 0
@@ -71,44 +80,42 @@ class DataFusion :
             listColorRedSecondary = []
             listColorGreenSecondary = []
             listColorBlueSecondary = []
-            finalList = []
-            finalDict = {}
             interDict = {}
-            for dict in list:
+            for imgData in imgDataList:
                 #concaténer les img
-                listImg.append(dict["img"])
+                listImg.append(imgData["img"])
 
                 #ShoeProb -> moyenne
-                sumProbProb = sumProbProb + float(dict["shoeProb"])
+                sumProbProb = sumProbProb + float(imgData["shoeProb"])
 
                 #COLORWAY MOYENNE -> à la majorité -> dico avec détection couleur et nombre
-                if("Colorway" in dict):
+                if("Colorway" in imgData):
                     if(len(dictColorsMain) == 0):
-                        dictColorsMain[dict["Colorway"]["mainColor"]["color"]] = 1
+                        dictColorsMain[imgData["Colorway"]["mainColor"]["color"]] = 1
                     else:
-                        if(dict["Colorway"]["mainColor"]["color"] in dictColorsMain):
-                            dictColorsMain[dict["Colorway"]["mainColor"]["color"]] += 1
+                        if(imgData["Colorway"]["mainColor"]["color"] in dictColorsMain):
+                            dictColorsMain[imgData["Colorway"]["mainColor"]["color"]] += 1
                         else:
-                            dictColorsMain[dict["Colorway"]["mainColor"]["color"]] = 1
+                            dictColorsMain[imgData["Colorway"]["mainColor"]["color"]] = 1
 
-                    listColorRedMain.append(dict["Colorway"]["mainColor"]["rgb"][0])
-                    listColorGreenMain.append(dict["Colorway"]["mainColor"]["rgb"][1])
-                    listColorBlueMain.append(dict["Colorway"]["mainColor"]["rgb"][2])
+                    listColorRedMain.append(imgData["Colorway"]["mainColor"]["rgb"][0])
+                    listColorGreenMain.append(imgData["Colorway"]["mainColor"]["rgb"][1])
+                    listColorBlueMain.append(imgData["Colorway"]["mainColor"]["rgb"][2])
 
-                    if(len(dict["Colorway"]) > 1):
+                    if(len(imgData["Colorway"]) > 1):
                         if(len(dictColorsSecondary) == 0):
-                            dictColorsSecondary[dict["Colorway"]["secondaryColor"]["color"]] = 1
+                            dictColorsSecondary[imgData["Colorway"]["secondaryColor"]["color"]] = 1
                         else:
-                            if(dict["Colorway"]["secondaryColor"]["color"] in dictColorsSecondary):
-                                dictColorsSecondary[dict["Colorway"]["secondaryColor"]["color"]] += 1
+                            if(imgData["Colorway"]["secondaryColor"]["color"] in dictColorsSecondary):
+                                dictColorsSecondary[imgData["Colorway"]["secondaryColor"]["color"]] += 1
                             else:
-                                dictColorsSecondary[dict["Colorway"]["secondaryColor"]["color"]] = 1
+                                dictColorsSecondary[imgData["Colorway"]["secondaryColor"]["color"]] = 1
 
-                        listColorRedSecondary.append(dict["Colorway"]["secondaryColor"]["rgb"][0])
-                        listColorGreenSecondary.append(dict["Colorway"]["secondaryColor"]["rgb"][1])
-                        listColorBlueSecondary.append(dict["Colorway"]["secondaryColor"]["rgb"][2])
+                        listColorRedSecondary.append(imgData["Colorway"]["secondaryColor"]["rgb"][0])
+                        listColorGreenSecondary.append(imgData["Colorway"]["secondaryColor"]["rgb"][1])
+                        listColorBlueSecondary.append(imgData["Colorway"]["secondaryColor"]["rgb"][2])
 
-            shoeProb = sumProbProb/len(list)
+            shoeProb = sumProbProb/len(imgDataList)
 
             if(len(dictColorsMain) != 0):
                 mainColor = max(dictColorsMain, key=dictColorsMain.get)
