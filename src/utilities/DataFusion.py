@@ -15,7 +15,7 @@ class Util:
         '''Destroys the data file from the previous session.'''
         path = BBConfig.getOutputFile()
         if(os.path.exists(path)): 
-            os.remove(BBConfig.getOutputFile(path))
+            os.remove(path)
     
     def writeToFile(dataToAdd):
         if dataToAdd is None: return
@@ -101,100 +101,19 @@ class DataFusion :
         '''Gets the data for ONE product, according to the informations from the images recorded in the parameter list.'''
         if(len(imgDataList) != 0):
             
-            IDProduct = imgDataList[0]["IDProduct"]
-
-            sumProbProb = 0     # DO NOT RENAME. THIS IS FINE.
-            
-            dictColorsMain = {}             # contient les couleurs de tous les produits
-            listColorRedMain = []           # liste des valeurs rouge dans les produits (main color)
-            listColorGreenMain = []         # liste des valeurs verte dans les produits
-            listColorBlueMain = []          # pareil
-            
-            dictColorsSecondary = {}        # 
-            listColorRedSecondary = []      # 
-            listColorGreenSecondary = []    # 
-            listColorBlueSecondary = []     # 
-            
             # we build the final dictionnary with everything we want
             finalProductData = { 
-                    'idProduct'     : IDProduct,
+                    'idProduct'     : imgDataList[0]["IDProduct"],
                     'lstImg'        : DFU.buildImgNamesList(imgDataList),
                     'probaShoe'     : DFU.calculateProbaShoe(imgDataList)
             }
             
-            shoeProbProb = finalProductData['probaShoe']
-            
-            # if there is a shoe
-            if shoeProbProb>0.5:
+            # if a shoe was detected, add the missing data.
+            if finalProductData['probaShoe'] > 0.5:
                 finalProductData['style'] = DFU.determineStyle(imgDataList)
                 finalProductData['colors'] = DFU.determineColors(imgDataList)
                     
             return finalProductData
-            
-            
-            
-           ###### OBSOLETE, TO REWRITE 
-            for imgData in imgDataList:
-                #COLORWAY MOYENNE -> à la majorité -> dico avec détection couleur et nombre
-                if("Colorway" in imgData):
-                    #increment DONE
-
-                    listColorRedMain.append(imgData["Colorway"]["mainColor"]["rgb"][0])
-                    listColorGreenMain.append(imgData["Colorway"]["mainColor"]["rgb"][1])
-                    listColorBlueMain.append(imgData["Colorway"]["mainColor"]["rgb"][2])
-
-                    if(len(imgData["Colorway"]) > 1):
-                        if(len(dictColorsSecondary) == 0):
-                            dictColorsSecondary[imgData["Colorway"]["secondaryColor"]["color"]] = 1
-                        else:
-                            if(imgData["Colorway"]["secondaryColor"]["color"] in dictColorsSecondary):
-                                dictColorsSecondary[imgData["Colorway"]["secondaryColor"]["color"]] += 1
-                            else:
-                                dictColorsSecondary[imgData["Colorway"]["secondaryColor"]["color"]] = 1
-
-                        listColorRedSecondary.append(imgData["Colorway"]["secondaryColor"]["rgb"][0])
-                        listColorGreenSecondary.append(imgData["Colorway"]["secondaryColor"]["rgb"][1])
-                        listColorBlueSecondary.append(imgData["Colorway"]["secondaryColor"]["rgb"][2])
-
-            
-
-            if(len(dictColorsMain) != 0):
-                mainColor = max(dictColorsMain, key=dictColorsMain.get)
-                listColorRedMain.sort()
-                RGBRedMain = median(listColorRedMain)
-                listColorGreenMain.sort()
-                RGBGreenMain = median(listColorGreenMain)
-                listColorBlueMain.sort()
-                RGBBlueMain = median(listColorBlueMain)
-                RGBMain = [RGBRedMain,RGBGreenMain,RGBBlueMain]
-            else:
-                mainColor = None
-
-            if(len(dictColorsSecondary) != 0):
-                secondaryColor = max(dictColorsSecondary, key=dictColorsSecondary.get)
-                listColorRedMain.sort()
-                RGBRedSecondary = median(listColorRedSecondary)
-                listColorGreenSecondary.sort()
-                RGBGreenSecondary = median(listColorGreenSecondary)
-                listColorBlueSecondary.sort()
-                RGBBlueSecondary = median(listColorBlueSecondary)
-                RGBSecondary = [RGBRedSecondary,RGBGreenSecondary,RGBBlueSecondary]
-            else:
-                secondaryColor = None
-
-            
-            ## CONSTRUCTION OF THE FINAL DICT
-            colorDict = {}
-            if(mainColor != None):
-                finalProductData["Colorway"]=[]
-                finalProductData["Colorway"].append({"mainColor":{"name":mainColor,"rgb":RGBMain}})
-            if(secondaryColor != None):
-                if(secondaryColor != mainColor):
-                    finalProductData["Colorway"].append({"secondaryColor":{"name":secondaryColor,"rgb":RGBSecondary}})
-            
-            
-            
-
 
 class DFU: 
     '''DataFusionUtility class.
@@ -223,10 +142,13 @@ class DFU:
     
     def determineColors(imgDataList):
         colors = {
-            'mainColor': DFU.determineOneColor('the main one', imgDataList)
+            'mainColor': DFU.determineOneColor('the main one', imgDataList),
+            'secondaryColor': DFU.determineOneColor('the secondary one', imgDataList)
         }
+        if colors['secondaryColor'] is None:
+            colors.pop('secondaryColor')
+        return colors
         
-    
     def determineOneColor(which:str, imgDataList):
         '''The parameter can be "the main one" or "the secondary one".'''
         
@@ -245,11 +167,11 @@ class DFU:
         # we count how many times each color appears in the imgs data
         for imgData in imgDataList:
             if("Colorway" in imgData):
-                if choosen in imgData['ColorWay']:
+                if choosen in imgData['Colorway']:
                     # extract the color from the data
-                    color     = imgData["Colorway"][choosen]
-                    colorName = color["color"]
-                    rgb       = color["rgb"]
+                    dataColor     = imgData["Colorway"][choosen]
+                    colorName = dataColor["color"]
+                    rgb       = dataColor["rgb"]
                     
                     # we count how many times each color appears in the imgs data
                     DFU.incrementInDict(colorName, colorCounters)
@@ -259,10 +181,28 @@ class DFU:
                     rgbCodes['g'].append(rgb[1])
                     rgbCodes['b'].append(rgb[2])
         
+        # if ColorCounters is empty, then we have found nothing. We can return none.
+        if len(colorCounters.keys())==0:
+            return None
         
+        # take the most represented color
+        finalColor = max(colorCounters, key=colorCounters.get)
         
-                
-                
+        # get the medians for rgb values
+        rgbCodes['r'].sort()
+        rgbCodes['g'].sort()
+        rgbCodes['b'].sort()
+        finalRGB = [
+            median(rgbCodes['r']),
+            median(rgbCodes['g']),
+            median(rgbCodes['b'])
+        ]
+        
+        # return the product color data
+        return {
+            'name' : finalColor,
+            'rgb'  : finalRGB
+        }
                 
     def incrementInDict(key, dict):
         '''Adds +1 to the given key in the given dict. Initializes at 1 if the key doesn't exist.'''
