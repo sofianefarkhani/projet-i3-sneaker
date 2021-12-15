@@ -128,6 +128,10 @@ class ColorDetector:
         :return : list of dominant colors without background color of images
         """
         # load list of background color
+
+        for i in range(len(listColorDominants)):
+            for j in range(len(listColorDominants)):
+                print("COULEURS DE LA LISTE AVANT LA SUPPR DU FOND : ",listColorDominants[i][j])
         
         listColorBg = ColorDetector.getBackgroundColors('color')
 
@@ -137,16 +141,19 @@ class ColorDetector:
             listInterm = []
             listInterm2 = []
             for subelement in elem :
-                temp = 0
+                
                 for color in subelement:
+                    
                     newColor = color.tolist()
                     newColor = Color(rgb=[newColor[2],newColor[1],newColor[0]])
+                    print("La couleur est créee : ", newColor.name)
                     if (newColor.name not in listColorBg):
-                        if(temp < ColorDetector.nbrBackground):
-                            listInterm.append(newColor)
-                            listInterm2.append(newColor.name)
+
+                        listInterm.append(newColor)
+                        listInterm2.append(newColor.name)
                             
             if(len(listInterm)>2):
+                print("IL PASSE DANS LA BOUCLE SUP 2 SUPPR")
                 listInterm.pop(-1)
                 listInterm2.pop(-1)
 
