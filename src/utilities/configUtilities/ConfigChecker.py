@@ -81,6 +81,9 @@ class ConfigChecker:
         }
     
         loader = {
+            'doneFile' : {
+                'type' : [str]
+            },
             'takeFromLocalSource' : {
                 'type' : [bool]
             },

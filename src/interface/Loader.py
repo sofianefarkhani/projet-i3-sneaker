@@ -17,6 +17,7 @@ from processes.LoaderMessage    import *
 
 from utilities.Herald                           import Herald
 from utilities.configUtilities.LoadConfig       import LoadConfig
+from utilities.DataFormatter import DataFormatter
 
 class Connexion:
     def __init__(self):
@@ -128,6 +129,8 @@ class Loader(multiprocessing.Process):
             
             files.sort()
             
+            self.removeOldProducts(files)
+            
             for file in files:
                 Herald.signalLoad(localFile+file)
                 yield { 
@@ -167,7 +170,7 @@ class Loader(multiprocessing.Process):
                 done = True
                 
                 listNames.sort()
-                
+                self.removeOldProducts(listNames)
                 
                 Herald.printForLoader("\n"+str(len(listNames))+" image names loaded! Starting task distribution")
                 
@@ -198,3 +201,48 @@ class Loader(multiprocessing.Process):
         img = img.astype('float32')/255.
         img = np.array([img])  # Convert single image to a batch.
         return img
+
+    def removeOldProducts(self, imgList):
+        oldPeas = self.getOldProducts()
+        oldPeas.sort()
+        print (Herald.getPrintElement('oldPeas', oldPeas, 1))
+        if len(oldPeas) == 0: return;
+        
+        # while there are still old products, keep looking through the list, and remove them.
+        oldP = oldPeas.pop(0)
+        i=0
+        while i < len(imgList):
+            p = imgList[i]
+            pId = DataFormatter.extractProdRef(p)
+            if int(pId) < int(oldP): 
+                i+=1
+            elif oldP == pId: 
+                imgList.pop(i)
+            else:
+                if (len(oldPeas) == 0) : return
+                oldP = oldPeas.pop(0)
+            
+            
+    def getOldProducts(self):
+        file = LoadConfig.getProdDoneFile()
+        peasList = []
+        if os.path.exists(file)==False: return peasList
+        
+        with open(file, 'r') as f:
+            lines = f.readlines()
+            for line in lines:
+                peas = line.split(',')
+                for p in peas:
+                    if p != '':
+                        peasList.append(p)
+            
+            peasList.sort()     
+            return peasList
+        
+    def a_AlphabeticallyBefore_b(a, b):
+        for i in range(len(a)) :
+            if (a[i]<b[i]):
+                return True
+            if (b[i]<a[i]):
+                return False
+        return False
