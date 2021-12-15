@@ -52,7 +52,7 @@ class ColorDetector:
                 palette, colorDominant = ColorDetector.getNewList(palette, dominant)
 
                 arr = np.array(listColorDominants)
-                print(np.uint8(colorDominant))
+                #print(np.uint8(colorDominant))
                 if(Color(rgb=np.uint8(colorDominant)[0]).name not in [Color(rgb=np.uint8(color)[0]).name for color in arr]):
                     listColorDominants.append(colorDominant)
                     listCounts.append(count)
@@ -129,9 +129,9 @@ class ColorDetector:
         """
         # load list of background color
 
-        for i in range(len(listColorDominants)):
-            for j in range(len(listColorDominants)):
-                print("COULEURS DE LA LISTE AVANT LA SUPPR DU FOND : ",listColorDominants[i][j])
+        #for i in range(len(listColorDominants)):
+        #    for j in range(len(listColorDominants)):
+                #print("COULEURS DE LA LISTE AVANT LA SUPPR DU FOND : ",listColorDominants[i][j])
         
         listColorBg = ColorDetector.getBackgroundColors('color')
 
@@ -146,20 +146,20 @@ class ColorDetector:
                     
                     newColor = color.tolist()
                     newColor = Color(rgb=[newColor[2],newColor[1],newColor[0]])
-                    print("La couleur est créee : ", newColor.name)
+                    #print("La couleur est créee : ", newColor.name)
                     if (newColor.name not in listColorBg):
 
                         listInterm.append(newColor)
                         listInterm2.append(newColor.name)
                             
             if(len(listInterm)>2):
-                print("IL PASSE DANS LA BOUCLE SUP 2 SUPPR")
+                #print("IL PASSE DANS LA BOUCLE SUP 2 SUPPR")
                 listInterm.pop(-1)
                 listInterm2.pop(-1)
 
             listFinal.append(listInterm)
-            print("taille de la liste apres la suppression du fond ! normalement 2 : ", len(listInterm))
-            print("liste des couleurs dans la liste : ", listInterm2)
+            #print("taille de la liste apres la suppression du fond ! normalement 2 : ", len(listInterm))
+            #print("liste des couleurs dans la liste : ", listInterm2)
         return listFinal
 
     def extractColor(list, imgName):
@@ -173,7 +173,7 @@ class ColorDetector:
         
         #print("###################################  Taille de la liste: ", len(list))
         #print("################################### LIST : ",list)
-        print("------- Extract color: Nom de l'image:", imgName)
+        #print("------- Extract color: Nom de l'image:", imgName)
 
         colors = []
         #for item in list:
@@ -190,17 +190,17 @@ class ColorDetector:
                         dictionnary[j] = 1
                 listColor = []
                 
-                print("------- Extract color: listInter ", listInter)
-                print("------- Extract color: taille listInter ", listInter)
-                print("------- Extract color: dictionnary ", dictionnary)
-                print("------- Extract color: taille dictionnary ", len(dictionnary))
+                #print("------- Extract color: listInter ", listInter)
+                #print("------- Extract color: taille listInter ", listInter)
+                #print("------- Extract color: dictionnary ", dictionnary)
+                #print("------- Extract color: taille dictionnary ", len(dictionnary))
 
                 if(len(listInter) != 0 and len(dictionnary) != 0):
                     for k in range(2):
                         maxValue = max(dictionnary, key=dictionnary.get)
 
-                        print("-------> Extract color: maxvalue ", maxValue)
-                        print("-------> Extract color: liste des couleurs ", listInter[i][maxValue].name)
+                        #print("-------> Extract color: maxvalue ", maxValue)
+                        #print("-------> Extract color: liste des couleurs ", listInter[i][maxValue].name)
 
                         listColor.append(listInter[i][maxValue])
                         dictionnary.pop(maxValue)
@@ -208,7 +208,7 @@ class ColorDetector:
                     listColor.append([])
             colors.append(listColor)
 
-            print("-------> Extract color: liste couleurs finales ", colors)
+            #print("-------> Extract color: liste couleurs finales ", colors)
 
         return colors
 
@@ -357,17 +357,17 @@ class ColorDetector:
         Herald.printColorDetection(procname)
         
         list = ColorDetector.getDominantColors(image)
-        print("****************************** sortie getDominantColors ", list)
-        print("****************************** taille ", len(list))
+        #print("****************************** sortie getDominantColors ", list)
+        #print("****************************** taille ", len(list))
 
         list = ColorDetector.deleteBackground(list)
-        print("****************************** sortie deleteBackground ", list)
-        print("****************************** taille ", len(list))
+        #print("****************************** sortie deleteBackground ", list)
+        #print("****************************** taille ", len(list))
 
 
         listFinal = ColorDetector.extractColor(list, imgName)
-        print("****************************** sortie extractColor ", listFinal)
-        print("****************************** taille ", len(listFinal))
+        #print("****************************** sortie extractColor ", listFinal)
+        #print("****************************** taille ", len(listFinal))
 
         #print("########################################## Taille de la liste ", len(listFinal))
         #print("****************************************** contenu de la listeFinal ", listFinal)
