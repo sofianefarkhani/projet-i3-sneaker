@@ -1,4 +1,4 @@
-Clean up Mathilde's code in datafusion.
+To do... Maybe? 
 
 Make it so that the loader can load recursively from directories inside the ones given.
 Add an option that checks for file extensions and only loads the files with it
