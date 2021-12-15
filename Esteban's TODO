@@ -1,5 +1,4 @@
-
-(DONE) Remember somewhere which products have been dealt with. The loader should not re-load images from these products.
+Clean up Mathilde's code in datafusion.
 
 Make it so that the loader can load recursively from directories inside the ones given.
 Add an option that checks for file extensions and only loads the files with it

@@ -43,11 +43,7 @@ if __name__ == '__main__':
         loader = Loader(loaderTasks, loaderResults, tasks, c)
         loader.start()
         
-        # remove that
-        Herald.queueMessageIn(__name__, loaderTasks, LoaderTask(LoaderTaskType.LOAD))
-        Herald.queueMessageIn(__name__, loaderTasks, LoaderTask(LoaderTaskType.TERMINATE))
-        loaderTasks.join()
-        exit()
+        
         
         # Start BlackBoxes
         consumers = [ BlackBox(tasks, results, testMode = True) for i in range(numProcesses) ]
