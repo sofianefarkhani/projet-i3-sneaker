@@ -120,7 +120,6 @@ def getDataseTrainingIAFromJson(target_size=(64, 64), ratio=0.8, pathJson=None):
     
     trainingSet = train_datagen.flow_from_dataframe(
         dataframe=dataFrameTraining,
-        directory="/mnt/424cf323-70f0-406a-ae71-29e3da370aec/allDataWithoutDoublon",
         x_col="id",
         y_col="label",
         target_size=target_size,
@@ -130,7 +129,6 @@ def getDataseTrainingIAFromJson(target_size=(64, 64), ratio=0.8, pathJson=None):
 
     testSet = test_datagen.flow_from_dataframe(
         dataframe=dataFrameTest,
-        directory="/mnt/424cf323-70f0-406a-ae71-29e3da370aec/allDataWithoutDoublon",
         x_col="id",
         y_col="label",
         target_size=target_size,
