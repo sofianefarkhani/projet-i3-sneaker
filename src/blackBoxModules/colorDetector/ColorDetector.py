@@ -214,7 +214,7 @@ class ColorDetector:
         """
         # load background colors
         listColorBg = ColorDetector.getBackgroundColors("np")
-        listRatioImage = list.calculateRatio(list, image, listColorBg)
+        listRatioImage = ColorDetector.calculateRatio(list, image, listColorBg)
 
         listRatios = []
 
@@ -353,7 +353,7 @@ class ColorDetector:
 
         list = ColorDetector.getDominantColors(image)
         list = ColorDetector.deleteBackground(list)
-        listColors = ColorDetector.extractColor(list, imgName)
+        listColors = ColorDetector.extractColor(list)
 
         if len(listColors) >= 1 and len(listColors[0]) != 0:
             listRatio = ColorDetector.getRatio(listColors, image)
