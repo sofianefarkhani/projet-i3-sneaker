@@ -1,3 +1,5 @@
 
-Add an auto connection to the distant repo in case there need to access it 
-Help Vivien with his part (connect the models)
+Add an option to remove or not the temp files at the end of the program.
+Add something that makes sure there are no temp files before executing the program.
+Add verifications in all the config getters for the files.
+
