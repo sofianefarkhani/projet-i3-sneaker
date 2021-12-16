@@ -138,7 +138,32 @@ class DFU:
         return np.round(probProb, 3)
         
     def determineStyle(imgDataList):
-        return "NOT IMPLEMENTED YET - See utilities.DataFusion.DFU"
+        #High Low Mid
+        styleType = { # this stores the style Type for averaging later
+        'high': [],
+        'low': [],
+        'mid': []
+        }
+
+        for imgData in imgDataList:
+            if("shoeType" in imgData):
+                typeShoesTab = imgData["shoeType"]
+                styleType['high'].append(typeShoesTab[0])
+                styleType['low'].append(typeShoesTab[1])
+                styleType['mid'].append(typeShoesTab[2])
+
+        styleType['high'].sort()
+        styleType['low'].sort()
+        styleType['mid'].sort()
+
+        styleTypeMedian = {
+            'high' : median(styleType['high']),
+            'low' : median(styleType['low']),
+            'mid' : median(styleType['mid'])
+        }
+
+        finalType = max(styleType, key=styleType.get)
+        return finalType
     
     def determineColors(imgDataList):
         colors = {
