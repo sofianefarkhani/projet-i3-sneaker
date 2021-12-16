@@ -6,23 +6,23 @@ import multiprocessing
 from processes.Enums                                import *
 from processes.Task                                 import Answer
 
+from keras.models                                   import load_model
+
 from interface.Writer                               import Writer
 from utilities.DataFormatter import DataFormatter
 
 from utilities.Herald                               import Herald
 from utilities.DataFormatter                        import DataFormatter
-from utilities.configUtilities.BBConfig             import BBConfig
-from utilities.configUtilities.ConfigRequirementException import ConfigRequirementException
-from utilities.configUtilities.ShoeDetectionConfig  import ShoeDetectionConfig as SDConfig
-from utilities.configUtilities.TypeDetectionConfig  import TypeDetectionConfig as TDConfig
 
 from blackBoxModules.typeDetector.TypeDetector      import TypeDetector
 from blackBoxModules.colorDetector.ColorDetector    import ColorDetector
 from blackBoxModules.sneakerExtractor.ShoeExtractor import ShoeExtractor
 from blackBoxModules.preprocess.ImagePreprocessor   import ImagePreprocessor
 
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = BBConfig.getTFVerboseLvl()
-from keras.models                                   import load_model
+from utilities.config.getters.RunConfigGeneral import RunConfigGeneral as RCG 
+from utilities.config.getters.IANetworkConfig import IANConfig as IAC
+from utilities.config.getters.TalkConfig import TalkConfig as TC
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = str(TC.getTF())
 
 
 class BlackBox(multiprocessing.Process):
@@ -60,10 +60,10 @@ class BlackBox(multiprocessing.Process):
             Herald.printStart(proc_name)
             
             # load IA models and shut TF up
-            modelShoeDetector = load_model(SDConfig.getModelFile())
-            modelShoeDetector.load_weights(SDConfig.getWeightsFile())
-            modelTypeDetector = load_model(TDConfig.getModelFile())
-            modelTypeDetector.load_weights(TDConfig.getWeightsFile())
+            modelShoeDetector = load_model(IAC.getSDModel())
+            modelShoeDetector.load_weights(IAC.getSDWeights())
+            modelTypeDetector = load_model(IAC.getTDModel())
+            modelTypeDetector.load_weights(IAC.getTDWeights())
             
             # This is the main loop
             while True:
@@ -144,7 +144,7 @@ class BlackBox(multiprocessing.Process):
         '''Shows an image if the config allows it. 
 
         Stops this BlackBox from executing anything new while the image is on display.'''
-        if BBConfig.getIfShowImages():
+        if RCG.getShowImages():
             cv2.imshow("From blackbox "+str(self.id), img)
             cv2.waitKey(0)
             cv2.destroyAllWindows()

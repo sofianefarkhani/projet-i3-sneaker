@@ -3,23 +3,21 @@ import json
 import shutil
 import numpy                                as np
 from statistics                             import median
-from utilities.configUtilities.BBConfig     import BBConfig
-from utilities.configUtilities.LoadConfig   import LoadConfig
 
-
-
+from utilities.config.getters.OutputConfig import OutputConfig as OC
+from utilities.config.getters.LoaderConfig import LoaderConfig as LC
 
 class Util:
     '''A simple utility class that does simple, menial tasks.'''
     def removeOldData():
         '''Destroys the data file from the previous session.'''
-        path = BBConfig.getOutputFile()
+        path = OC.getData()
         if(os.path.exists(path)): 
             os.remove(path)
     
     def writeToFile(dataToAdd):
         if dataToAdd is None: return
-        outPutFile = BBConfig.getOutputFile()
+        outPutFile = OC.getData()
         with open(outPutFile, "a") as f:
             newLineToWrite = json.dumps(dataToAdd) + "\n"
             f.write(newLineToWrite)
@@ -39,14 +37,14 @@ class Util:
         
     def cleanTempFiles():
         '''Removes the temporary files created by the blackboxes.'''
-        pathFile = BBConfig.getTempOutput()
+        pathFile =  OC.getTempData()
         shutil.rmtree(pathFile,ignore_errors=True)
         os.mkdir(pathFile)
     
     def registerProductAsDone(product:str):
         '''Registers the product in a file. Products found in this file will not be dealt with again.'''
         if product is None: return
-        with open(LoadConfig.getProdDoneFile(), 'a') as f:
+        with open(LC.getDoneFile(), 'a') as f:
             f.write(','+product)
 
 
@@ -57,14 +55,14 @@ class DataFusion :
         Then adds the fusion of these results to the final json.'''
         
         jsonObjectList = []                 # the list of objects (one by img) in all blackbox-temp-jsons
-        pathFile = BBConfig.getTempOutput()
+        pathTempDir = OC.getTempData()
         
         # prepare file for final data
         Util.removeOldData()
         
         # prepare data from the temp json files (one per blackbox ran)
-        for fileName in os.listdir(pathFile):
-            Util.getObjectsFromFile(pathFile+"/"+fileName,jsonObjectList)   
+        for fileName in os.listdir(pathTempDir):
+            Util.getObjectsFromFile(pathTempDir+"/"+fileName,jsonObjectList)   
         Util.sortByIdOfProduct(jsonObjectList)
         
         tempList = []       # will contain the images for one product.

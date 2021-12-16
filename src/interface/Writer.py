@@ -2,9 +2,8 @@
 # -*- coding: utf-8 -*-
 import os
 import json
-from utilities.configUtilities.BBConfig import BBConfig
-from Data.TrainDataElement import TrainDataElement
-from utilities.configUtilities.LoadConfig import LoadConfig
+from utilities.config.getters.OutputConfig import OutputConfig as OC
+
 class Writer(json.JSONEncoder):
     '''The Writer writes JSON. 
     
@@ -12,14 +11,7 @@ class Writer(json.JSONEncoder):
 
 
     def prepareTempFiles():
-        dir = BBConfig.getTempOutput()
-        if dir[-1]=='/' or dir[-1]=='\\':
-            dir = dir[:-1]
-
-        if not os.path.exists(dir):
-            os.mkdir(dir,mode=0o777)
-        
-            
+        dir = OC.getTempData()
         filesToRemove = os.listdir(dir)
         for f in filesToRemove:
             os.remove(dir+'/'+f)
@@ -29,9 +21,7 @@ class Writer(json.JSONEncoder):
         return json.dumps(data)
     
     def writeDataToTempFile(procName, data:dict):
-        tempDir = BBConfig.getTempOutput()
-        if tempDir[-1]=='/' or tempDir[-1]=='\\':
-            tempDir = tempDir[:-1]
+        tempDir = OC.getTempData()
         outputFilePath = tempDir+"/"+ procName+'.json'
         
         with open(outputFilePath, 'a') as f:

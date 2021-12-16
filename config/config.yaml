@@ -10,17 +10,17 @@ runConfig:
     
     talkative:              # all these options are for console messages with print()
         processes:      True    
-        messages:       False    
-        ias:            True    
+        messages:       True    
+        ias:            False    
         ias-detailed:   False  
-        loader:         False   
+        loader:         True   
         tensorflow:     4 
     
     logs: 
         file:           ../out/logs.log
         removePrevious: True
         processes:      False  
-        messages:       False   
+        messages:       True   
         ias:            False   
         ias-detailed:   False  
         loader:         False
@@ -32,6 +32,7 @@ output:
     data: ../out/data.json          # the output for image tags
     testData: ../out/testData.json  # the output file where we dump stuff that does not really matter, when we test stuff
     tempData: ../out/temp
+    keepTempFiles: False
 
 input:
     # to train our IAs

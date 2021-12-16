@@ -1,5 +1,5 @@
 
-from utilities.configUtilities.ConfigRequirementException import ConfigRequirementException
+from utilities.config.ConfigRequirementException import ConfigRequirementException
 from colorama import Style, Fore
 
 class ConfigChecker:
@@ -63,6 +63,9 @@ class ConfigChecker:
         output = {
             'tempData':{
                 'type': [str]
+            },
+            'keepTempFiles':{
+                'type':[bool]    
             },
             'any': {
                 'type': [str],

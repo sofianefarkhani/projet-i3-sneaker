@@ -3,9 +3,8 @@
 
 import cv2
 import numpy as np
-import ast
 
-from utilities.configUtilities.BBConfig import BBConfig
+from utilities.config.getters.BGConfig import BGConfig as BGC 
 from blackBoxModules.preprocess.ContrastAndBrightness import ContrastAndBrightness
 
 class BackgroundSuppression:
@@ -21,8 +20,9 @@ class BackgroundSuppression:
         :param image: image load by OpenCV
         :return: list of images
         """
-        __MASK_COLOR = BBConfig.getBackground()
+        backgrounds = BGC.getBG()
         imagesNoBg = []
+        
         if image is not None:
             contrast = ContrastAndBrightness.getContrastValue(image)
             gray = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
@@ -66,8 +66,8 @@ class BackgroundSuppression:
             image         = image.astype('float32') / 255.0                 #  for easy blending
 
             
-            for key in __MASK_COLOR:
-                masked = (mask_stack * image) + ((1-mask_stack) * __MASK_COLOR[key])
+            for key in backgrounds:
+                masked = (mask_stack * image) + ((1-mask_stack) * backgrounds[key])
                 imagesNoBg.append((masked * 255).astype('uint8'))
         # Blend
         return imagesNoBg

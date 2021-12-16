@@ -3,16 +3,17 @@ from Data.Color import Color
 
 import cv2
 import numpy as np
-from blackBoxModules.preprocess.BackgroundSuppression import BackgroundSuppression
-from utilities.configUtilities.ColorDetectorConfig import ColorDetectorConfig as CDConfig
-import ast
-
 
 from utilities.Herald import Herald
-class ColorDetector:
+from utilities.config.getters.BGConfig import BGConfig as BGC 
+from utilities.config.getters.ColorDetectConfig import ColorDetectConfig as CDC 
 
+from blackBoxModules.preprocess.BackgroundSuppression import BackgroundSuppression
+
+
+class ColorDetector:
     #Get the number of background used
-    nbrBackground = CDConfig.getNbBg()
+    nbrBackground = BGC.getNbBg()
     
     def detectColorsOf(shoeImage):
         """
@@ -30,7 +31,7 @@ class ColorDetector:
         flags = cv2.KMEANS_RANDOM_CENTERS
 
         #cv2 give in palette all the colors that we have in an image
-        _, labels, palette = cv2.kmeans(pixels, n_colors, None, criteria, CDConfig.getNbAttempts(), flags)
+        _, labels, palette = cv2.kmeans(pixels, n_colors, None, criteria, CDC.getAttempts(), flags)
         #counts has the number of pixels for each colors in palette
         _, counts = np.unique(labels, return_counts=True)
         
@@ -179,8 +180,6 @@ class ColorDetector:
 
         :return : list of ratio for primary and secondary color for each image of the list
         """
-        margiRgbCode = CDConfig.getMargin()
-
         # load background colors
         listColorBg = ColorDetector.getBackgroundColors('np')
 
@@ -236,7 +235,7 @@ class ColorDetector:
         """
         :param list : list of primary and secondary color
         """
-        seuil = CDConfig.getSeuil()
+        seuil = CDC.getSeuil()
         for dict in list:
             listKeySuppr = []
             if dict[max(dict, key=dict.get)] >= seuil:
@@ -264,7 +263,7 @@ class ColorDetector:
         """
         moinsRGB = [0, 0, 0]
         plusRGB = [0, 0, 0]
-        margiRgbCode = CDConfig.getMargin()
+        margiRgbCode = CDC.getMargin()
 
         for i in range(len(colorFound)):
             if colorFound[i]-margiRgbCode < 0:
@@ -289,7 +288,7 @@ class ColorDetector:
         
         :return : list of background colors
         """
-        listColor = CDConfig.getBackground()
+        listColor = BGC.getBG()
         listColorBg = []
         for color in listColor:
             if mode == 'color':

@@ -1,1 +1,87 @@
 The wise Beaver's big dam of logs: 
+---------------------------------------
+__main__: Sent message: LoaderTaskType.LOAD
+---------------------------------------
+Loader: Recieved message: LoaderTaskType.LOAD
+---------------------------------------
+Loader: Sent message: TaskType.PROCESS
+---------------------------------------
+BlackBox-2: Recieved message: TaskType.PROCESS
+---------------------------------------
+Loader: Sent message: TaskType.PROCESS
+---------------------------------------
+BlackBox-8: Recieved message: TaskType.PROCESS
+---------------------------------------
+Loader: Sent message: TaskType.PROCESS
+---------------------------------------
+BlackBox-3: Recieved message: TaskType.PROCESS
+---------------------------------------
+Loader: Sent message: TaskType.PROCESS
+---------------------------------------
+BlackBox-9: Recieved message: TaskType.PROCESS
+---------------------------------------
+Loader: Sent message: TaskType.PROCESS
+---------------------------------------
+BlackBox-5: Recieved message: TaskType.PROCESS
+---------------------------------------
+Loader: Sent message: TaskType.PROCESS
+---------------------------------------
+BlackBox-6: Recieved message: TaskType.PROCESS
+---------------------------------------
+Loader: Sent message: TaskType.PROCESS
+---------------------------------------
+BlackBox-7: Recieved message: TaskType.PROCESS
+---------------------------------------
+Loader: Sent message: TaskType.PROCESS
+---------------------------------------
+Loader: Sent message: TaskType.PROCESS
+---------------------------------------
+Loader: Sent message: TaskType.PROCESS
+---------------------------------------
+BlackBox-4: Recieved message: TaskType.PROCESS
+---------------------------------------
+Loader: Sent message: TaskType.PROCESS
+---------------------------------------
+Loader: Sent message: TaskType.PROCESS
+---------------------------------------
+Loader: Sent message: TaskType.PROCESS
+---------------------------------------
+Loader: Sent message: TaskType.PROCESS
+---------------------------------------
+Loader: Sent message: TaskType.PROCESS
+---------------------------------------
+Loader: Sent message: LoaderAnswerType.LOADDONE
+---------------------------------------
+__main__: Recieved message: LoaderAnswerType.LOADDONE
+---------------------------------------
+__main__: Sent message: LoaderTaskType.LOAD
+---------------------------------------
+Loader: Recieved message: LoaderTaskType.LOAD
+---------------------------------------
+Loader: Sent message: TaskType.PROCESS
+---------------------------------------
+Loader: Sent message: TaskType.PROCESS
+---------------------------------------
+Loader: Sent message: TaskType.PROCESS
+---------------------------------------
+Loader: Sent message: TaskType.PROCESS
+---------------------------------------
+Loader: Sent message: LoaderAnswerType.NOMORE
+---------------------------------------
+__main__: Recieved message: LoaderAnswerType.NOMORE
+---------------------------------------
+Loader: Sent message: LoaderAnswerType.LOADDONE
+---------------------------------------
+__main__: Sent message: LoaderTaskType.TERMINATE
+---------------------------------------
+Loader: Recieved message: LoaderTaskType.TERMINATE
+---------------------------------------
+Loader: Sent message: LoaderAnswerType.END
+---------------------------------------
+__main__: Recieved message: LoaderAnswerType.LOADDONE
+---------------------------------------
+__main__: Recieved message: LoaderAnswerType.END
+---------------------------------------
+__main__: Recieved message: TaskType.PROCESS
+---------------------------------------
+__main__: Recieved message: TaskType.PROCESS
