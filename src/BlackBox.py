@@ -14,6 +14,7 @@ from utilities.DataFormatter                        import DataFormatter
 from utilities.configUtilities.BBConfig             import BBConfig
 from utilities.configUtilities.ConfigRequirementException import ConfigRequirementException
 from utilities.configUtilities.ShoeDetectionConfig  import ShoeDetectionConfig as SDConfig
+from utilities.configUtilities.TypeDetectionConfig  import TypeDetectionConfig as TDConfig
 
 from blackBoxModules.typeDetector.TypeDetector      import TypeDetector
 from blackBoxModules.colorDetector.ColorDetector    import ColorDetector
@@ -61,6 +62,8 @@ class BlackBox(multiprocessing.Process):
             # load IA models and shut TF up
             modelShoeDetector = load_model(SDConfig.getModelFile())
             modelShoeDetector.load_weights(SDConfig.getWeightsFile())
+            modelTypeDetector = load_model(TDConfig.getModelFile())
+            modelTypeDetector.load_weights(TDConfig.getWeightsFile())
             
             # This is the main loop
             while True:
@@ -71,7 +74,7 @@ class BlackBox(multiprocessing.Process):
                 elif nextTask.type == TaskType.PROCESS: 
                     if nextTask.img is None: continue # this should not happen, but i still left it as a precaution
                     
-                    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector)
+                    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector, modelTypeDetector)
                     
                     self.taskQueue.task_done()    # helps when we want to join threads at the end of the programm
                     
@@ -95,7 +98,7 @@ class BlackBox(multiprocessing.Process):
     
     
     
-    def compute(self, img, imgPath:str, imgPathInCache:str=None, tfImg=None, modelShoeDetector=None):
+    def compute(self, img, imgPath:str, imgPathInCache:str=None, tfImg=None, modelShoeDetector=None, modelTypeDetector=None):
         '''Computes if there is a shoe, its type and color.
         If there is a path in cache, use this one.
         tfImg is the image loaded for the needs of tensorflow. Don't use it unless you're called Vivien.'''
@@ -115,36 +118,27 @@ class BlackBox(multiprocessing.Process):
                 self.name
             )
             
-            # typeOfShoe = TypeDetector.detectTypeOfShoe(
-            #     ImagePreprocessor.preprocessForTypeIdentification(shoeImg, self.name),
-            #     self.name
-            # )
-
-            # tag = Tag(0) # yeah temporary id for now we don't care too much about that
-
-            # tag.setType(typeOfShoe)
-            # tag.setMainColor(mainColor)
-            # tag.setSecondaryColor(secondaryColor)
-
-            # if self.testMode:
-            #    Writer.outputTagAsJson(tag, BBConfig.getTestOutputFile())
-            # else:
-            #    Writer.outputTagAsJson(tag)
+            # type of shoe takes the form : [high, low, mid], each float in [0, 1]
+            typeOfShoe = TypeDetector.detectTypeOfShoe(
+                tfImg,
+                modelTypeDetector
+            )
 
             colorway = DataFormatter.buildColorWay(mainColor, secondaryColor)
-            dataShoes= DataFormatter.getFullData(refProd, imgName, "NOT IMPLEMENTED YET", colorway, shoeProb)
+            dataShoes= DataFormatter.getFullData(refProd, imgName, "NOT IMPLEMENTED YET", colorway, shoeProb, typeOfShoe)
             Herald.printResults(dataShoes)
         
-        else: 
-            # there was no shoe
+        else: # there was no shoe
             dataShoes = DataFormatter.getNoneData(refProd, imgName, shoeProb)
             Herald.printResults(dataShoes)
 
+        # prepare for all the data display / saving
         Writer.writeDataToTempFile(self.name, dataShoes)
-        
         Herald.printWrittenData(self.name)
-
         self.showImage(img)
+        
+        
+        
 
     def showImage(self, img):
         '''Shows an image if the config allows it. 

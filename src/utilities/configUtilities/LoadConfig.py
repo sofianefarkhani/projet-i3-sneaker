@@ -30,4 +30,7 @@ class LoadConfig:
         
     def getPswd():
         return ConfigLoader.getVariable('loader', 'remoteCoIds', 'pswd')
+    
+    def getProdDoneFile():
+        return ConfigLoader.getVariable('loader', 'doneFile')
         

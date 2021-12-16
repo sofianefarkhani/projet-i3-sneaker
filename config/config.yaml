@@ -4,7 +4,7 @@
 #   The data is loaded whole in the ConfigLoader, and then reloaded on demand.
 
 runConfig:
-    nbProcess: 6      # -> 'default' calculates for the number of processors you have.
+    nbProcess: 8      # -> 'default' calculates for the number of processors you have.
                             #       - some may be idling from time to time.
                             # -> any strictly positive number: sets the number of processes to this number.
     
@@ -18,7 +18,7 @@ runConfig:
     
     logs: 
         file:           ../out/logs.log
-        removePrevious: False
+        removePrevious: True
         processes:      False  
         messages:       False   
         ias:            False   
@@ -26,7 +26,7 @@ runConfig:
         loader:         False
 
     gui:
-        showImages: False       # Show each image when processed (stops the Blackbox from processing other images while the image is on display!!!)
+        showImages: False      # Show each image when processed (stops the Blackbox from processing other images while the image is on display!!!)
 
 output:
     data: ../out/data.json          # the output for image tags
@@ -47,8 +47,9 @@ loader:
         host: ~
         user: ~
         pswd: ~
-    batchSize: 5      # how many images should the loader load at once in the system
-    reloadNumber: 4   # When we reach this number of loaded images or less, we try to load more.
+    batchSize: 15      # how many images should the loader load at once in the system
+    reloadNumber: 10   # When we reach this number of loaded images or less, we try to load more.
+    doneFile: ../in/done.txt
 
 background:
     g: [0.0, 1.0, 0.0]
@@ -60,6 +61,9 @@ color_detection:
     margin: 20      # Margin for pixel detection when calculating the ratio
     seuil: 0.25    
     
-shoeDetection:
-    modelFilePath: ../in/AI/DetectShoes/model.h5
-    weightsFilePath: ../in/AI/DetectShoes/weights.h5
+neuronNetworks:
+    shoeDetectModelFilePath: ../in/AI/DetectShoes/model.h5
+    shoeDetectWeightsFilePath: ../in/AI/DetectShoes/weights.h5
+    typeDetectModelFilePath: ../in/AI/DetectType/model.h5
+    typeDetectWeightsFilePath: ../in/AI/DetectType/weights.h5
+

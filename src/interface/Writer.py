@@ -4,6 +4,7 @@ import os
 import json
 from utilities.configUtilities.BBConfig import BBConfig
 from Data.TrainDataElement import TrainDataElement
+from utilities.configUtilities.LoadConfig import LoadConfig
 class Writer(json.JSONEncoder):
     '''The Writer writes JSON. 
     
@@ -14,6 +15,10 @@ class Writer(json.JSONEncoder):
         dir = BBConfig.getTempOutput()
         if dir[-1]=='/' or dir[-1]=='\\':
             dir = dir[:-1]
+
+        if not os.path.exists(dir):
+            os.mkdir(dir,mode=0o777)
+        
             
         filesToRemove = os.listdir(dir)
         for f in filesToRemove:
@@ -31,3 +36,4 @@ class Writer(json.JSONEncoder):
         
         with open(outputFilePath, 'a') as f:
             f.write("\n"+Writer.convertToJson(data))
+

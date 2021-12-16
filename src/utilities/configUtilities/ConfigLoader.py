@@ -21,7 +21,7 @@ class ConfigLoader:
             if varPath[i] in configData:
                 configData = configData[varPath[i]]
             else:
-                raise ValueError('No such value in the config file: '+str(varPath)+"\n(failed at: "+str(varPath[i]))
+                raise ValueError('No such value in the config file: '+str(varPath)+"\n(failed at: "+str(varPath[i])+')')
         return configData
     
     

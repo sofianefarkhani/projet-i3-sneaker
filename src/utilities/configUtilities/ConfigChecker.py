@@ -81,6 +81,9 @@ class ConfigChecker:
         }
     
         loader = {
+            'doneFile' : {
+                'type' : [str]
+            },
             'takeFromLocalSource' : {
                 'type' : [bool]
             },
@@ -145,7 +148,7 @@ class ConfigChecker:
             'loader' : loader,
             'background' : background,
             'color_detection' : color_detection,
-            'shoeDetection' : shoeDetection
+            'neuronNetworks' : shoeDetection
         }
     
     

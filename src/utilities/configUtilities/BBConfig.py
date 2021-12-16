@@ -25,3 +25,4 @@ class BBConfig:
     
     def getTFVerboseLvl():
         return str(ConfigLoader.getVariable('runConfig', 'talkative', 'tensorflow'))
+    

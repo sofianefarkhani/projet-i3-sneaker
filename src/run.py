@@ -13,9 +13,10 @@ from BlackBox                   import BlackBox
 
 from utilities.Herald                       import Herald
 from utilities.Beaver                       import Beaver
-from utilities.configUtilities.ConfigRequirementException import ConfigRequirementException
 from utilities.configUtilities.ProcConfig   import ProcConfig
 from utilities.configUtilities.LoadConfig   import LoadConfig
+from utilities.DataFusion                   import DataFusion
+
 
 if __name__ == '__main__':
     
@@ -41,6 +42,8 @@ if __name__ == '__main__':
         c = Connexion() 
         loader = Loader(loaderTasks, loaderResults, tasks, c)
         loader.start()
+        
+        
         
         # Start BlackBoxes
         consumers = [ BlackBox(tasks, results, testMode = True) for i in range(numProcesses) ]
@@ -108,6 +111,8 @@ if __name__ == '__main__':
         tasks.join()
         loaderTasks.join()
         
+        DataFusion.fusionJson()
+
         Herald.printTermination(__name__)
 
 

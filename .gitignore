@@ -1,5 +1,6 @@
 __pycache__/
 .DS_Store
+.env
 testData.json
 out/*
 .vs
@@ -10,3 +11,4 @@ img/*
 *.jpg
 *.jpg
 *.jpg
+.env

@@ -37,12 +37,13 @@ class DataFormatter:
         return os.path.normpath(path)
     
     
-    def getFullData(refProd:str, imgName:str, typeOfShoe, colorway:dict, shoeProb):
+    def getFullData(refProd:str, imgName:str, typeOfShoe, colorway:dict, shoeProb, shoeType):
         return {
             "IDProduct": refProd,
             "img": imgName,
             "style": typeOfShoe,
             "Colorway": colorway,
+            "shoeType": shoeType,
             "shoeProb":str(shoeProb)
         }
     
