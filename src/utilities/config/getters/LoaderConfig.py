@@ -29,3 +29,6 @@ class LoaderConfig(AG):
     
     def getDoneFile():
         return AG.get('loader', 'doneFile')
+    
+    def redoOldProducts():
+        return AG.get('loader', 'redoOldProducts')

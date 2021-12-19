@@ -1,5 +1,4 @@
-(DONE) Add an option to remove or not the temp files at the end of the program.
-(DONE) Eventual old temp files removed at the start of the program.
+Add an option to take into account or not the previously used products.
 
 Add something that checks that no 2 instances of the app run at the same time.
 

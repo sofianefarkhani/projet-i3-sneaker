@@ -87,6 +87,9 @@ class ConfigChecker:
             'doneFile' : {
                 'type' : [str]
             },
+            'redoOldProducts': {
+                'type' : [bool]
+            },
             'takeFromLocalSource' : {
                 'type' : [bool]
             },

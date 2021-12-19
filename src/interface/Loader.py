@@ -205,6 +205,8 @@ class Loader(multiprocessing.Process):
         return img
 
     def removeOldProducts(self, imgList):
+        if LC.redoOldProducts()==True: return
+        
         oldPeas = self.getOldProducts()
         oldPeas.sort()
         
