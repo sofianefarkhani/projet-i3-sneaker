@@ -1,10 +1,6 @@
-Freaking refactor the config utilities, i hate them so much right now.
-    -> refactor the old calls to the configUtilities and check if it all works;
-
-Add an option to remove or not the temp files at the end of the program.
-    -> option added but does nothing yet
-Add something that makes sure there are no temp files before executing the program.
-Add verifications in all the config getters for the files.
+(DONE) Add an option to remove or not the temp files at the end of the program.
+(DONE) Eventual old temp files removed at the start of the program.
 
 Add something that checks that no 2 instances of the app run at the same time.
 
+Remove references to config: testData

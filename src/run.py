@@ -14,6 +14,7 @@ from BlackBox                   import BlackBox
 from utilities.Herald           import Herald
 from utilities.Beaver           import Beaver 
 from utilities.DataFusion       import DataFusion
+from utilities.DataFusion       import Util as DFU
 
 from utilities.config.getters.RunConfigGeneral import RunConfigGeneral as RCG 
 from utilities.config.getters.LoaderConfig import LoaderConfig as LC 
@@ -33,7 +34,7 @@ if __name__ == '__main__':
     loaderTasks = multiprocessing.JoinableQueue()
     loaderResults = multiprocessing.Queue()
 
-    
+    DFU.cleanTempFiles(True)
     
     try:
         # start the loader    

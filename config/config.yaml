@@ -10,8 +10,8 @@ runConfig:
     
     talkative:              # all these options are for console messages with print()
         processes:      True    
-        messages:       True    
-        ias:            False    
+        messages:       False    
+        ias:            True    
         ias-detailed:   False  
         loader:         True   
         tensorflow:     4 

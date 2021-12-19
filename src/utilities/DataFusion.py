@@ -35,11 +35,12 @@ class Util:
     def sortByIdOfProduct(list):
         list.sort(key=lambda x : x["IDProduct"])
         
-    def cleanTempFiles():
+    def cleanTempFiles(forceClean:bool = False):
         '''Removes the temporary files created by the blackboxes.'''
-        pathFile =  OC.getTempData()
-        shutil.rmtree(pathFile,ignore_errors=True)
-        os.mkdir(pathFile)
+        if OC.getKeepTempFiles()==False or forceClean==True:
+            pathFile =  OC.getTempData()
+            shutil.rmtree(pathFile,ignore_errors=True)
+            os.mkdir(pathFile)
     
     def registerProductAsDone(product:str):
         '''Registers the product in a file. Products found in this file will not be dealt with again.'''
