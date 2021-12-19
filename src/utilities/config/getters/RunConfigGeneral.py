@@ -4,6 +4,13 @@ from utilities.config.AbstractGetter import AbstractGetter
 
 class RunConfigGeneral(AbstractGetter):
     
+    def getNoTwoAppFile():
+        return RunConfigGeneral.get('runConfig', 'noTwoAppsFile')
+    
+    def getIsAppRunning():
+        with open(RunConfigGeneral.getNoTwoAppFile(), mode='r') as f:
+            return f.readline()=='yes'
+    
     def getNbProcess():
         '''Returns the number of processus asked in config.yaml'''
         request = RunConfigGeneral.get('runConfig', 'nbProcess')

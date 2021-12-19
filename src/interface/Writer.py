@@ -3,7 +3,8 @@
 import os
 import json
 from utilities.config.getters.OutputConfig import OutputConfig as OC
-
+from utilities.config.getters.RunConfigGeneral import RunConfigGeneral as RCG
+ 
 class Writer(json.JSONEncoder):
     '''The Writer writes JSON. 
     
@@ -16,7 +17,10 @@ class Writer(json.JSONEncoder):
         for f in filesToRemove:
             os.remove(dir+'/'+f)
 
-
+    def setAppToRun(mode:bool=True):
+        with open(RCG.getNoTwoAppFile(), 'w') as f:
+            f.write('yes' if mode==True else 'no')
+    
     def convertToJson(data: dict):
         return json.dumps(data)
     

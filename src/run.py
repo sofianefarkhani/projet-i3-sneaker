@@ -23,6 +23,11 @@ if __name__ == '__main__':
     
     Herald.printStart(__name__)
     
+    # Check if another instance of this app is already running:
+    if RCG.getIsAppRunning() == True:
+        exit()
+    Writer.setAppToRun()
+    
     # Prepare environment
     Beaver.reinitLogsIfNeeded()
     Writer.prepareTempFiles()
@@ -133,3 +138,6 @@ if __name__ == '__main__':
         # wait for the end of it all
         tasks.join()
         loaderTasks.join()
+        
+# mark the application as finished: 
+Writer.setAppToRun(False)

@@ -30,6 +30,10 @@ class ConfigChecker:
     def getVarData():
         """Builds and returns the dictionnary of requirements for the variables in config.yaml."""
         runConfig = {
+            'noTwoAppsFile': {
+                'type': [str]
+            },
+            
             'nbProcess': {
                 'type': [int, str],
                 'min' : 1,
