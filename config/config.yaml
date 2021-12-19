@@ -4,6 +4,9 @@
 #   The data is loaded whole in the ConfigLoader, and then reloaded on demand.
 
 runConfig:
+
+    noTwoAppsFile: ../in/noTwoAppsFileCheck
+
     nbProcess: 8      # -> 'default' calculates for the number of processors you have.
                             #       - some may be idling from time to time.
                             # -> any strictly positive number: sets the number of processes to this number.
@@ -13,14 +16,14 @@ runConfig:
         messages:       False    
         ias:            True    
         ias-detailed:   False  
-        loader:         False   
+        loader:         True   
         tensorflow:     4 
     
     logs: 
         file:           ../out/logs.log
         removePrevious: True
         processes:      False  
-        messages:       False   
+        messages:       True   
         ias:            False   
         ias-detailed:   False  
         loader:         False
@@ -32,6 +35,7 @@ output:
     data: ../out/data.json          # the output for image tags
     testData: ../out/testData.json  # the output file where we dump stuff that does not really matter, when we test stuff
     tempData: ../out/temp
+    keepTempFiles: False
 
 input:
     # to train our IAs
@@ -50,6 +54,7 @@ loader:
     batchSize: 15      # how many images should the loader load at once in the system
     reloadNumber: 10   # When we reach this number of loaded images or less, we try to load more.
     doneFile: ../in/done.txt
+    redoOldProducts: True
 
 background:
     g: [0.0, 1.0, 0.0]

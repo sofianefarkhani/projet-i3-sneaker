@@ -11,23 +11,27 @@ from interface.Loader           import Connexion
 
 from BlackBox                   import BlackBox
 
-from utilities.Herald                       import Herald
-from utilities.Beaver                       import Beaver
-from utilities.configUtilities.ProcConfig   import ProcConfig
-from utilities.configUtilities.LoadConfig   import LoadConfig
-from utilities.DataFusion                   import DataFusion
+from utilities.Herald           import Herald
+from utilities.Beaver           import Beaver 
+from utilities.DataFusion       import DataFusion
+from utilities.DataFusion       import Util as DFU
 
+from utilities.config.getters.RunConfigGeneral import RunConfigGeneral as RCG 
+from utilities.config.getters.LoaderConfig import LoaderConfig as LC 
 
 if __name__ == '__main__':
     
     Herald.printStart(__name__)
     
+    # Check if another instance of this app is already running:
+    if RCG.getIsAppRunning() == True:
+        exit()
+    Writer.setAppToRun()
+    
     # Prepare environment
     Beaver.reinitLogsIfNeeded()
     Writer.prepareTempFiles()
     
-    # Get basic parameters
-    (numProcesses, procTalkative, bbTalkative) = ProcConfig.getRunningConfig()
     
     # Establish communication queues
     tasks = multiprocessing.JoinableQueue()
@@ -35,7 +39,7 @@ if __name__ == '__main__':
     loaderTasks = multiprocessing.JoinableQueue()
     loaderResults = multiprocessing.Queue()
 
-    
+    DFU.cleanTempFiles(True)
     
     try:
         # start the loader    
@@ -46,7 +50,7 @@ if __name__ == '__main__':
         
         
         # Start BlackBoxes
-        consumers = [ BlackBox(tasks, results, testMode = True) for i in range(numProcesses) ]
+        consumers = [ BlackBox(tasks, results, testMode = True) for i in range(RCG.getNbProcess()) ]
         
         for bb in consumers:
             bb.start()
@@ -69,7 +73,7 @@ if __name__ == '__main__':
             
             # Check if we need to load more and the loader is not already trying to load more  
             # If the loader is stopped and there aer no more tasks, stop the whole machine.
-            elif tasks.qsize()<=LoadConfig.getReloadNumber() and not loaderIsLoading:
+            elif tasks.qsize()<=LC.getReloadNumber() and not loaderIsLoading:
                 if loaderRunning: 
                     Herald.queueMessageIn(__name__, loaderTasks, LoaderTask(LoaderTaskType.LOAD))
                     loaderIsLoading = True
@@ -134,3 +138,6 @@ if __name__ == '__main__':
         # wait for the end of it all
         tasks.join()
         loaderTasks.join()
+        
+# mark the application as finished: 
+Writer.setAppToRun(False)

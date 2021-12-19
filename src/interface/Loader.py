@@ -16,27 +16,27 @@ from processes.Enums            import *
 from processes.LoaderMessage    import *
 
 from utilities.Herald                           import Herald
-from utilities.configUtilities.LoadConfig       import LoadConfig
+from utilities.config.getters.LoaderConfig      import LoaderConfig as LC
 from utilities.DataFormatter import DataFormatter
 
 class Connexion:
     def __init__(self):
-        self.local=LoadConfig.getIfLocalSource()
+        self.local=LC.sourceIsLocal()
         if self.local == False: 
             self.hostname=Connexion.getHost()
             self.username=Connexion.getUser()
             self.password=Connexion.getPswd()
     
     def getHost():
-        if (host:=LoadConfig.getHost() is None):
+        if (host:=LC.getRemoteHost() is None):
             return input('Host > ')
         return host
     def getUser():
-        if (user:=LoadConfig.getUser() is None):
+        if (user:=LC.getRemoteUser() is None):
             return input('User > ')
         return user
     def getPswd():
-        if (pswd:=LoadConfig.getPswd() is None):
+        if (pswd:=LC.getRemotePswd() is None):
             return input('Pswd > ')
         return pswd
 
@@ -76,7 +76,7 @@ class Loader(multiprocessing.Process):
             
             if task is not None:
                 if task.type == LoaderTaskType.LOAD:
-                    batchSize = LoadConfig.getBatchSize()
+                    batchSize = LC.getBatchsize()
                     
                     Herald.printLoading(batchSize)
                     
@@ -123,8 +123,8 @@ class Loader(multiprocessing.Process):
     def getImagesGenerator(self):
         
         # from local directory
-        if LoadConfig.getIfLocalSource(): 
-            localFile = LoadConfig.getLocalImageSource()
+        if LC.sourceIsLocal()==True: 
+            localFile = LC.getLocalSource()
             files = os.listdir(localFile)
             
             files.sort()
@@ -135,7 +135,7 @@ class Loader(multiprocessing.Process):
                 Herald.signalLoad(localFile+file)
                 yield { 
                        'imgPath': file,
-                       'img':cv2.imread(os.path.join(localFile,file), cv2.IMREAD_COLOR),
+                       'img'  : cv2.imread(os.path.join(localFile,file), cv2.IMREAD_COLOR),
                        'tfImg': self.loadTensorFlowImage(os.path.join(localFile,file))
                     }
         
@@ -152,17 +152,19 @@ class Loader(multiprocessing.Process):
                 Herald.printForLoader("Loading the list of image names... Please wait. This could take up to a few minutes, depending on the number of images in the distant folder.")
                 Herald.printForLoader("Please don't ctrl c during this time")
                 
-                sftp.cwd(LoadConfig.getRemoteImgSrc())
+                sftp.cwd(LC.getRemoteSource())
                 
                 # load names with a waiting animation
                 done = False
                 def animate():
-                    for c in itertools.cycle(['|', '/', '-', '\\']):
-                        if done :
-                            break
-                        sys.stdout.write('\rLoading ' + c )
-                        sys.stdout.flush()
-                        time.sleep(0.1)
+                    from utilities.config.getters.TalkConfig import TalkConfig as TC
+                    if TC.getLoader()==True:
+                        for c in itertools.cycle(['|', '/', '-', '\\']):
+                            if done :
+                                break
+                            sys.stdout.write('\rLoading ' + c )
+                            sys.stdout.flush()
+                            time.sleep(0.1)
                 t = threading.Thread(target=animate)
                 t.start()
                 
@@ -183,7 +185,7 @@ class Loader(multiprocessing.Process):
                     
                     # yield image from folder
                     yield { 
-                            'imgPath': os.path.join(LoadConfig.getRemoteImgSrc(),temp),
+                            'imgPath': os.path.join(LC.getRemoteSource(),temp),
                             'imgPathInCache': os.path.join('../img/temp/',temp),
                             'img': cv2.imread(os.path.join('../img/temp/',temp), cv2.IMREAD_COLOR),
                             'tfImg': self.loadTensorFlowImage(os.path.join('../img/temp/',temp))
@@ -203,14 +205,17 @@ class Loader(multiprocessing.Process):
         return img
 
     def removeOldProducts(self, imgList):
+        if LC.redoOldProducts()==True: return
+        
         oldPeas = self.getOldProducts()
         oldPeas.sort()
-        print (Herald.getPrintElement('oldPeas', oldPeas, 1))
+        
         if len(oldPeas) == 0: return;
         
         # while there are still old products, keep looking through the list, and remove them.
         oldP = oldPeas.pop(0)
         i=0
+        imgRemovedCounter = 0
         while i < len(imgList):
             p = imgList[i]
             pId = DataFormatter.extractProdRef(p)
@@ -218,13 +223,15 @@ class Loader(multiprocessing.Process):
                 i+=1
             elif oldP == pId: 
                 imgList.pop(i)
+                imgRemovedCounter+=1
             else:
                 if (len(oldPeas) == 0) : return
                 oldP = oldPeas.pop(0)
+        Herald.printNbImgRemoved(imgRemovedCounter)
             
             
     def getOldProducts(self):
-        file = LoadConfig.getProdDoneFile()
+        file = LC.getDoneFile()
         peasList = []
         if os.path.exists(file)==False: return peasList
         

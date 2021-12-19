@@ -6,8 +6,8 @@ Style: DIM, NORMAL, BRIGHT, RESET_ALL
 '''
 
 from utilities.Beaver                           import Beaver
-from utilities.configUtilities.ConfigLoader     import ConfigLoader
-from utilities.configUtilities.ProcConfig       import ProcConfig
+from utilities.config.getters.TalkConfig        import TalkConfig as TC
+from utilities.config.getters.LogsConfig        import LogsConfig as LC
 from processes.Task             import *
 from processes.LoaderMessage    import *
 from processes.Enums            import *
@@ -21,66 +21,74 @@ class Herald:
     Its nothing complicated, just used to hide stuff where the rest of the code is more important. 
     It will all by itself queue the messages, and print the infos / log them.'''
     
-   
+    def applyStyle(msg, style:Style=None, fore:Fore=None):
+        if style is not None:
+            msg = style + msg
+        if fore is not None:
+            msg = fore + msg
+        if style is not None or fore is not None:
+            msg += Style.RESET_ALL
+        return msg
     
+    def bringTheNews(msg:str, consolePrint:bool, logPrint:bool, style:Style=None, fore:Fore=None):
+        if consolePrint==True:
+            fullMsg = msg
+            fullMsg = Herald.applyStyle(fullMsg, style, fore)
+            print (fullMsg)
+        
+        if logPrint==True:
+            Beaver.log(msg)    
     
     # PRINTING / LOGGING
     def printError(message):
         '''Prints a string in the terminal, in bright red.'''
-        print (Style.BRIGHT + Fore.RED + message)
-        print(Style.RESET_ALL)
-        Beaver.log(message)
+        Herald.bringTheNews(message, True, True, Style.BRIGHT, Fore.RED)
     
     def printStart(procName):
         '''Announces the start of a process in the terminal.'''
-        if ConfigLoader.getVariable('runConfig', 'talkative', 'processes'): 
-            print (Fore.CYAN+'%s: Start of service' % procName+Style.RESET_ALL)
-        if ConfigLoader.getVariable('runConfig', 'logs', 'processes'): 
-            Beaver.log('%s: Start of service' % procName)
+        msg = '%s: Start of service' % procName
+        Herald.bringTheNews(msg, TC.getProc(), LC.getProc(), Style.BRIGHT, Fore.CYAN)
             
     def printTermination(procName):
         '''Announces the end of a process in the terminal.'''
-        if ConfigLoader.getVariable('runConfig', 'talkative', 'processes'): 
-            print (Fore.CYAN+'%s: End of service' % procName+Style.RESET_ALL)
-        if ConfigLoader.getVariable('runConfig', 'logs', 'processes'): 
-            Beaver.log('%s: End of service' % procName)
+        msg = '%s: End of service' % procName
+        Herald.bringTheNews(msg, TC.getProc(), LC.getProc(), fore=Fore.CYAN)
     
     # LOADER SPECIFIC MESSAGES
     def printLoading(number):
         '''Announces in the terminal that the Loader will load more images.'''
-        if ProcConfig.loaderShouldTalk() : 
-            print(Fore.BLUE+'Loading '+str(number)+' more images'+Style.RESET_ALL)
-        if ConfigLoader.getVariable('runConfig', 'logs', 'loader')==True:
-            Beaver.log('Loading '+str(number)+' more images')
+        msg = 'Loading %s more images' % str(number)
+        Herald.bringTheNews(msg, TC.getLoader(), LC.getLoader(), fore=Fore.BLUE)
+    
     
     def signalLoad(imgName):
         '''Announces in the terminal that an image was loaded successfully.'''
-        if ProcConfig.loaderShouldTalk() : 
-            print(Fore.BLUE+'    - Loaded '+ imgName+Style.RESET_ALL)
-        if ConfigLoader.getVariable('runConfig', 'logs', 'loader')==True:
-            Beaver.log('    - Loaded '+ imgName)    
-            
+        msg = '    - Loaded '+ imgName
+        Herald.bringTheNews(msg, TC.getLoader(), LC.getLoader(), fore=Fore.BLUE)  
+    
+    def printNbImgRemoved(imgRemovedCounter:int):
+        '''Announces in the terminal how many images were removed from the initial file list.
+        
+        Images are removed when they are from products that were previously dealt with already.'''
+        if imgRemovedCounter<=0:
+            msg = 'All images are new.'
+        else:
+            msg = 'Loader detected '+str(imgRemovedCounter)+' images that were already dealt with. These will not be sent to the blacboxes.'
+        Herald.bringTheNews(msg, TC.getLoader(), LC.getLoader(), fore=Fore.BLUE)  
             
     def printNoMoreImages():
         '''Announces in the terminal that the Loader reached the end of the database.'''
-        if ProcConfig.loaderShouldTalk() : 
-            print(Fore.BLUE+'No more images in database to load'+Style.RESET_ALL)
-        if ConfigLoader.getVariable('runConfig', 'logs', 'loader')==True:
-            Beaver.log('No more images in database to load') 
+        msg = 'No more images in database to load'
+        Herald.bringTheNews(msg, TC.getLoader(), LC.getLoader(), fore=Fore.BLUE)
     
     def printForLoader(msg):
-        if ProcConfig.loaderShouldTalk() : 
-            print(msg)
-        if ConfigLoader.getVariable('runConfig', 'logs', 'loader')==True:
-            Beaver.log(msg) 
+        Herald.bringTheNews(msg, TC.getLoader(), LC.getLoader(), fore=Fore.BLUE)
 
     # BLACKBOX SPECIFIC MESSAGES
     def printWrittenData(procName):
-        if ProcConfig.iaShouldTalk(): 
-            print('%s: New data written in the test output file.' % (procName))
-        if ConfigLoader.getVariable('runConfig', 'logs', 'ias')==True:
-            Beaver.log('%s: New data written in the test output file.' % (procName)) 
-            
+        msg = '%s: New data written in the test output file.' % procName
+        Herald.bringTheNews(msg, TC.getIAs(), LC.getIAs())
+        
     def printResults(results:dict, indent:int=1, returned = False):
         msg = "{\n"
         for key in results:
@@ -88,14 +96,14 @@ class Herald:
         
         msg = "".join(msg.rsplit(',', 1))
         
-        if returned == False:
-            print(Fore.YELLOW+Style.BRIGHT+msg+"}"+Style.RESET_ALL)
+        if returned == False: # we want to print it directly
+            Herald.bringTheNews(msg+"}", True, False, Style.BRIGHT, Fore.YELLOW)
         else:
+            # we just want the string, not printed
             indentStr = ''
             for i in range(indent-1): indentStr += '    '
             return msg+indentStr+"}"
         
-    
     def getPrintElement(key:str, element, indent:int):
         indentStr = ''
         for i in range(indent): indentStr += '    '
@@ -117,49 +125,49 @@ class Herald:
     def getMessageFrom(procName, queue):
         '''Returns the next available message in the given queue, and prints/logs it if necessary.'''
         message = queue.get()
-        if ProcConfig.messagesShouldBeSpoken(): 
-            print(Style.BRIGHT+Fore.MAGENTA+procName+Style.NORMAL+': Recieved message: %s' % str(message.type))
-        if ConfigLoader.getVariable('runConfig', 'logs', 'messages'):
-            Beaver.log('%s: Recieved message: %s' % (procName, str(message.type))) 
+        
+        sstring = Herald.applyStyle(procName, Style.BRIGHT)
+        sstring += ': Recieved message: %s' % str(message.type)
+        
+        Herald.bringTheNews(sstring, TC.getMsgs(), False, fore=Fore.MAGENTA)
+        if LC.getMsgs():
+            Beaver.log(procName + ': Recieved message: %s' % str(message.type)) 
         return message
     
     # QUEUING MESSAGES  
     def queueMessageIn(procName, queue, msg):
         '''Places the given message in the given queue, and prints/logs the action if necessary.'''
         queue.put(msg)
-        if ProcConfig.messagesShouldBeSpoken(): 
-            print(Style.BRIGHT+Fore.MAGENTA+procName+Style.NORMAL+': Sent message: %s' % str(msg.type))
-        if ConfigLoader.getVariable('runConfig', 'logs', 'messages'):
-            Beaver.log('%s: Sent message: %s' % (procName, str(msg.type))) 
+        
+        sstring = Herald.applyStyle(procName, Style.BRIGHT)
+        sstring += ': Sent message: %s' % str(msg.type)
+        
+        Herald.bringTheNews(sstring, TC.getMsgs(), False, fore=Fore.MAGENTA) 
+        if LC.getMsgs():
+            Beaver.log(procName + ': Sent message: %s' % str(msg.type))
         
     # IA DETAILS
     def printShoeExtractor(procName):
-        if ProcConfig.iaShouldTalkInDetail(): print("%s: Extracting shoe from the given image" % procName)
-        if ConfigLoader.getVariable('runConfig', 'logs', 'ias-detailed'):
-            Beaver.log("%s: Extracting shoe from the given image" % procName) 
+        msg = "%s: Extracting shoe from the given image" % procName
+        Herald.bringTheNews(msg, TC.getIADetails(), LC.getIADetails()) 
         
     def printPreprocessForShoeExtraction(procName):
-        if ProcConfig.iaShouldTalkInDetail(): print("%s: Preprocessing the image before detection and extraction of the shoe"% procName)
-        if ConfigLoader.getVariable('runConfig', 'logs', 'ias-detailed'):
-            Beaver.log("%s: Preprocessing the image before detection and extraction of the shoe"% procName)
-   
+        msg = "%s: Preprocessing the image before detection and extraction of the shoe" % procName
+        Herald.bringTheNews(msg, TC.getIADetails(), LC.getIADetails()) 
+        
     def printPreprocessForColorIdentification(procName):
-        if ProcConfig.iaShouldTalkInDetail(): print("%s: Preprocessing the image before detecting the main colors of the shoe"% procName)
-        if ConfigLoader.getVariable('runConfig', 'logs', 'ias-detailed'):
-            Beaver.log("%s: Preprocessing the image before detecting the main colors of the shoe"% procName)
+        msg = "%s: Preprocessing the image before detecting the main colors of the shoe"% procName
+        Herald.bringTheNews(msg, TC.getIADetails(), LC.getIADetails()) 
     
     def printPreprocessForTypeIdentification(procName):
-        if ProcConfig.iaShouldTalkInDetail(): print("%s: Preprocessing the image before detecting the type of the shoe"% procName)
-        if ConfigLoader.getVariable('runConfig', 'logs', 'ias-detailed'):
-            Beaver.log("%s: Preprocessing the image before detecting the type of the shoe"% procName)
+        msg = "%s: Preprocessing the image before detecting the type of the shoe"% procName
+        Herald.bringTheNews(msg, TC.getIADetails(), LC.getIADetails()) 
     
     def printColorDetection(procName):
-        if ProcConfig.iaShouldTalkInDetail(): print('%s: Color detector attributed a color to the given image.'% procName)
-        if ConfigLoader.getVariable('runConfig', 'logs', 'ias-detailed'):
-            Beaver.log('%s: Color detector attributed a color to the given image.'% procName)
+        msg = '%s: Color detector attributed a color to the given image.' % procName
+        Herald.bringTheNews(msg, TC.getIADetails(), LC.getIADetails()) 
             
     def printTypeDetection(procName):
-        if ProcConfig.iaShouldTalkInDetail(): print("%s: Detecting the type of the shoe"%procName)
-        if ConfigLoader.getVariable('runConfig', 'logs', 'ias-detailed'):
-            Beaver.log("%s: Detecting the type of the shoe"%procName)
+        msg = "%s: Detecting the type of the shoe" % procName
+        Herald.bringTheNews(msg, TC.getIADetails(), LC.getIADetails()) 
     

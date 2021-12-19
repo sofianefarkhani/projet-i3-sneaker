@@ -1,5 +1,5 @@
 
-from utilities.configUtilities.ProcConfig import ProcConfig
+from utilities.config.getters.TalkConfig import TalkConfig as TC 
 
 class ShoeExtractor:
     
@@ -10,5 +10,5 @@ class ShoeExtractor:
         
         If prediction near 0: There is NO shoe."""
         
-        prediction = model.predict( img, verbose=(1 if ProcConfig.iaShouldTalkInDetail() else 0) )
+        prediction = model.predict( img, verbose=(1 if TC.getIADetails() else 0) )
         return prediction[0][0]

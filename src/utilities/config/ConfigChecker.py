@@ -1,5 +1,5 @@
 
-from utilities.configUtilities.ConfigRequirementException import ConfigRequirementException
+from utilities.config.ConfigRequirementException import ConfigRequirementException
 from colorama import Style, Fore
 
 class ConfigChecker:
@@ -30,6 +30,10 @@ class ConfigChecker:
     def getVarData():
         """Builds and returns the dictionnary of requirements for the variables in config.yaml."""
         runConfig = {
+            'noTwoAppsFile': {
+                'type': [str]
+            },
+            
             'nbProcess': {
                 'type': [int, str],
                 'min' : 1,
@@ -64,6 +68,9 @@ class ConfigChecker:
             'tempData':{
                 'type': [str]
             },
+            'keepTempFiles':{
+                'type':[bool]    
+            },
             'any': {
                 'type': [str],
                 'ext' : '.json'
@@ -83,6 +90,9 @@ class ConfigChecker:
         loader = {
             'doneFile' : {
                 'type' : [str]
+            },
+            'redoOldProducts': {
+                'type' : [bool]
             },
             'takeFromLocalSource' : {
                 'type' : [bool]
