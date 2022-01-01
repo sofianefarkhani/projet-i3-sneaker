@@ -13,7 +13,7 @@ from keras import callbacks
 from keras.models import load_model
 from tensorflow.keras import initializers
 from tensorflow.keras.optimizers import RMSprop
-from trainAI.getDatasetTrainingIA import getDataseTrainingIA, getDataseTrainingIAFromJson
+from trainAI.getDatasetTrainingIA import getDataseTrainingIAFromJson
 import tensorflow as tf
 from keras.callbacks import ModelCheckpoint
 # https://towardsdatascience.com/10-minutes-to-building-a-cnn-binary-image-classifier-in-tensorflow-4e216b2034aa
@@ -71,7 +71,7 @@ def trainAIV1():
     model.add(Dense(units=4, activation='softmax'))
 
     
-    model.compile(loss='categorical_crossentropy',optimizer=RMSprop(learning_rate=0.003),metrics='accuracy')
+    model.compile(loss='categorical_crossentropy',optimizer=RMSprop(learning_rate=0.0005),metrics='accuracy')
 
     model.summary()
 
@@ -81,7 +81,7 @@ def trainAIV1():
         target_size=(200, 200), ratio=0.8, pathJson="/mnt/424cf323-70f0-406a-ae71-29e3da370aec/data.json")
 
     # set steps_per_epoch=3000 and validation_steps=1000 with real data
-    model.fit(trainingSet, validation_data=testSet, batch_size=32, epochs=100, callbacks=callbacks_list)
+    model.fit(trainingSet, validation_data=testSet, batch_size=16, epochs=100, callbacks=callbacks_list)
     model.save("../in/AI/DetectType/model.h5", overwrite=True)
     model.save_weights('../in/AI/DetectType/weights.h5', overwrite=True)
 
