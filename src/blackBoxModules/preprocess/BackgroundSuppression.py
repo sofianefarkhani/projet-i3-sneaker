@@ -44,13 +44,15 @@ class BackgroundSuppression:
             flags,
         )
             color = Color(rgb=(palette[0][2],palette[0][1],palette[0][0]))
+            print("COLOR : ", color.name)
+            print("CONTRASTE : ", contrast)
 
             if contrast >= 0.99 and color.name == "BLACK":
                 highThresh, _ = cv2.threshold(gray, 0, 255, cv2.THRESH_TOZERO + cv2.THRESH_OTSU)
-                lowThresh = 0.85*highThresh
+                lowThresh = 0.55*highThresh
             elif contrast >= 0.99 and color.name == "WHITE":
                 highThresh, _ = cv2.threshold(gray, 0, 255, cv2.THRESH_TOZERO + cv2.THRESH_OTSU)
-                lowThresh = -0.85*highThresh
+                lowThresh = 0.2*highThresh
             else:
                 highThresh, _ = cv2.threshold(gray, 80, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_TOZERO)
                 lowThresh = 0*highThresh
