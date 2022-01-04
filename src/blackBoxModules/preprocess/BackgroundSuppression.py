@@ -30,22 +30,19 @@ class BackgroundSuppression:
             contrast = ContrastAndBrightness.getContrastValue(image)
             gray = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
 
-            average = image.mean(axis=0).mean(axis=0)
             pixels = np.float32(image.reshape(-1, 3))
             n_colors = 1
             criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 10, 0.1)
             flags = cv2.KMEANS_RANDOM_CENTERS
-            _, labels, palette = cv2.kmeans(
-            pixels,
-            n_colors,
-            None,
-            criteria,
-            ConfigLoader.getVariable("color_detection", "attempts"),
-            flags,
-        )
+            _, _, palette = cv2.kmeans(
+                pixels,
+                n_colors,
+                None,
+                criteria,
+                ConfigLoader.getVariable("color_detection", "attempts"),
+                flags,
+            )
             color = Color(rgb=(palette[0][2],palette[0][1],palette[0][0]))
-            print("COLOR : ", color.name)
-            print("CONTRASTE : ", contrast)
 
             if contrast >= 0.99 and color.name == "BLACK":
                 highThresh, _ = cv2.threshold(gray, 0, 255, cv2.THRESH_TOZERO + cv2.THRESH_OTSU)
@@ -56,7 +53,6 @@ class BackgroundSuppression:
             else:
                 highThresh, _ = cv2.threshold(gray, 80, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_TOZERO)
                 lowThresh = 0*highThresh
-
             edges = cv2.Canny(gray, lowThresh, highThresh)
             edges = cv2.dilate(edges, None)
             edges = cv2.erode(edges, None)
@@ -85,8 +81,7 @@ class BackgroundSuppression:
 
             #-- Blend masked image into MASK_COLOR background --------------------------------------
             mask_stack  = mask_stack.astype('float32') / 255.0          # Use float matrices, 
-            image         = image.astype('float32') / 255.0                 #  for easy blending
-
+            image       = image.astype('float32') / 255.0                 #  for easy blending
 
             for key in __MASK_COLOR:
                 masked = (mask_stack * image) + ((1-mask_stack) * ast.literal_eval(__MASK_COLOR[key]))

@@ -4,6 +4,7 @@ from utilities.Herald import Herald
 from utilities.configUtilities.ConfigLoader import ConfigLoader
 
 from blackBoxModules.preprocess.BackgroundSuppression import BackgroundSuppression
+from blackBoxModules.preprocess.ContrastAndBrightness import ContrastAndBrightness
 
 import cv2
 import ast
@@ -339,6 +340,22 @@ class ColorDetector:
                 listColorBg.append(bgColor)
         return listColorBg
 
+    def estimateDominantColor(image):
+        pixels = np.float32(image.reshape(-1, 3))
+        n_colors = 1
+        criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 10, 0.1)
+        flags = cv2.KMEANS_RANDOM_CENTERS
+        _, _, palette = cv2.kmeans(
+            pixels,
+            n_colors,
+            None,
+            criteria,
+            ConfigLoader.getVariable("color_detection", "attempts"),
+            flags,
+        )
+        palette = palette[0]
+        return Color(rgb=[int(palette[2]),int(palette[1]),int(palette[0])])
+
     def detection(image, procname, imgName):
         """
         Function grouping together all the treatments
@@ -351,23 +368,27 @@ class ColorDetector:
         """
         Herald.printColorDetection(procname)
 
-        list = ColorDetector.getDominantColors(image)
-        list = ColorDetector.deleteBackground(list)
-        listColors = ColorDetector.extractColor(list)
+        mainColor = None
+        secondaryColor = None
 
-        if len(listColors) >= 1 and len(listColors[0]) != 0:
-            listRatio = ColorDetector.getRatio(listColors, image)
-            colorWithRatio = ColorDetector.associateRatioColor(listColors, listRatio)
+        contrast = ContrastAndBrightness.getContrastValue(image)
+        if contrast >= 1.0:
+            color = ColorDetector.estimateDominantColor(image)
+            mainColor = color
+        else :
+            list = ColorDetector.getDominantColors(image)
+            list = ColorDetector.deleteBackground(list)
+            listColors = ColorDetector.extractColor(list)
 
-            ColorDetector.persistanceColor(colorWithRatio)
+            if len(listColors) >= 1 and len(listColors[0]) != 0:
+                listRatio = ColorDetector.getRatio(listColors, image)
+                colorWithRatio = ColorDetector.associateRatioColor(listColors, listRatio)
 
-            keyList = colorWithRatio[0].keys()
-            mainColor = Color(str([*keyList][0]))
-            secondaryColor = None
-            if len(keyList) > 1:
-                secondaryColor = Color(str([*keyList][1]))
-        else:
-            mainColor = None
-            secondaryColor = None
+                ColorDetector.persistanceColor(colorWithRatio)
+
+                keyList = colorWithRatio[0].keys()
+                mainColor = Color(str([*keyList][0]))
+                if len(keyList) > 1:
+                    secondaryColor = Color(str([*keyList][1]))
 
         return (mainColor, secondaryColor)
