@@ -121,7 +121,7 @@ class BlackBox(multiprocessing.Process):
         )
         
         print("======== shoeProb: ", shoeProb)
-        if shoeProb>0.5:
+        if shoeProb>0.7:
             (mainColor, secondaryColor) = ColorDetector.detection(
                 img,
                 self.name,
