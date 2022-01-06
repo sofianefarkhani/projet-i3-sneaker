@@ -1,6 +1,4 @@
 from enum import Enum
-import matplotlib.colors as mcolors
-import numpy as np
 
 class ColorEnum(Enum):
     '''Each ColorEnum is represented by the name of the color in uppercase, and has for value the rgb representation of the color.'''
@@ -16,16 +14,16 @@ class ColorEnum(Enum):
     ANTHRACITE = [48, 48, 48]
     LICORICE = [27, 18, 18]
     RED   = [255, 0, 0]
-    REAL_RED   = [250, 0, 0]
+    REAL_RED   = [252, 10, 10]
     BORDEAUX = [109, 7, 26]
     GRENADINE = [233, 56, 63]
     BLUE  = [0, 0, 255]
-    REAL_BLUE = [0, 0, 250]
+    REAL_BLUE = [10, 10, 251]
     CYAN = [43, 250, 250]
     NAVY = [3, 34, 76]
     ROYAL_BLUE = [49, 140, 231]
     GREEN = [0, 255, 0]
-    REAL_GREEN = [0, 250, 0]
+    REAL_GREEN = [10, 252, 10]
     EPINARD = [47, 79, 79]
     GRASS = [58, 137, 35]
     MINT = [22, 184, 78]
@@ -96,7 +94,7 @@ class ColorEnum(Enum):
             generalDif = (difRc+difGc+difBc)/3 #the divergence measured between the two colors, measured in [0,1]
             if generalDif<maxDivergence:
                 maxDivergence = generalDif
-                decidedC = color.name;
+                decidedC = color.name
         return decidedC
 
     def getColorByName(name:str):
