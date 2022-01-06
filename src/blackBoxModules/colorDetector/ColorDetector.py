@@ -372,7 +372,7 @@ class ColorDetector:
         secondaryColor = None
 
         contrast = ContrastAndBrightness.getContrastValue(image)
-        if contrast >= 1.0:
+        if contrast >= 0.95:
             color = ColorDetector.estimateDominantColor(image)
             mainColor = color
         else :
