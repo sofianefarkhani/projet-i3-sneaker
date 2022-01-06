@@ -333,15 +333,16 @@ class ColorDetector:
         """
         listColor = BGC.getBG()
         listColorBg = []
+        
         for color in listColor:
             if mode == "color":
                 newColor = Color(
-                    rgb=[(elem * 255) for elem in ast.literal_eval(listColor[color])]
+                    rgb=[(elem * 255) for elem in listColor[color]]
                 )
                 listColorBg.append(newColor.name)
             elif mode == "np":
                 bgColor = np.array(
-                    [(elem * 255) for elem in ast.literal_eval(listColor[color])],
+                    [(elem * 255) for elem in listColor[color]],
                     np.uint8,
                 )
                 listColorBg.append(bgColor)
