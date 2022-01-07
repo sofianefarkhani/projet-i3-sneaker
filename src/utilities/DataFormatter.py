@@ -8,20 +8,22 @@ class DataFormatter:
     
     
     def buildColorWay(mainColor, secondaryColor):
-        colorway = {
-            "mainColor": {
-                "color": mainColor.name,
-                "rgb": mainColor.rgb
-            }
-        }
 
-        if secondaryColor != None:
-            colorway["secondaryColor"] = {
-                "color": secondaryColor.name,
-                "rgb": secondaryColor.rgb
+        if(mainColor != None):
+            colorway = {
+                "mainColor": {
+                    "color": mainColor.name,
+                    "rgb": mainColor.rgb
+                }
             }
-        return colorway
-    
+
+            if secondaryColor != None:
+                colorway["secondaryColor"] = {
+                    "color": secondaryColor.name,
+                    "rgb": secondaryColor.rgb
+                }
+            return colorway
+        return {}
     
     def extractProdRef(imgName:str):
         tempRef = None

@@ -43,7 +43,7 @@ input:
 
 loader:
     takeFromLocalSource: True  
-    localImgSrc: ../img/test/
+    localImgSrc: ../img/test
     remoteImgSrc: /resources
     remoteCoIds : 
         host: ~

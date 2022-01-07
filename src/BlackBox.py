@@ -112,10 +112,12 @@ class BlackBox(multiprocessing.Process):
             modelShoeDetector
         )
         
-        if shoeProb>0.5:
+        print("======== shoeProb: ", shoeProb)
+        if shoeProb>0.7:
             (mainColor, secondaryColor) = ColorDetector.detection(
                 img,
-                self.name
+                self.name,
+                imgName
             )
             
             # type of shoe takes the form : [high, low, mid], each float in [0, 1]
