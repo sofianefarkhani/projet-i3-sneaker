@@ -78,9 +78,6 @@ class ConfigChecker:
         }
     
         input = {
-            'trainingImagesFolder': {
-                'type': [str]
-            },
             'any': {
                 'type': [str],
                 'ext' : '.json'
