@@ -38,8 +38,6 @@ output:
     keepTempFiles: False
 
 input:
-    # to train our IAs
-    trainingImagesFolder: ../img/train/trainingTestImages   # the home folder for all images to train our ia
     shoeDetectAndExtractTrainData: ../in/trainData.json     # the data to train the IA that detects the presence of sneakers 
     shoeTypeTrainData: ../in/trainData.json                                 # the displayed image to inform there are no more images when labelling by hand
 

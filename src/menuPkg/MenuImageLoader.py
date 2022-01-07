@@ -4,8 +4,6 @@ from os import listdir
 from os.path import isfile, join
 from Data.Image import Image
 import cv2
-from interface.JsonReader import JsonReader
-from interface.ConfigLoader import ConfigLoader
 class MenuImageLoader:
     '''A class that loads a table of images for the menu. Simple enough.'''
     

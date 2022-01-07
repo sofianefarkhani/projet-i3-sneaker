@@ -83,11 +83,6 @@ A directory where images are stored as a cache file when imported from a distant
 
 ### **The input section**
 
-> trainingImagesFolder: ../img/train/trainingTestImages
-
-Accepts a directory path. 
-The home folder for all images used to train our ia. 
-
 > shoeDetectAndExtractTrainData: ../in/trainData.json     
 
 Accepts a json file. 
