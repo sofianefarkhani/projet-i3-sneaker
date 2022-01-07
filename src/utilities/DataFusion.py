@@ -109,9 +109,9 @@ class DataFusion :
             
             # if a shoe was detected, add the missing data.
             if finalProductData['probaShoe'] > 0.5:
-                finalProductData['style'] = DFU.determineStyle(imgDataList)
-                finalProductData['colors'] = DFU.determineColors(imgDataList)
-                    
+                if(DFU.determineStyle(imgDataList) != None):
+                    finalProductData['style'] = DFU.determineStyle(imgDataList)
+                    finalProductData['colors'] = DFU.determineColors(imgDataList)
             return finalProductData
 
 class DFU: 
@@ -150,19 +150,21 @@ class DFU:
                 styleType['high'].append(typeShoesTab[0])
                 styleType['low'].append(typeShoesTab[1])
                 styleType['mid'].append(typeShoesTab[2])
+        if(len(styleType['high']) != 0 and len(styleType['mid']) != 0 and len(styleType['low']) != 0):
+            styleType['high'].sort()
+            styleType['low'].sort()
+            styleType['mid'].sort()
 
-        styleType['high'].sort()
-        styleType['low'].sort()
-        styleType['mid'].sort()
+            styleTypeMedian = {
+                'high' : median(styleType['high']),
+                'low' : median(styleType['low']),
+                'mid' : median(styleType['mid'])
+            }
 
-        styleTypeMedian = {
-            'high' : median(styleType['high']),
-            'low' : median(styleType['low']),
-            'mid' : median(styleType['mid'])
-        }
-
-        finalType = max(styleType, key=styleType.get)
-        return finalType
+            finalType = max(styleType, key=styleType.get)
+            return finalType
+        
+        return None
     
     def determineColors(imgDataList):
         colors = {
