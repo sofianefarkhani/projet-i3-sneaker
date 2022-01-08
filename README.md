@@ -1,4 +1,6 @@
-# Projet I3 : SNEAKERS
+# Projet I3 : SNEAKERS 
+[![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
+
 ## Requirements
 ### With Docker
 * Docker Engine (>= 19.03.0+)
