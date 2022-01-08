@@ -3,10 +3,10 @@
 
 ## Requirements
 ### With Docker
-* Docker Engine (>= 19.03.0+)
+[![docker-minimal-version](https://img.shields.io/badge/Docker-v19.03-blue)](https://www.python.org/)
 ### Without Docker
-* Python (>= 3.8)
-* pip
+[![python-minimal-version](https://img.shields.io/badge/python-v3.8-blue)](https://www.python.org/)
+[![pip-minimal-version](https://img.shields.io/badge/pip-v21.1.3-blue)](https://www.python.org/)
 ## Configuration 
 ### Docker
 #### IP Forward for containers (Linux kernel)
