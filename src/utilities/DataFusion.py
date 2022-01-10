@@ -111,7 +111,7 @@ class DataFusion :
             if finalProductData['probaShoe'] > 0.5:
                 if(DFU.determineStyle(imgDataList) != None):
                     finalProductData['style'] = DFU.determineStyle(imgDataList)
-                    finalProductData['colors'] = DFU.determineColors(imgDataList)
+                finalProductData['colors'] = DFU.determineColors(imgDataList)
             return finalProductData
 
 class DFU: 
