@@ -22,8 +22,8 @@ from blackBoxModules.preprocess.ImagePreprocessor   import ImagePreprocessor
 from utilities.config.getters.RunConfigGeneral import RunConfigGeneral as RCG 
 from utilities.config.getters.IANetworkConfig import IANConfig as IAC
 from utilities.config.getters.TalkConfig import TalkConfig as TC
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = str(TC.getTF())
 
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = str(TC.getTF())
 
 class BlackBox(multiprocessing.Process):
     '''The BlackBox coordinates all the image dealings and the extraction of the values.
@@ -112,28 +112,33 @@ class BlackBox(multiprocessing.Process):
             modelShoeDetector
         )
         
-        print("======== shoeProb: ", shoeProb)
-        if shoeProb>0.7:
-            (mainColor, secondaryColor) = ColorDetector.detection(
-                img,
-                self.name,
-                imgName
-            )
-            
-            # type of shoe takes the form : [high, low, mid], each float in [0, 1]
-            typeOfShoe = TypeDetector.detectTypeOfShoe(
-                tfImg,
-                modelTypeDetector
-            )
+        try:
+            if shoeProb>0.7:
+                    (mainColor, secondaryColor) = ColorDetector.detection(
+                        img,
+                        self.name,
+                        imgName
+                    )
+                    
+                    # type of shoe takes the form : [high, low, mid], each float in [0, 1]
+                    typeOfShoe = TypeDetector.detectTypeOfShoe(
+                        tfImg,
+                        modelTypeDetector
+                    )
 
-            colorway = DataFormatter.buildColorWay(mainColor, secondaryColor)
-            dataShoes= DataFormatter.getFullData(refProd, imgName, "NOT IMPLEMENTED YET", colorway, shoeProb, typeOfShoe)
-            Herald.printResults(dataShoes)
-        
-        else: # there was no shoe
+                    colorway = DataFormatter.buildColorWay(mainColor, secondaryColor)
+                    dataShoes= DataFormatter.getFullData(refProd, imgName, "NOT IMPLEMENTED YET", colorway, shoeProb, typeOfShoe)
+                    Herald.printResults(dataShoes)
+                
+            else: # there was no shoe
+                dataShoes = DataFormatter.getNoneData(refProd, imgName, shoeProb)
+                Herald.printResults(dataShoes)
+
+        except Exception as e:
+            Herald.printError("A blackbox encountered an error when dealing with image: '"+imgPath+"'. Image will be ignored. Full error is: "+e)
             dataShoes = DataFormatter.getNoneData(refProd, imgName, shoeProb)
             Herald.printResults(dataShoes)
-
+        
         # prepare for all the data display / saving
         Writer.writeDataToTempFile(self.name, dataShoes)
         Herald.printWrittenData(self.name)

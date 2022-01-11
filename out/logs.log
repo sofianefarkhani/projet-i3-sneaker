@@ -2,31 +2,27 @@ The wise Beaver's big dam of logs:
 ---------------------------------------
 __main__: Sent message: LoaderTaskType.LOAD
 ---------------------------------------
-BlackBox-4: Recieved message: TaskType.END
----------------------------------------
-BlackBox-4: Sent message: AnswerType.BOXENDSERVICE
----------------------------------------
-BlackBox-6: Recieved message: TaskType.END
----------------------------------------
-BlackBox-6: Sent message: AnswerType.BOXENDSERVICE
----------------------------------------
-BlackBox-5: Recieved message: TaskType.END
----------------------------------------
-BlackBox-5: Sent message: AnswerType.BOXENDSERVICE
----------------------------------------
-BlackBox-8: Recieved message: TaskType.END
----------------------------------------
-BlackBox-2: Recieved message: TaskType.END
----------------------------------------
-BlackBox-8: Sent message: AnswerType.BOXENDSERVICE
----------------------------------------
-BlackBox-2: Sent message: AnswerType.BOXENDSERVICE
----------------------------------------
 Loader: Recieved message: LoaderTaskType.LOAD
 ---------------------------------------
 Loader: Sent message: TaskType.PROCESS
 ---------------------------------------
+Loader: Sent message: TaskType.PROCESS
+---------------------------------------
+BlackBox-8: Recieved message: TaskType.PROCESS
+---------------------------------------
+Loader: Sent message: TaskType.PROCESS
+---------------------------------------
+BlackBox-9: Recieved message: TaskType.PROCESS
+---------------------------------------
+Loader: Sent message: TaskType.PROCESS
+---------------------------------------
 BlackBox-7: Recieved message: TaskType.PROCESS
+---------------------------------------
+Loader: Sent message: TaskType.PROCESS
+---------------------------------------
+Loader: Sent message: TaskType.PROCESS
+---------------------------------------
+Loader: Sent message: TaskType.PROCESS
 ---------------------------------------
 Loader: Sent message: TaskType.PROCESS
 ---------------------------------------
@@ -35,16 +31,6 @@ BlackBox-4: Recieved message: TaskType.PROCESS
 Loader: Sent message: TaskType.PROCESS
 ---------------------------------------
 BlackBox-6: Recieved message: TaskType.PROCESS
----------------------------------------
-BlackBox-2: Recieved message: TaskType.PROCESS
----------------------------------------
-Loader: Sent message: TaskType.PROCESS
----------------------------------------
-BlackBox-5: Recieved message: TaskType.PROCESS
----------------------------------------
-Loader: Sent message: TaskType.PROCESS
----------------------------------------
-Loader: Sent message: TaskType.PROCESS
 ---------------------------------------
 BlackBox-3: Recieved message: TaskType.PROCESS
 ---------------------------------------
@@ -56,39 +42,49 @@ Loader: Sent message: TaskType.PROCESS
 ---------------------------------------
 Loader: Sent message: TaskType.PROCESS
 ---------------------------------------
-Loader: Sent message: TaskType.PROCESS
----------------------------------------
-Loader: Sent message: TaskType.PROCESS
----------------------------------------
-Loader: Sent message: TaskType.PROCESS
----------------------------------------
 Loader: Sent message: LoaderAnswerType.NOMORE
+---------------------------------------
+Loader: Sent message: LoaderAnswerType.LOADDONE
 ---------------------------------------
 __main__: Recieved message: LoaderAnswerType.NOMORE
 ---------------------------------------
 __main__: Sent message: LoaderTaskType.TERMINATE
 ---------------------------------------
-__main__: Recieved message: LoaderAnswerType.LOADDONE
----------------------------------------
 Loader: Recieved message: LoaderTaskType.TERMINATE
+---------------------------------------
+__main__: Recieved message: LoaderAnswerType.LOADDONE
 ---------------------------------------
 Loader: Sent message: LoaderAnswerType.END
 ---------------------------------------
 __main__: Recieved message: LoaderAnswerType.END
 ---------------------------------------
+BlackBox-2: Recieved message: TaskType.PROCESS
+---------------------------------------
+BlackBox-5: Recieved message: TaskType.PROCESS
+---------------------------------------
+BlackBox-3: Recieved message: TaskType.PROCESS
+---------------------------------------
+BlackBox-2: Recieved message: TaskType.PROCESS
+---------------------------------------
 BlackBox-8: Recieved message: TaskType.PROCESS
 ---------------------------------------
-__main__: Recieved message: TaskType.PROCESS
+BlackBox-4: Recieved message: TaskType.PROCESS
 ---------------------------------------
-__main__: Recieved message: TaskType.PROCESS
+BlackBox-5: Recieved message: TaskType.PROCESS
 ---------------------------------------
-__main__: Recieved message: TaskType.PROCESS
+__main__: Sent message: TaskType.END
 ---------------------------------------
-__main__: Recieved message: TaskType.PROCESS
+BlackBox-3: Recieved message: TaskType.END
 ---------------------------------------
-__main__: Recieved message: TaskType.PROCESS
+__main__: Sent message: TaskType.END
 ---------------------------------------
-__main__: Recieved message: TaskType.PROCESS
+BlackBox-6: Recieved message: TaskType.END
+---------------------------------------
+__main__: Sent message: TaskType.END
+---------------------------------------
+__main__: Sent message: TaskType.END
+---------------------------------------
+BlackBox-6: Sent message: AnswerType.BOXENDSERVICE
 ---------------------------------------
 __main__: Sent message: TaskType.END
 ---------------------------------------
@@ -98,12 +94,28 @@ __main__: Sent message: TaskType.END
 ---------------------------------------
 __main__: Sent message: TaskType.END
 ---------------------------------------
-__main__: Sent message: TaskType.END
+BlackBox-3: Sent message: AnswerType.BOXENDSERVICE
 ---------------------------------------
-__main__: Sent message: TaskType.END
+BlackBox-2: Recieved message: TaskType.END
 ---------------------------------------
-__main__: Sent message: TaskType.END
+BlackBox-9: Recieved message: TaskType.END
 ---------------------------------------
-__main__: Sent message: TaskType.END
+BlackBox-2: Sent message: AnswerType.BOXENDSERVICE
 ---------------------------------------
-__main__: Sent message: LoaderTaskType.TERMINATE
+BlackBox-9: Sent message: AnswerType.BOXENDSERVICE
+---------------------------------------
+BlackBox-7: Recieved message: TaskType.END
+---------------------------------------
+BlackBox-7: Sent message: AnswerType.BOXENDSERVICE
+---------------------------------------
+BlackBox-8: Recieved message: TaskType.END
+---------------------------------------
+BlackBox-8: Sent message: AnswerType.BOXENDSERVICE
+---------------------------------------
+BlackBox-4: Recieved message: TaskType.END
+---------------------------------------
+BlackBox-4: Sent message: AnswerType.BOXENDSERVICE
+---------------------------------------
+BlackBox-5: Recieved message: TaskType.END
+---------------------------------------
+BlackBox-5: Sent message: AnswerType.BOXENDSERVICE
