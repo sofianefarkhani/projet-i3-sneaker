@@ -93,15 +93,23 @@ def getDataseTrainingIAFromJson(target_size=(64, 64), ratio=0.8, pathJson=None):
     # Fitting the CNN to the images
     train_datagen = ImageDataGenerator(
         rescale=1. / 255,
+        rotation_range=40,
+        width_shift_range=0.2,
+        height_shift_range=0.2,
         shear_range=0.2,
         zoom_range=0.2,
+        # fill_mode='nearest',
         horizontal_flip=True
     )
 
     test_datagen = ImageDataGenerator(
-        rescale=1. / 255,
+        rescale=1. / 255,        
+        rotation_range=40,
+        width_shift_range=0.2,
+        height_shift_range=0.2,
         shear_range=0.2,
         zoom_range=0.2,
+        # fill_mode='nearest',
         horizontal_flip=True)
 
     import json
@@ -109,7 +117,7 @@ def getDataseTrainingIAFromJson(target_size=(64, 64), ratio=0.8, pathJson=None):
     dataset = json.load(f)
     f.close()
 
-    print(dataset)
+    # print(dataset)
 
     # Need randomize the dataset order before separate it in two part
     (dataFrameTraining, dataFrameTest) = shuffleDataSet(dataset, ratio)
@@ -134,6 +142,63 @@ def getDataseTrainingIAFromJson(target_size=(64, 64), ratio=0.8, pathJson=None):
         target_size=target_size,
         batch_size=32,
         color_mode="grayscale",
+        class_mode='categorical')
+
+    return (trainingSet, testSet)
+
+def getDataseTrainingIAFromJsonV2Color(target_size=(64, 64), ratio=0.8, pathJson=None):
+    # Fitting the CNN to the images
+    train_datagen = ImageDataGenerator(
+        rescale=1. / 255,
+        rotation_range=40,
+        width_shift_range=0.2,
+        height_shift_range=0.2,
+        shear_range=0.2,
+        zoom_range=0.2,
+        # fill_mode='nearest',
+        horizontal_flip=True
+    )
+
+    test_datagen = ImageDataGenerator(
+        rescale=1. / 255,        
+        rotation_range=40,
+        width_shift_range=0.2,
+        height_shift_range=0.2,
+        shear_range=0.2,
+        zoom_range=0.2,
+        # fill_mode='nearest',
+        horizontal_flip=True)
+
+    import json
+    f = open(pathJson)
+    dataset = json.load(f)
+    f.close()
+
+    # print(dataset)
+
+    # Need randomize the dataset order before separate it in two part
+    (dataFrameTraining, dataFrameTest) = shuffleDataSet(dataset, ratio)
+
+    dataFrameTraining = pandas.DataFrame(data=dataFrameTraining)
+    dataFrameTest = pandas.DataFrame(data=dataFrameTest)
+
+    
+    trainingSet = train_datagen.flow_from_dataframe(
+        dataframe=dataFrameTraining,
+        x_col="id",
+        y_col="label",
+        target_size=target_size,
+        batch_size=16,
+        color_mode="rgb",
+        class_mode='categorical')
+
+    testSet = test_datagen.flow_from_dataframe(
+        dataframe=dataFrameTest,
+        x_col="id",
+        y_col="label",
+        target_size=target_size,
+        batch_size=16,
+        color_mode="rgb",
         class_mode='categorical')
 
     return (trainingSet, testSet)
