@@ -62,7 +62,7 @@ def trainAIV1():
    
     model.summary()
 
-    base_learning_rate = 0.00004
+    base_learning_rate = 0.0005 # 0.00004
     model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=base_learning_rate),
               loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
               metrics=['accuracy'])

@@ -56,33 +56,33 @@ def trainAIV1():
     # Pooling
     model.add(MaxPooling2D(pool_size=(2, 2)))
 
-    model.add(Conv2D(128, (3, 3)))
+    model.add(Conv2D(64, (3, 3)))
     model.add(Activation("relu"))
     # Pooling
     model.add(MaxPooling2D(pool_size=(2, 2)))
 
-    # model.add(Conv2D(64, (3, 3)))
-    # model.add(Activation("relu"))
-    # # Pooling
-    # model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Conv2D(64, (3, 3)))
+    model.add(Activation("relu"))
+    # Pooling
+    model.add(MaxPooling2D(pool_size=(2, 2)))
 
     # Flattening
     model.add(Flatten())
 
     # Full connection
-    model.add(Dense(units=128, activation='relu', kernel_initializer='random_normal',
+    model.add(Dense(units=2048, activation='relu', kernel_initializer='random_normal',
                     bias_initializer='zeros'
                     ))
     model.add(Dropout(0.8))
-    # model.add(Dense(units=4, activation='softmax'))
-    model.add(Dense(units=4))
+    model.add(Dense(units=4, activation='softmax'))
+    # model.add(Dense(units=4))
 
 
     # 0.0001 
-    # model.compile(loss='categorical_crossentropy',optimizer=RMSprop(learning_rate=0.002),metrics='accuracy')
-    model.compile(optimizer='adam',
-              loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
-              metrics=['accuracy'])
+    model.compile(loss='categorical_crossentropy',optimizer=RMSprop(learning_rate=0.0004),metrics='accuracy')
+    # model.compile(optimizer='adam',
+    #           loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+    #           metrics=['accuracy'])
 
 
     checkpoint = ModelCheckpoint("../in/AI/DetectType/best_weights.h5", monitor='val_accuracy', verbose=1,save_best_only=True, mode='max')
@@ -98,7 +98,7 @@ def trainAIV1():
 
     # set steps_per_epoch=3000 and validation_steps=1000 with real data
     model.save("../in/AI/DetectType/model.h5", overwrite=True)
-    model.fit(trainingSet, validation_data=testSet, batch_size=16, epochs=100, callbacks=callbacks_list)
+    model.fit(trainingSet, validation_data=testSet, batch_size=16, epochs=500, callbacks=callbacks_list)
     model.save_weights('../in/AI/DetectType/weights.h5', overwrite=True)
     
 
