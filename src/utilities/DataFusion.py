@@ -111,7 +111,7 @@ class DataFusion :
             if finalProductData['probaShoe'] > 0.5:
                 if(DFU.determineStyle(imgDataList) != None):
                     finalProductData['style'] = DFU.determineStyle(imgDataList)
-                finalProductData['colors'] = DFU.determineColors(imgDataList)
+                    finalProductData['colors'] = DFU.determineColors(imgDataList)
             return finalProductData
 
 class DFU: 
@@ -141,7 +141,8 @@ class DFU:
         styleType = { # this stores the style Type for averaging later
         'high': [],
         'low': [],
-        'mid': []
+        'mid': [],
+        'not_available': []
         }
 
         for imgData in imgDataList:
@@ -150,15 +151,22 @@ class DFU:
                 styleType['high'].append(typeShoesTab[0])
                 styleType['low'].append(typeShoesTab[1])
                 styleType['mid'].append(typeShoesTab[2])
-        if(len(styleType['high']) != 0 and len(styleType['mid']) != 0 and len(styleType['low']) != 0):
+                styleType['not_available'].append(typeShoesTab[3])
+
+        if(len(styleType['high']) != 0):
             styleType['high'].sort()
-            styleType['low'].sort()
+        if(len(styleType['mid']) != 0):
             styleType['mid'].sort()
+        if(len(styleType['low']) != 0):
+            styleType['low'].sort()
+        if(len(styleType['not_available']) != 0):
+            styleType['not_available'].sort()
 
             styleTypeMedian = {
                 'high' : median(styleType['high']),
                 'low' : median(styleType['low']),
-                'mid' : median(styleType['mid'])
+                'mid' : median(styleType['mid']),
+                'not_available' : median(styleType['not_available'])
             }
 
             finalType = max(styleType, key=styleType.get)
