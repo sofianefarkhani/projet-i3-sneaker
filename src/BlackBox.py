@@ -74,7 +74,14 @@ class BlackBox(multiprocessing.Process):
                 elif nextTask.type == TaskType.PROCESS: 
                     if nextTask.img is None: continue # this should not happen, but i still left it as a precaution
                     
-                    self.compute(nextTask.img, nextTask.imgPath, nextTask.imgPathInCache, nextTask.tfImg, modelShoeDetector, modelTypeDetector)
+                    self.compute(
+                        nextTask.img, 
+                        nextTask.imgPath, 
+                        nextTask.imgPathInCache, 
+                        nextTask.tfImg, 
+                        nextTask.tf2Img, 
+                        modelShoeDetector, 
+                        modelTypeDetector)
                     
                     self.taskQueue.task_done()    # helps when we want to join threads at the end of the programm
                     
@@ -98,7 +105,7 @@ class BlackBox(multiprocessing.Process):
     
     
     
-    def compute(self, img, imgPath:str, imgPathInCache:str=None, tfImg=None, modelShoeDetector=None, modelTypeDetector=None):
+    def compute(self, img, imgPath:str, imgPathInCache:str=None, tfDetectImg=None, tfTypeImg=None, modelShoeDetector=None, modelTypeDetector=None):
         '''Computes if there is a shoe, its type and color.
         If there is a path in cache, use this one.
         tfImg is the image loaded for the needs of tensorflow. Don't use it unless you're called Vivien.'''
@@ -108,7 +115,7 @@ class BlackBox(multiprocessing.Process):
         img = ImagePreprocessor.resize(img)
         
         shoeProb = ShoeExtractor.isThereShoe(
-            tfImg,
+            tfDetectImg,
             modelShoeDetector
         )
         
@@ -122,7 +129,7 @@ class BlackBox(multiprocessing.Process):
                     
                     # type of shoe takes the form : [high, low, mid], each float in [0, 1]
                     typeOfShoe = TypeDetector.detectTypeOfShoe(
-                        tfImg,
+                        tfTypeImg,
                         modelTypeDetector
                     )
 

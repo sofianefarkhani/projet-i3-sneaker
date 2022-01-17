@@ -17,7 +17,7 @@ runConfig:
         ias:            True    
         ias-detailed:   False  
         loader:         True   
-        tensorflow:     4 
+        tensorflow:     4
     
     logs: 
         file:           ../out/logs.log

@@ -99,25 +99,21 @@ class Loader(multiprocessing.Process):
             imgInfo = next(imagesGenerator)
             
             if imgInfo is not None:
-                imgPath = imgInfo['imgPath']
                 
-                try: imgPathInCache = imgInfo['imgPathInCache']
-                except: imgPathInCache = None
-                
-                img = imgInfo['img']
-                
-                tfImg = imgInfo['tfImg']
-                
-            else: 
-                imgPath = None
-                imgPathInCache = None
-                img = None
-                        
-            if imgInfo is None:  # if image generator yields None, this is the end of the db
+                Herald.queueMessageIn(
+                    'Loader', 
+                    self.bbTaskQueue, 
+                    Task(TaskType.PROCESS, 
+                         imgPath =          imgInfo['imgPath'], 
+                         img =              imgInfo['img'], 
+                         tfImg =            imgInfo['tfImg'], 
+                         tf2Img =           imgInfo['tfImg2']
+                         )
+                    )    
+            else: # if image generator yields None, this is the end of the db
                 Herald.queueMessageIn('Loader', self.answerQueue, LoaderAnswer(LoaderAnswerType.NOMORE))
                 break
-            else:                  # else append the image to the tasks
-                Herald.queueMessageIn('Loader', self.bbTaskQueue, Task(TaskType.PROCESS, imgPath=imgPath, imgPathInCache=imgPathInCache, img=img, tfImg=tfImg))
+                     
                     
         
     def getImagesGenerator(self):
@@ -134,9 +130,10 @@ class Loader(multiprocessing.Process):
             for file in files:
                 Herald.signalLoad(localFile+file)
                 yield { 
-                       'imgPath': file,
-                       'img'  : cv2.imread(os.path.join(localFile,file), cv2.IMREAD_COLOR),
-                       'tfImg': self.loadTensorFlowImage(os.path.join(localFile,file))
+                        'imgPath': file,
+                        'img'  : cv2.imread(os.path.join(localFile,file), cv2.IMREAD_COLOR),
+                        'tfImg': Loader.loadImageIADetectShoe(os.path.join(localFile,file)),
+                        'tfImg2': Loader.loadImageIATypeShoe(os.path.join(localFile,file))
                     }
         
         # from distant directory
@@ -188,7 +185,8 @@ class Loader(multiprocessing.Process):
                             'imgPath': os.path.join(LC.getRemoteSource(),temp),
                             'imgPathInCache': os.path.join('../img/temp/',temp),
                             'img': cv2.imread(os.path.join('../img/temp/',temp), cv2.IMREAD_COLOR),
-                            'tfImg': self.loadTensorFlowImage(os.path.join('../img/temp/',temp))
+                            'tfImg':  Loader.loadImageIADetectShoe(os.path.join('../img/temp/',temp)),
+                            'tfImg2': Loader.loadImageIATypeShoe(os.path.join('../img/temp/',temp))
                         }
                     
                     # remove image from cache
@@ -196,13 +194,22 @@ class Loader(multiprocessing.Process):
         
         yield None
 
-    def loadTensorFlowImage(self, path):
-        img = tf.keras.preprocessing.image.load_img(
-        path, color_mode="grayscale", target_size=(200, 200))
+
+    ######################### TensorFlow Loading
+    
+    def loadTFImage(path, colorMode, size:int):
+        img = tf.keras.preprocessing.image.load_img(path, color_mode=colorMode, target_size=(size, size))
         img = tf.keras.preprocessing.image.img_to_array(img)
         img = img.astype('float32')/255.
         img = np.array([img])  # Convert single image to a batch.
         return img
+
+    def loadImageIADetectShoe(path): return Loader.loadTFImage(path, "grayscale", 200)
+
+    def loadImageIATypeShoe(path): return Loader.loadTFImage(path, "rgb", 224)
+
+
+    ######################### Old products removal
 
     def removeOldProducts(self, imgList):
         if LC.redoOldProducts()==True: return
@@ -228,8 +235,7 @@ class Loader(multiprocessing.Process):
                 if (len(oldPeas) == 0) : return
                 oldP = oldPeas.pop(0)
         Herald.printNbImgRemoved(imgRemovedCounter)
-            
-            
+              
     def getOldProducts(self):
         file = LC.getDoneFile()
         peasList = []
